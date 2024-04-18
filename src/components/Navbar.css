@@ -1,0 +1,419 @@
+
+
+/* .list:nth-child(2),.list:nth-child(3),.list:nth-child(4),.list:nth-child(5),.list:nth-child(6){
+   
+    margin-right: 5%;
+} */
+.custom-modal {
+    .ant-modal-content {
+      background-color: rgba(162, 237, 229, 0.732); 
+    }
+  }
+  @media screen and (min-width: 300px) and (max-width: 550px){
+    .ant-modal-content {
+        width: 350px; 
+    position: absolute;   
+    top: 50%; 
+ 
+    left: 50%; 
+    
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    
+      }
+  } 
+  /* .scroll-element{
+    width: 500px;
+    height: 500px;
+    margin-bottom: 500px;
+    background-color: white;
+    transform: scale(0);
+    transition: all 0.5s;
+  }
+  .scroll-element.visible{
+    transform: scale(1);
+  } */
+.nav{
+    position: sticky;
+    top:0;
+    background-color: rgba(8,8,67);
+}
+
+ul{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content:flex-end;
+    margin-right: 4%;
+    
+}
+.logo{
+    box-shadow: 2px 1px 1px 1px rgb(170, 212, 223);
+    margin: 1%;
+}
+
+.list{
+    
+   margin-left: 2%;
+  
+} 
+
+
+.link:hover{
+    background-color: rgb(22, 139, 185);
+    box-shadow: 1px 1px 1px 1px rgb(153, 222, 210);
+}
+.logo{
+   
+    margin-right: 0%;
+}
+
+.login:hover{
+    box-shadow: 2px 3px 3px 2px rgb(193, 144, 54);
+    border-radius: 10%;
+    transition: all 0.5s ease;
+} 
+
+
+/* Responsive */
+/* .nav .menu{
+    display: none;
+    position: absolute;
+    top: 0.75rem;
+    right: 0.5rem;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 2.25rem;
+    height: 2rem;
+    
+    
+}
+
+.nav .menu span{
+    height: 0.4rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 0.2rem;
+    
+} */
+
+/* @media(max-width: 1050px){
+    .nav .menu{
+        display: flex;
+        
+    }
+    .nav .logo{
+      margin-top: 0.5rem;
+    }
+    .nav{
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 0.25rem;
+        background-color: rgb(8, 8, 67);
+        
+    }
+    .nav ul.open{
+        display: flex;
+
+    }
+    .list{
+        margin-left: 0%;
+    }
+    .nav ul .list{
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav ul .list .link{
+        margin: 0.2rem 0.5rem ;
+    }
+    .nav ul .list .link:hover{
+        width: 100%;
+        
+        
+       
+    }
+
+}
+
+     */
+.menu-icon{
+    display: none;
+}
+
+/* Hamburger and Cancel Icon Transitions */
+.hammenu-icon,
+.cancel-icon {
+  position: absolute;
+  font-size: 2rem;
+  background-color: rgb(8, 8, 67);
+  top: 10%;
+  right: 3%;
+}
+
+
+
+/* Animation for Hamburger Icon */
+@keyframes spin-hamburger {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}
+
+/* Animation for Cancel Icon */
+@keyframes spin-cancel {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+.animate-hamburger {
+  animation: spin-hamburger 0.3s ease;
+}
+
+.animate-cancel {
+  animation: spin-cancel 0.3s ease;
+}
+
+@media screen and (min-width: 300px) and (max-width: 500px){
+    /* .nav{
+        
+        display: flex;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+        
+        /* white-space: nowrap; */
+    /* } */ */
+   
+    .logo{
+        display: flex;
+        position: absolute;
+        top: 2%;
+        left: 5%;
+    }
+    
+    .nav-items{
+        height: 100vh;
+        width: 100vh;
+    }
+    .desk{
+        display: none;
+    }
+    .mob{
+        position: absolute;
+        display: block;
+        background-color: rgb(8, 8, 67);
+        left: 0;
+        top: 100%;
+      
+        transition: all 0.5s ease;
+        width: 100%;
+         
+    } 
+    ul{
+        /* display: flex;
+        flex-wrap: nowrap; */
+        display: block;
+        width: max-content;
+       
+        margin: 0%;
+        
+    }
+    .list{
+        text-align: center;
+        padding-bottom: 27px;
+        height: 80px;
+        transition: all 0.5s ease;
+       
+    }
+   
+    .login{
+        text-align: center;
+        transition: all 0.5s ease;
+    }
+
+    .menu-icon{
+        display: block;
+        position:absolute;
+        font-size: 3rem;
+        background-color: rgb(8, 8, 67);
+        top: 10%;
+        right: 3%;
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 768px){
+    .logo{
+        display: flex;
+        position: absolute;
+        top: 2%;
+        left: 5%;
+    }
+    .desk{
+        display: none;
+    }
+    .mob{
+        position: absolute;
+        display: block;
+        background-color: rgb(8, 8, 67);
+        left: 0;
+        top: 100%;
+        transition: all 0.5s ease;
+        width: 100%;
+    } 
+   
+    ul{
+        display: block;
+        width: max-content;
+        margin: 0%;
+    }
+    .list{
+        text-align: center;
+        padding-bottom: 27px;
+        height: 80px;
+        transition: all 0.5s ease;
+    }
+    
+    .login{
+        text-align: center;
+        transition: all 0.5s ease;
+    }
+
+    .menu-icon{
+        display: block;
+        position:absolute;
+        font-size: 3rem;
+        background-color: rgb(8, 8, 67);
+        top: 10%;
+        right: 3%;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media screen and (min-width: 768px) and (max-width: 1060px){
+    .logo{
+        display: flex;
+        position: absolute;
+        top: 2%;
+        left: 5%;
+    }
+    .desk{
+        display: none;
+    }
+    .mob{
+        position: absolute;
+        display: block;
+        background-color: rgb(8, 8, 67);
+        left: 0;
+        top: 100%;
+        transition: all 5s ease;
+        width: 100%;
+        
+        
+    } 
+   
+   
+    ul{
+        display: block;
+        
+       
+        margin: 0%;
+    }
+    .list{
+        text-align: center;
+        padding: 25px;
+        
+        transition: all 0.5s ease;
+    }
+    
+   
+    
+    .login{
+        text-align: center;
+        transition: all 0.5s ease;
+      
+    }
+
+    .menu-icon{
+        display: block;
+        position:absolute;
+        font-size: 3rem;
+        background-color: rgb(8, 8, 67);
+        top: 10%;
+        right: 3%;
+    }
+    
+      
+}
+
+/* Large devices (desktops, 1024px and up) */
+/* @media screen and (min-width: 990px) { */
+    /* .logo{
+        display: flex;
+        position: absolute;
+        top: 2%;
+        left: 5%;
+    } */
+    /* .desk{
+        display: none;
+    } */
+    /* .mob{
+        position: absolute;
+        display: block;
+        background-color: rgb(8, 8, 67);
+        left: 0;
+        top: 100%;
+        transition: all 0.5s ease;
+        width: 100%;
+    }  */
+    /* ul{
+        display: block;
+        width: max-content;
+        height: min-content;
+        margin: 0%;
+    }
+    .list{
+        text-align: center;
+        padding: 8%;
+        width: 100%;
+        transition: all 0.5s ease;
+    }
+    .list:hover{
+        left: 0;
+        right: 100%;
+        width: 100%;
+    }
+    .login{
+        text-align: center;
+        transition: all 0.5s ease;
+    }
+
+    .menu-icon{
+        display: block;
+        position:absolute;
+        font-size: 3rem;
+        background-color: rgb(8, 8, 67);
+        top: 10%;
+        right: 3%;
+    }
+} */
+
+/* Extra large devices (large desktops, 1440px and up) */
+
+  
+  
+  
