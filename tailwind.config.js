@@ -7,23 +7,26 @@ module.exports = {
 theme: {
   screens: {
     'mo': [
-      {'min': '201px','max': '550px'}
+      {'min': '300px','max': '550px'}
     ],
     'ta': [
-      {'min': '551px', 'max': '767px'}
+      {'min': '550px', 'max': '768px'}
     ],
     'de': [
       {'min': '768px', 'max': '990px'}
     ],
-    'des':[{'min': '991px', 'max': '1600px'}],
+    'des':[{'min': '990px', 'max': '1600px'}],
 
     'des_search':[{
-      'min':'991px', 'max':'1060px'
+      'min':'990px', 'max':'1060px'
     }],
 
     'des_xl':[{
-      'min':'1061px', 'max':'1300px'
-    }]
+      'min':'1060px', 'max':'1300px'
+    }],
+    'des_2xl':[{
+      'min':'1300px', 'max':'2300px'
+    }] 
     
   },
   extend: {

@@ -1,0 +1,495 @@
+
+
+/* .list:nth-child(2),.list:nth-child(3),.list:nth-child(4),.list:nth-child(5),.list:nth-child(6){
+   
+    margin-right: 5%;
+} */
+/* .fixed-components {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Adjust z-index to ensure it's above the scrollable section */
+/* }
+#ac_div {
+    overflow-y: auto; /* Enable vertical scrolling */
+
+/* in AC page i want ac_div id element scroll */
+    #c_div {
+        position: relative; /* Ensure the position is relative */
+        max-height: 100vh; /* Set the maximum height */
+        overflow: hidden; /* Hide the scrollbar initially */
+        z-index: 1;
+      }
+      
+      #c_div::-webkit-scrollbar {
+        width: 0; /* Hide the scrollbar for WebKit (Chrome, Safari, etc.) */
+      }
+      
+      #c_div:hover {
+        overflow-y: auto; /* Show scrollbar on hover */
+      }
+
+      /* Inside your CSS file, add the following styles */
+
+
+      
+      /* Add this CSS class definition to your CSS file */
+/* Add this CSS class definition to your CSS file */
+ /* Add this CSS class definition to your CSS file */
+/* .details-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease; /* Adjust the duration and timing function as needed */
+  /* }
+  
+  .details-content.open {
+    max-height: 1000px; /* Change to a suitable value to accommodate the content */
+  /* } */ 
+
+
+  
+/*Modal design*/
+.custom-modal{
+    .ant-modal-content {
+      background-color: rgba(162, 237, 229, 0.732); 
+    }
+}
+
+.custom {
+    .ant-modal-content {
+      background-color: rgba(255, 255, 255, 0.832); 
+    }
+}
+  /* .text-pretty {
+    /* Add styles to ensure the text wraps automatically */
+    /* white-space: normal;
+    word-wrap: break-word;
+    text-align: center;
+    text-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
+  } */ 
+
+  .nav-c {
+    background-color: rgb(8, 8,80);
+  }
+
+  .ant-modal .ant-modal-content{
+    position: relative;
+  }
+
+  .ant-modal .ant-modal-content{
+    position: relative;
+  }
+  /* @media screen and (min-width: 300px) and (max-width: 550px){
+    .ant-modal-content {
+        width: 350px; 
+    position: absolute;   
+    top: 50%; 
+ 
+    left: 50%; 
+    
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    
+      }
+  }  */
+
+  /* design the slick slider of the spare details table in mobileview in (ac) */
+
+  .slick-next {
+    right: 10px;
+    background: rgb(243, 243, 243) !important;
+    border-radius: 7px;
+  }
+  
+  .slick-prev {
+    left: 10px;
+    z-index: 2;
+    background: rgb(243, 243, 240) !important;
+    
+  }
+  
+
+  .slick-prev:before,
+  .slick-next:before {
+    color: rgb(0, 0, 0) !important;
+  }
+
+  .custom-spinner .ant-spin-dot-item {
+    background-color: red; /* Change to your desired color */
+}
+  /* .scroll-element{
+    width: 500px;
+    height: 500px;
+    margin-bottom: 500px;
+    background-color: white;
+    transform: scale(0);
+    transition: all 0.5s;
+  }
+  .scroll-element.visible{
+    transform: scale(1);
+  } */
+  .drop:hover .drop-menu {
+    display: block;
+  }
+.nav{
+    position: sticky;
+    top:0;
+    background-color: rgba(8, 8, 67);
+}
+
+ul{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content:flex-end;
+    margin-right: 4%;
+    
+    
+}
+.logo{
+   display: flex;
+   align-items: center;
+   width:190px;
+   margin-left: 10px;
+   margin-right: 0%;
+}
+
+.list{
+    
+   margin-left: 2%;
+  
+} 
+
+.active{
+    background-color: rgb(22, 139, 185);
+    box-shadow: 1px 1px 1px 1px rgb(153, 222, 210);
+    border-radius: 5px;
+}
+.link:hover{
+    background-color: rgb(22, 139, 185);
+    box-shadow: 1px 1px 1px 1px rgb(153, 222, 210);
+    border-radius: 5px;
+}
+
+
+.login:hover{
+    box-shadow: 2px 3px 3px 2px rgb(193, 144, 54);
+    border-radius: 10%;
+    transition: all 0.5s ease;
+} 
+
+
+/* Responsive */
+/* .nav .menu{
+    display: none;
+    position: absolute;
+    top: 0.75rem;
+    right: 0.5rem;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 2.25rem;
+    height: 2rem;
+    
+    
+}
+
+.nav .menu span{
+    height: 0.4rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 0.2rem;
+    
+} */
+
+/* @media(max-width: 1050px){
+    .nav .menu{
+        display: flex;
+        
+    }
+    .nav .logo{
+      margin-top: 0.5rem;
+    }
+    .nav{
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 0.25rem;
+        background-color: rgb(8, 8, 67);
+        
+    }
+    .nav ul.open{
+        display: flex;
+
+    }
+    .list{
+        margin-left: 0%;
+    }
+    .nav ul .list{
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav ul .list .link{
+        margin: 0.2rem 0.5rem ;
+    }
+    .nav ul .list .link:hover{
+        width: 100%;
+        
+        
+       
+    }
+
+}
+
+     */
+.menu-icon{
+    display: none;
+}
+
+/* Hamburger and Cancel Icon Transitions */
+.hammenu-icon,
+.cancel-icon {
+  position: absolute;
+  font-size: 2rem;
+  background-color: rgb(8, 8, 67);
+  top: 10%;
+  right: 3%;
+}
+
+
+
+/* Animation for Hamburger Icon */
+@keyframes spin-hamburger {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}
+
+/* Animation for Cancel Icon */
+@keyframes spin-cancel {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+.animate-hamburger {
+  animation: spin-hamburger 0.3s ease;
+}
+
+.animate-cancel {
+  animation: spin-cancel 0.3s ease;
+}
+
+/* Navbar scroll mob view */
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+
+@media screen and (min-width: 300px) and (max-width: 500px){
+    /* .nav{
+        
+        display: flex;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+        
+        /* white-space: nowrap; */
+    /* } */ */
+   
+    .logo{
+        display: flex;
+        position: absolute;
+       
+    }
+    
+    /* .nav-items{
+        height: 100vh;
+        width: 100vh;    // this is takeover other div when mob - view then i cant do any function like click. after remove this it work properly.
+    } */
+    .desk{
+        display: none;
+    }
+    .mob{
+        position: absolute;
+        display: block;
+        background-color: rgba(8, 8, 67);
+        left: 0;
+        top: 100%;
+        animation: slideInFromTop 0.8s forwards; /* Apply the animation */
+        width: 100%;
+         
+    } 
+    ul{
+        /* display: flex;
+        flex-wrap: nowrap; */
+        display: block;
+        width: max-content;
+       
+        margin: 0%;
+        
+    }
+    .list{
+        text-align: center;
+        padding-bottom: 27px;
+        height: 80px;
+        transition: all 0.5s ease;
+       
+    }
+   
+    .login{
+        text-align: center;
+        transition: all 0.5s ease;
+    }
+
+    .menu-icon{
+        display: block;
+        position:absolute;
+        font-size: 3rem;
+        background-color: rgb(8, 8, 67);
+        top: 10%;
+        right: 3%;
+    }
+
+    
+}
+
+@media screen and (min-width: 500px) and (max-width: 768px){
+    .logo{
+        display: flex;
+        position: absolute;
+        
+        left: 10px;
+    }
+    .desk{
+        display: none;
+    }
+    .mob{
+        position: absolute;
+        display: block;
+        background-color: rgb(8, 8, 67);
+        left: 0;
+        top: 100%;
+        animation: slideInFromTop 0.8s forwards; /* Apply the animation */
+        width: 100%;
+    } 
+   
+    ul{
+        display: block;
+        width: max-content;
+        margin: 0%;
+    }
+    .list{
+        text-align: center;
+        padding-bottom: 27px;
+        height: 80px;
+        transition: all 0.5s ease;
+    }
+    
+    .login{
+        text-align: center;
+        transition: all 0.5s ease;
+    }
+
+    .menu-icon{
+        display: block;
+        position:absolute;
+        font-size: 3rem;
+        background-color: rgb(8, 8, 67);
+        top: 10%;
+        right: 3%;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media screen and (min-width: 768px) and (max-width: 1060px){
+    .logo{
+        display: flex;
+        position: absolute;
+        left: 10px;
+    }
+    .desk{
+        display: none;
+    }
+    .mob{
+        position: absolute;
+        display: block;
+        background-color: rgb(8, 8, 67);
+        left: 0;
+        top: 100%;
+        animation: slideInFromTop 0.8s forwards; /* Apply the animation */
+        
+        width: 100%;
+        
+        
+    } 
+   
+   
+    ul{
+        display: block;
+        
+       
+        margin: 0%;
+    }
+    .list{
+        text-align: center;
+        padding: 25px;
+        
+        transition: all 0.5s ease;
+    }
+    
+   
+    
+    .login{
+        text-align: center;
+        transition: all 0.5s ease;
+      
+    }
+
+    .menu-icon{
+        display: block;
+        position:absolute;
+        font-size: 3rem;
+        background-color: rgb(8, 8, 67);
+        top: 10%;
+        right: 3%;
+    }
+    
+      
+}
+
+/* Large devices (desktops, 1024px and up) */
+ @media screen and (min-width: 1060px) and  (max-width: 1600px){
+    logo{
+        display: flex;
+        position: absolute;
+        margin-left: 45px;
+    } 
+   
+} 
+
+/* Extra large devices (large desktops, 1440px and up) */
+
+  
+  
+  
