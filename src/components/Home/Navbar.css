@@ -1,19 +1,5 @@
 
 
-/* .list:nth-child(2),.list:nth-child(3),.list:nth-child(4),.list:nth-child(5),.list:nth-child(6){
-   
-    margin-right: 5%;
-} */
-/* .fixed-components {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000; /* Adjust z-index to ensure it's above the scrollable section */
-/* }
-#ac_div {
-    overflow-y: auto; /* Enable vertical scrolling */
-
 /* in AC page i want ac_div id element scroll */
     #c_div {
         position: relative; /* Ensure the position is relative */
@@ -33,22 +19,7 @@
       /* Inside your CSS file, add the following styles */
 
 
-      
-      /* Add this CSS class definition to your CSS file */
-/* Add this CSS class definition to your CSS file */
- /* Add this CSS class definition to your CSS file */
-/* .details-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease; /* Adjust the duration and timing function as needed */
-  /* }
-  
-  .details-content.open {
-    max-height: 1000px; /* Change to a suitable value to accommodate the content */
-  /* } */ 
 
-
-  
 /*Modal design*/
 .custom-modal{
     .ant-modal-content {
@@ -61,15 +32,7 @@
       background-color: rgba(255, 255, 255, 0.832); 
     }
 }
-  /* .text-pretty {
-    /* Add styles to ensure the text wraps automatically */
-    /* white-space: normal;
-    word-wrap: break-word;
-    text-align: center;
-    text-wrap: wrap;
-    display: flex;
-    flex-wrap: wrap;
-  } */ 
+ 
 
   .nav-c {
     background-color: rgb(8, 8,80);
@@ -82,21 +45,7 @@
   .ant-modal .ant-modal-content{
     position: relative;
   }
-  /* @media screen and (min-width: 300px) and (max-width: 550px){
-    .ant-modal-content {
-        width: 350px; 
-    position: absolute;   
-    top: 50%; 
  
-    left: 50%; 
-    
-    transform: translate(-50%, -50%);
-    overflow: hidden;
-    
-      }
-  }  */
-
-  /* design the slick slider of the spare details table in mobileview in (ac) */
 
   .slick-next {
     right: 10px;
@@ -120,17 +69,7 @@
   .custom-spinner .ant-spin-dot-item {
     background-color: red; /* Change to your desired color */
 }
-  /* .scroll-element{
-    width: 500px;
-    height: 500px;
-    margin-bottom: 500px;
-    background-color: white;
-    transform: scale(0);
-    transition: all 0.5s;
-  }
-  .scroll-element.visible{
-    transform: scale(1);
-  } */
+  
   .drop:hover .drop-menu {
     display: block;
   }
@@ -183,74 +122,7 @@ ul{
 } 
 
 
-/* Responsive */
-/* .nav .menu{
-    display: none;
-    position: absolute;
-    top: 0.75rem;
-    right: 0.5rem;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 2.25rem;
-    height: 2rem;
-    
-    
-}
 
-.nav .menu span{
-    height: 0.4rem;
-    width: 100%;
-    background-color: white;
-    border-radius: 0.2rem;
-    
-} */
-
-/* @media(max-width: 1050px){
-    .nav .menu{
-        display: flex;
-        
-    }
-    .nav .logo{
-      margin-top: 0.5rem;
-    }
-    .nav{
-        flex-direction: column;
-        align-items: start;
-    }
-
-    .nav ul {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        margin-bottom: 0.25rem;
-        background-color: rgb(8, 8, 67);
-        
-    }
-    .nav ul.open{
-        display: flex;
-
-    }
-    .list{
-        margin-left: 0%;
-    }
-    .nav ul .list{
-        width: 100%;
-        text-align: center;
-    }
-
-    .nav ul .list .link{
-        margin: 0.2rem 0.5rem ;
-    }
-    .nav ul .list .link:hover{
-        width: 100%;
-        
-        
-       
-    }
-
-}
-
-     */
 .menu-icon{
     display: none;
 }

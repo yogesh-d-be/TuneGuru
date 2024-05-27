@@ -39,40 +39,7 @@
     display: block;
   }
   
-  /* @media screen and (min-width: 300px) and (max-width: 1060px){
-    /* .dropdown-menu {
-      display: block;
-    /* } */
   
-   
-     /* .nav-item .ml-2 {
-      margin-left: 10px; /* Adjust as needed */
-    /* }  */
-   /* */ 
-  
-    /* .nav-item .fas {
-      position: absolute;
-      top: 50%;
-      right: 10px;
-      transform: translateY(-50%);
-    } */
-  
-    
-  /* }
-  
-  @media screen and (min-width: 1061px) {
-    .nav-item {
-      position: relative;
-    }
-  
-    .nav-item .ml-2 {
-      margin-left: 10px; /* Adjust as needed */
-    /* }
-    .nav-item .fas.fa-caret-up {
-        display: block;
-      }
-    
-  } */ 
 
   @media screen and (min-width: 300px) and (max-width: 500px){
     .dropdown-menu {
