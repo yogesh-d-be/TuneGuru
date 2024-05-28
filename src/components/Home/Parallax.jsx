@@ -8,6 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 function Parallax() {
   useEffect(() => {
     const animateElements = () => {
+      console.log("Animating elements...");
+  
       gsap.from(".im-bg", {
         scrollTrigger: {
           scrub: 1,
@@ -55,12 +57,17 @@ function Parallax() {
         },
       });
     };
-
+  
     animateElements(); // Call the animation function
-
+  
     // Refresh ScrollTrigger after dynamic changes
     ScrollTrigger.refresh();
+  
+    // Log a message when the useEffect hook runs
+    console.log("ScrollTrigger initialized.");
+  
   }, []); // Empty dependency array means this effect will run only once after the initial render
+  
 
   return (
     <>
