@@ -112,10 +112,10 @@
 // export default App;
 
 
-import React, { useContext, useState } from "react";
-import ReactDOM from 'react-dom';
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import React, { useContext } from "react";
+
+import { Routes, Route, Navigate } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Home/Navbar'
 import Home from "./components/Home/Home";
@@ -126,7 +126,7 @@ import Login from "./components/Register_Login/LoginModal";
 import Customer from "./components/Register_Login/Customer";
 import Mender from "./components/Register_Login/Mender";
 import Profile from './components/Profile/Profile';
-import LoginModal from "./components/Register_Login/LoginModal";
+
 
 import AC from "./components/Services/AC";
 import Fridge from "./components/Services/Fridge";
@@ -134,7 +134,7 @@ import Cartservices from "./components/Cart/Cartservices";
 import CartData from "./components/Cart/CartData";
 import EditProfile from "./components/Profile/EditProfile";
 import { StoreContext, StoreProvider } from "./components/StoreContext";
-import ThrowablesScene from "./components/ThrowableScenes";
+
 
 function App() {
   
