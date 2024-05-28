@@ -3,43 +3,53 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import "./Parallax.css";
 
+// Register ScrollTrigger plugin with GSAP
 gsap.registerPlugin(ScrollTrigger);
 
 function Parallax() {
   useEffect(() => {
     const animateElements = () => {
       console.log("Animating elements...");
-  
+
       gsap.from(".im-bg", {
         scrollTrigger: {
           scrub: 1,
+          onEnter: () => console.log("im-bg entered"),
         },
         scale: 1.4,
       });
+
       gsap.from(".im-bg-1", {
         scrollTrigger: {
           scrub: 1,
+          onEnter: () => console.log("im-bg-1 entered"),
         },
         scale: 1.4,
       });
+
       gsap.from(".door_l", {
         scrollTrigger: {
           scrub: 1,
+          onEnter: () => console.log("door_l entered"),
         },
         x: -200,
       });
+
       gsap.from(".door_r", {
         scrollTrigger: {
           scrub: 1,
+          onEnter: () => console.log("door_r entered"),
         },
         x: 200,
       });
+
       gsap.to(".comp", {
         scrollTrigger: {
           trigger: ".comp",
           start: "top top",
           end: "bottom top",
           scrub: 1,
+          onEnter: () => console.log("comp entered"),
           onUpdate: (self) => {
             const scrollDirection = self.direction;
             if (scrollDirection === 1) {
@@ -57,17 +67,21 @@ function Parallax() {
         },
       });
     };
-  
+
     animateElements(); // Call the animation function
-  
+
     // Refresh ScrollTrigger after dynamic changes
     ScrollTrigger.refresh();
-  
+
     // Log a message when the useEffect hook runs
     console.log("ScrollTrigger initialized.");
-  
+
+    // Adding event listener for loading all assets
+    window.addEventListener('load', () => {
+      console.log("All assets are loaded.");
+      ScrollTrigger.refresh();
+    });
   }, []); // Empty dependency array means this effect will run only once after the initial render
-  
 
   return (
     <>
