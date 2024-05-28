@@ -10,10 +10,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 function Parallax() {
   useEffect(() => {
+    console.log('GSAP:', gsap);
+    console.log('ScrollTrigger:', ScrollTrigger);
+  
     // Function to animate elements
     const animateElements = () => {
       console.log("Animating elements...");
-
+  
       gsap.from(".im-bg", {
         scrollTrigger: {
           scrub: 1,
@@ -21,7 +24,7 @@ function Parallax() {
         },
         scale: 1.4,
       });
-
+  
       gsap.from(".im-bg-1", {
         scrollTrigger: {
           scrub: 1,
@@ -29,7 +32,7 @@ function Parallax() {
         },
         scale: 1.4,
       });
-
+  
       gsap.from(".door_l", {
         scrollTrigger: {
           scrub: 1,
@@ -37,7 +40,7 @@ function Parallax() {
         },
         x: -200,
       });
-
+  
       gsap.from(".door_r", {
         scrollTrigger: {
           scrub: 1,
@@ -45,7 +48,7 @@ function Parallax() {
         },
         x: 200,
       });
-
+  
       gsap.to(".comp", {
         scrollTrigger: {
           trigger: ".comp",
@@ -70,26 +73,24 @@ function Parallax() {
         },
       });
     };
-
-   
+  
     const handleLoad = () => {
       console.log("All assets are loaded.");
       animateElements();
       ScrollTrigger.refresh();
     };
-
-   
+  
     if (document.readyState === "complete") {
       handleLoad();
     } else {
-      window.addEventListener('load', handleLoad);
+      window.addEventListener("load", handleLoad);
     }
-
-    
+  
     return () => {
-      window.removeEventListener('load', handleLoad);
+      window.removeEventListener("load", handleLoad);
     };
-  }, []); 
+  }, []);
+  
 
   return (
     <>
