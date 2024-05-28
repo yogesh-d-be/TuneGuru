@@ -512,9 +512,9 @@ const settings = {
           {dataTable.map((tab,i)=>(
             <div key={i} className=" text-black">
               <div  className="rounded-lg ">
-              <img id="table" src={tab.images} alt={tab.alt} className=" "/>
+              <img src={tab.images} alt={tab.alt} className=" "/>
               </div>
-              
+              <div id="table"></div>
             </div>
           ))
 

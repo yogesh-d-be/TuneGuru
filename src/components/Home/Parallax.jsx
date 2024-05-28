@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Parallax.css";
+
+
 
 // Register ScrollTrigger plugin with GSAP
 gsap.registerPlugin(ScrollTrigger);
@@ -69,25 +71,25 @@ function Parallax() {
       });
     };
 
-    // Check if all assets are fully loaded
+   
     const handleLoad = () => {
       console.log("All assets are loaded.");
       animateElements();
       ScrollTrigger.refresh();
     };
 
-    // If document is already loaded, call handleLoad
+   
     if (document.readyState === "complete") {
       handleLoad();
     } else {
       window.addEventListener('load', handleLoad);
     }
 
-    // Cleanup event listener on unmount
+    
     return () => {
       window.removeEventListener('load', handleLoad);
     };
-  }, []); // Empty dependency array means this effect will run only once after the initial render
+  }, []); 
 
   return (
     <>
