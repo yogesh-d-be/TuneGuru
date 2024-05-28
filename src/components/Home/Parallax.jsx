@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 function Parallax() {
   useEffect(() => {
+    // Function to animate elements
     const animateElements = () => {
       console.log("Animating elements...");
 
@@ -68,19 +69,24 @@ function Parallax() {
       });
     };
 
-    animateElements(); // Call the animation function
-
-    // Refresh ScrollTrigger after dynamic changes
-    ScrollTrigger.refresh();
-
-    // Log a message when the useEffect hook runs
-    console.log("ScrollTrigger initialized.");
-
-    // Adding event listener for loading all assets
-    window.addEventListener('load', () => {
+    // Check if all assets are fully loaded
+    const handleLoad = () => {
       console.log("All assets are loaded.");
+      animateElements();
       ScrollTrigger.refresh();
-    });
+    };
+
+    // If document is already loaded, call handleLoad
+    if (document.readyState === "complete") {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+    }
+
+    // Cleanup event listener on unmount
+    return () => {
+      window.removeEventListener('load', handleLoad);
+    };
   }, []); // Empty dependency array means this effect will run only once after the initial render
 
   return (
