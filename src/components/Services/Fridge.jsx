@@ -5,17 +5,13 @@ import {
   faAnglesDown,
   faSquareCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
-import { toast } from "react-toastify";
 import { StoreContext } from "../StoreContext";
 import ACI from "../../assests/images/AC.jpg";
 import ProfessionalTeamImage from "../../assests/images/professional-team.jpg";
 import LoginModal from "../Register_Login/LoginModal";
 import AC_RATE_CARD from "./Ac_Rate_Card";
-import { rateCards } from "./Rate_Card";
 import "../Home/Navbar.css";
 import Slider from "react-slick";
-import { faCircleChevronUp, faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -27,14 +23,13 @@ function Fridge({showCommon,showMotors, showElectrical, showParts, showService, 
   const URL = "http://localhost:3420";
 
   const {
-    openLoginModal,
+    
     closeLoginModal,
     loginModalOpen,
     cartItems,
     addToCart,
     removeFromCart,
-    AllServiceDetails,
-    updateCartItemQuantity,
+    
     serviceList
   } = useContext(StoreContext);
 

@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState, Suspense, lazy } from "react";
-import { Link, unstable_HistoryRouter, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import OtpModal from "../Register_Login/OtpModal";
-import Navbar from "./Navbar";
+import React, { useContext,  useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 import LoginModal from "../Register_Login/LoginModal";
 // import NavContext from "./NavContext";
 // import Navbar from "./Navbar";
@@ -33,7 +31,7 @@ import ThrowablesScene from "../ThrowableScenes";
 function Home() {
   
   // const history = unstable_HistoryRouter(); 
-  const {openLoginModal,closeLoginModal,loginModalOpen} = useContext(StoreContext)
+const {loginModalOpen, closeLoginModal} = useContext(StoreContext)
   const [serviceModalOpen, setServiceModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
 const navigate = useNavigate();

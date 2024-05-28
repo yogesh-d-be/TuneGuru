@@ -1,16 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {  useContext } from "react";
 // Image imports
 import Team from "../../assests/images/Technical team.jpg";
 import ProfessionalTeamImage from "../../assests/images/professional-team.jpg";
-// FontAwesomeIcon import
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// FontAwesome icons import
-import {
-  faAnglesUp,
-  faAnglesDown,
-  faSquareCheck,
-} from "@fortawesome/free-solid-svg-icons";
-import AC_RATE_CARD from "./Ac_Rate_Card";
 import "../Home/Navbar.css";
 import LoginModal from "../Register_Login/LoginModal";
 import { servicesAvailable } from "./AllServices";
@@ -20,7 +11,7 @@ import { StoreContext } from "../StoreContext";
 function Services() {
  
   // const [select, setSelect] = useState("")
-  const { openLoginModal, closeLoginModal, loginModalOpen } = useContext(StoreContext)
+  const { closeLoginModal, loginModalOpen } = useContext(StoreContext)
   const scrollToHello = () => {
     const helloDiv = document.getElementById("hello");
     if (helloDiv) {

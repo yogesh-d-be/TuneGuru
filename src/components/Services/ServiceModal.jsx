@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { Modal } from "antd";
 import "../Home/Navbar.css";
 import { Link } from "react-router-dom";

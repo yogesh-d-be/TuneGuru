@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import tuneImage from "../../assests/images/Tuneguru.jpeg";
 import { Link } from "react-router-dom";
 import LoginModal from "./LoginModal";
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { registerfunction } from "../../service/Api";
-import Navbar from "../Home/Navbar";
+
 
 import { StoreContext } from "../StoreContext";
 

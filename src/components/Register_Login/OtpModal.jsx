@@ -1,15 +1,15 @@
 import React from "react";
 import { Modal, Spin } from 'antd';
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import {  useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 import {userVerify} from '../../service/Api'
 
 function OtpModal({ isOpenOtp, closeOtpModal, email }) {
     const [otp,setOtp] = useState("");
     const [spiner,setSpiner] = useState(false);
 
-    const location =  useLocation();
+  
 
     const navigate = useNavigate();
 

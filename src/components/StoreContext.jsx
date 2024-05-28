@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext,  useEffect, useState } from 'react';
 // import { AllServiceDetails } from './Services/ServiceDetails';
-import { Await, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import {  useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import {API_URL}  from '../service/Helper';
 
@@ -15,7 +15,7 @@ export const StoreProvider = ({children}) =>{
   // const [serviceList, setServiceList] = useState({});
  
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const[token, setToken] = useState("")
+  
     const [serviceList, setServiceList] = useState([]);
     const navigate = useNavigate()
    
@@ -108,7 +108,7 @@ export const StoreProvider = ({children}) =>{
 
     const removeFromCart = async (itemId) => {
 
-      const service = serviceList.find(service => service.s_id === itemId);
+      serviceList.find(service => service.s_id === itemId);
 
         setCartItems((prev) => {
           const updatedItems = { ...prev };
@@ -146,7 +146,7 @@ export const StoreProvider = ({children}) =>{
       }
     
       const deleteCart = (itemId) =>{
-        const service = serviceList.find(service => service.s_id === itemId);
+        serviceList.find(service => service.s_id === itemId);
         setCartItems((prev)=>{
           const updateItems = {...prev};
           delete updateItems[itemId]
@@ -157,7 +157,7 @@ export const StoreProvider = ({children}) =>{
       
     
       const updateCartItemQuantity = (itemId, qty) => {
-        const service = serviceList.find(service => service.s_id === itemId);
+        serviceList.find(service => service.s_id === itemId);
         setCartItems(prevCartItems => ({
           ...prevCartItems,
           [itemId]: qty
