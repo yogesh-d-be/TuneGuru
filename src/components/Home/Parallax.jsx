@@ -81,12 +81,12 @@ function Parallax() {
         <img
           src={require("../../assests/images/Door left.png")}
           alt="Door left"
-          className="absolute top-0 left-0 w-2/5 h-screen object-cover pointer-events-none door_l mo:left-16"
+          className="absolute top-0 left-0 w-2/5 h-screen object-cover pointer-events-none door_l mo:left-0"
         />
         <img
           src={require("../../assests/images/Door right.png")}
           alt="Door right"
-          className="absolute top-0 right-0 w-2/5 h-screen object-cover pointer-events-none door_r mo:right-16"
+          className="absolute top-0 right-0 w-2/5 h-screen object-cover pointer-events-none door_r mo:right-0"
         />
       </section>
     </>
