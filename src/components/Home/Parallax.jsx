@@ -75,7 +75,7 @@ function Parallax() {
           alt="Service persons"
           className="im-bg-1 absolute top-0 left-50 w-full h-5/6 object-cover pointer-events-none mo:block ta:block ta:w-4/6 de:hidden des:hidden"
         />
-        <h2 className="relative text-8xl comp scroll-smooth font-bold bg-gradient-to-r from-cyan-500 via-pink-500 to-blue-900 inline-block text-transparent bg-clip-text font-outline-6 mo:text-6xl mo:font-outline-3 ta:text-7xl ta:font-outline-4">
+        <h2 className="relative text-8xl comp scroll-smooth font-bold text-black mo:text-6xl mo:font-outline-3 ta:text-7xl ta:font-outline-4">
           TUNEGURU
         </h2>
         <img
