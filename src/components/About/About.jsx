@@ -18,7 +18,7 @@ function About(){
 return(
 <>
 
-<div className="bg-[url('assests/images/AC1.png')]"></div>
+{/* <div className="bg-[url('assests/images/AC1.png')]"></div> */}
 
 </>
 )

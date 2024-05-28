@@ -1,60 +1,55 @@
 /* Throwables.css */
 .lqd-throwable-scene {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background-color: #f0f0f0; /* Light background to see the elements */
-    overflow: hidden;
-    cursor: pointer;
-  }
-  
-  .lqd-throwable-element {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: auto;
-    white-space: nowrap;
-    margin: 0;
-    cursor: grab;
-    
-    
-  }
-  
-  
-  .lqd-throwable-element:active {
-    cursor: grabbing;
-  }
-  
-  
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0f0f0; /* Light background to see the elements */
+  overflow: hidden;
+  cursor: pointer;
+}
 
-  .text-black {
-    color: black;
-    user-select: none;
-  }
-  
-  .py-0\/25em {
-    padding-top: 0.25em;
-    padding-bottom: 0.25em;
-  }
-  
-  .px-1\/5em {
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-  }
-  
-  .text-22 {
-    font-size: 22px;
-  }
-  
-  .leading-1\/5em {
-    line-height: 1.5em;
-  }
-  
-  .rounded-100 {
-    border-radius: 100px;
-  }
-  
-  .sm\:text-16 {
-    font-size: 16px;
-  }
-  
+.lqd-throwable-element {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+  white-space: nowrap;
+  margin: 0;
+  cursor: grab;
+}
+
+.lqd-throwable-element:active {
+  cursor: grabbing;
+}
+
+.text-black {
+  color: black;
+  user-select: none;
+}
+
+.py-025em {
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+.px-15em {
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+}
+
+.text-22 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.leading-15em {
+  line-height: 1.5em;
+}
+
+.rounded-100 {
+  border-radius: 100px;
+}
+
+.sm-text-16 {
+  font-size: 16px;
+}

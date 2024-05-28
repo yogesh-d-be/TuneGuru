@@ -106,8 +106,8 @@ ScrollTrigger.refresh();
             {/* <img src= {require('../../assests/Images/service.png')} alt="Home Service Person"  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-96 object-cover pointer-events-none serv_man"/> */}
             {/* <img src= {require('../../assests/Images/AC1.png')} alt="AC1" />
             <img src= {require('../../assests/Images/AC2.png')} alt="AC2" /> */}
-            <img src= {require('../../assests/images/Door left.png')} alt="Door left" className="absolute top-0 left-0 w-2/5 h-screen objcet-cover pointer-events-none door_l mo:left-20"/>
-            <img src= {require('../../assests/images/Door right.png')} alt="Door right" className="absolute top-0 right-0 w-2/5 h-screen objcet-cover pointer-events-none door_r mo:right-20"/>
+            <img src= {require('../../assests/images/Door left.png')} alt="Door left" className="absolute top-0 left-0 w-2/5 h-screen objcet-cover pointer-events-none door_l mo:left-16"/>
+            <img src= {require('../../assests/images/Door right.png')} alt="Door right" className="absolute top-0 right-0 w-2/5 h-screen objcet-cover pointer-events-none door_r mo:right-16"/>
         </section>
       
         

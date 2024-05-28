@@ -187,7 +187,7 @@ ul{
         -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
         
         /* white-space: nowrap; */
-    /* } */ */
+    /* } */ 
    
     .logo{
         display: flex;
