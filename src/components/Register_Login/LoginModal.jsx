@@ -8,7 +8,9 @@ import OtpModal from "./OtpModal";
 
 
 
+
 function LoginModal({ isOpen, closeModal}) {
+
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [loginSuccess, setLoginSuccess] = useState(false);
@@ -88,7 +90,7 @@ function LoginModal({ isOpen, closeModal}) {
                         className="border border-black rounded-lg pl-2 h-8  w-3/4 mt-8 ml-4"
                         onChange={(e) => setUserName(e.target.value)}
                     />
-                    <br />
+                    <br/>
                     <input
                         type="email"
                         name="email"
@@ -106,7 +108,7 @@ function LoginModal({ isOpen, closeModal}) {
                     <br />
                     <p>
                         <span className="ml-2">
-                            Create an Account? <Link to="/customer/register" className="text-blue-900 font-medium">SignUp</Link>
+                            Create an Account? <Link onClick={closeModalAndReset}  to="/customer/register" className="text-blue-900 font-medium">SignUp</Link>
                         </span>
                     </p>
                 </form>

@@ -14,13 +14,18 @@ function Parallax() {
     gsap.set(doorLRef.current, { x: -250 });
     gsap.set(doorRRef.current, { x: 250 });
     gsap.set(compRef.current, { y: 0, opacity: 1 });
+    gsap.set(imBgRef.current, { scale: 1.2 }); // Initial zoom-in for desktop image
+    gsap.set(imBg1Ref.current, { scale: 1.2 }); // Initial zoom-in for mobile image
 
     // Scroll event handler
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
 
-      // Animate the text and doors based on scroll position
+      // Calculate the scale value based on scroll position
+      const scaleValue = 1.2 - (scrollY / windowHeight) * 0.2;
+
+      // Animate the text, doors, and background image based on scroll position
       if (scrollY > windowHeight / 2) {
         gsap.to(compRef.current, { y: 300, opacity: 0, duration: 1, ease: "power1.out" });
         gsap.to(doorLRef.current, { x: 0, duration: 1, ease: "power1.inOut" });
@@ -30,6 +35,10 @@ function Parallax() {
         gsap.to(doorLRef.current, { x: -250, duration: 1, ease: "power1.inOut" });
         gsap.to(doorRRef.current, { x: 250, duration: 1, ease: "power1.inOut" });
       }
+
+      // Apply zoom effect to background images
+      gsap.to(imBgRef.current, { scale: scaleValue, duration: 0.5, ease: "power1.out" });
+      gsap.to(imBg1Ref.current, { scale: scaleValue, duration: 0.5, ease: "power1.out" });
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -61,13 +70,13 @@ function Parallax() {
       <img
         src={require("../../assests/images/Door left.png")}
         alt="Door left"
-        className="absolute top-0 left-[-8px] w-2/5 h-screen object-cover pointer-events-none door_l "
+        className="absolute top-0 left-[-8px] w-2/5 h-screen object-cover pointer-events-none door_l"
         ref={doorLRef}
       />
       <img
         src={require("../../assests/images/Door right.png")}
         alt="Door right"
-        className="absolute top-0 right-[-8px] w-2/5 h-screen object-cover pointer-events-none door_r "
+        className="absolute top-0 right-[-8px] w-2/5 h-screen object-cover pointer-events-none door_r"
         ref={doorRRef}
       />
     </section>

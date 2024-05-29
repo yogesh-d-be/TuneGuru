@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Modal, Spin } from 'antd';
 import { useState } from "react";
 import {  useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import {userVerify} from '../../service/Api'
+import { StoreContext } from "../StoreContext";
 
 function OtpModal({ isOpenOtp, closeOtpModal, email }) {
+
+    const {closeLoginModal} = useContext(StoreContext)
+
     const [otp,setOtp] = useState("");
     const [spiner,setSpiner] = useState(false);
 
@@ -49,6 +53,7 @@ function OtpModal({ isOpenOtp, closeOtpModal, email }) {
             finally {
                 setSpiner(false);
                 setTimeout(()=>{
+                    closeLoginModal();
                     closeOtpModal();
                 },3000)
                 

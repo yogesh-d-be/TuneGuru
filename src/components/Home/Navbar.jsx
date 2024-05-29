@@ -6,6 +6,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 
 import "./Navbar.css";
 import { StoreContext } from "../StoreContext";
+import { toast } from "react-toastify";
 
 
 function Navbar() {
@@ -45,7 +46,7 @@ const quantity = getTotalItems();
 
   const handleRegister = () =>{
     handleMenuOpen();
-    window.alert("You are already registered..!");
+    toast.info("You are already registered..!")
   }
   
 

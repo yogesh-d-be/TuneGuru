@@ -10,7 +10,8 @@ export const StoreContext = createContext();
 
 export const StoreProvider = ({children}) =>{
 
-    
+ 
+
   const [cartItems, setCartItems] = useState({});
   // const [serviceList, setServiceList] = useState({});
  
@@ -67,7 +68,7 @@ export const StoreProvider = ({children}) =>{
     const handleLogout = async () => {
         try {
           logout();
-          // setIsLoggedIn(false);
+          setIsLoggedIn(false);
           toast.success("Logout Successfully");
           navigate('/'); // Navigate to the home page after logout
         } catch (error) {
@@ -79,60 +80,74 @@ export const StoreProvider = ({children}) =>{
 
 
       const addToCart = async(itemId) => {
-        
-       
-          const service = serviceList.find(service => service.s_id === itemId);
-
-          if(!service) return;
-        // setCartItems((prev) => ({ ...prev, [itemId]:( prev[itemId] || 0) + qty })); //already clicked service
-  //       If the item is already in the cart, prevCartItems[itemId] will return its current quantity.
-  // If the item is not in the cart, prevCartItems[itemId] will be undefined.The || operator returns the right-hand operand (0 in this case) 
-  //if the left-hand operand (prevCartItems[itemId]) is falsy (i.e., undefined, null, 0, false, etc.).
-  // This ensures that when the item is not already in the cart (prevCartItems[itemId] is undefined), we start with a quantity of 0.
-        if(!cartItems[itemId]){
-          setCartItems((prev)=>({...prev,[itemId]:1}))
-        }
-        else{
-          setCartItems((prev)=>({...prev,[itemId]:prev[itemId]+1}))
-        }
+        try{
         const token = localStorage.getItem("userdbtoken");
         if(token){
-          await axios.post(API_URL+"/api/cart/add",{s_id:itemId},{
+          const response = await axios.post(API_URL+"/api/cart/add",{s_id:itemId},{
             headers: {
               Authorization: `Bearer ${token}`
           }
           })
           console.log("added")
+       
+       
+          
+
+          
+        // setCartItems((prev) => ({ ...prev, [itemId]:( prev[itemId] || 0) + qty })); //already clicked service
+  //       If the item is already in the cart, prevCartItems[itemId] will return its current quantity.
+  // If the item is not in the cart, prevCartItems[itemId] will be undefined.The || operator returns the right-hand operand (0 in this case) 
+  //if the left-hand operand (prevCartItems[itemId]) is falsy (i.e., undefined, null, 0, false, etc.).
+  // This ensures that when the item is not already in the cart (prevCartItems[itemId] is undefined), we start with a quantity of 0.
+        if(response.data.success){
+          setCartItems((prev)=>({
+            ...prev, [itemId]:(prev[itemId] || 0)+1
+          }))
+          toast.success("Added to cart");
         }
+        else{
+          toast.error(response.data.message)
+        }
+      }}
+      catch(error){
+        toast.error("error adding to cart")
+      }
       }
 
     const removeFromCart = async (itemId) => {
 
-      serviceList.find(service => service.s_id === itemId);
-
-        setCartItems((prev) => {
-          const updatedItems = { ...prev };
-          if (updatedItems[itemId] > 1) {
-            updatedItems[itemId] -= 1;
-          } else {
-            delete updatedItems[itemId];
-          }
-          return updatedItems;
-          // const newCartItems = { ...prevCartItems };
-          // delete newCartItems[itemId];
-          // return newCartItems;
-        });
+      try{
         const token = localStorage.getItem("userdbtoken");
         if(token){
-          await axios.post(API_URL+"/api/cart/remove",{s_id:itemId},{
+          const response = await axios.post(API_URL+"/api/cart/remove",{s_id:itemId},{
             headers: {
               Authorization: `Bearer ${token}`
           }
-          })
+        })
           console.log("removed")
+          if(response.data.success){
+          setCartItems((prev) => {
+            const updatedItems = { ...prev };
+            if (updatedItems[itemId] > 1) {
+              updatedItems[itemId] -= 1;
+            } else {
+              delete updatedItems[itemId];
+            }
+            return updatedItems;
+           
+          })
+          toast.success("Removed from cart")
         }
+        else{
+          toast.error(response.data.message)
+        }
+        
+      }}
+      catch(error){
+          toast.error("Error removing from cart")
+      }
          
-      };
+      }
 
 
       const loadCartData = async(token)=>{   
@@ -145,14 +160,36 @@ export const StoreProvider = ({children}) =>{
           setCartItems(response.data.cartData)
       }
     
-      const deleteCart = (itemId) =>{
-        serviceList.find(service => service.s_id === itemId);
-        setCartItems((prev)=>{
-          const updateItems = {...prev};
-          delete updateItems[itemId]
-    
-          return updateItems
-        })
+      const deleteFromCart = async(itemId) =>{
+
+        try{
+          const token = localStorage.getItem("userdbtoken");
+          if(token){
+            const response = await axios.post(API_URL+"/api/cart/delete",{s_id:itemId},{
+              headers: {
+                Authorization: `Bearer ${token}`
+            }
+          })
+            console.log("deleted")
+            if(response.data.success){
+              setCartItems(prev => {
+                const updatedItems = { ...prev };
+                delete updatedItems[itemId];
+                return updatedItems;
+     
+            })
+            toast.success("Deleted from cart")
+          }
+          else{
+            toast.error(response.data.message)
+          }
+          
+        }}
+        catch(error){
+            toast.error("Error Deleted from cart")
+        }
+     
+       
       }
       
     
@@ -235,8 +272,9 @@ export const StoreProvider = ({children}) =>{
         <StoreContext.Provider value={{
             isLoggedIn, setIsLoggedIn, logout, handleLogout,openLoginModal, closeLoginModal, loginModalOpen,
             cartItems, addToCart, removeFromCart, updateCartItemQuantity,
-            getTotalItems, getGrandTotalPrice, deleteCart, serviceList, setServiceList, fetchServiceList
+            getTotalItems, getGrandTotalPrice, deleteFromCart, serviceList, setServiceList, fetchServiceList,
         }}>
+
             {children}
         </StoreContext.Provider>
     )
