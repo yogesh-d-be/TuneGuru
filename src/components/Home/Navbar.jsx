@@ -104,9 +104,7 @@ else {
   }
 };
 
-useEffect(()=>{
 
-},[isLoggedIn])
   return (
     <>
       <div className="relative flex justify-between h-20 items-center nav z-20">

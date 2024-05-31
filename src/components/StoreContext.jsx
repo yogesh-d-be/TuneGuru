@@ -10,8 +10,40 @@ export const StoreContext = createContext();
 
 export const StoreProvider = ({children}) =>{
 
- 
 
+  const apiInstance = axios.create({
+    baseURL: API_URL
+  });
+
+  apiInstance.interceptors.request.use(
+    (config)=>{
+      const authToken = localStorage.getItem("userdbtoken");
+      config.headers.Authorization  = `Bearer ${authToken}`
+      return config;
+    },
+    (error)=>{
+      console.error("Request Error",error);
+      return Promise.reject(error)
+    }
+  );
+
+  //Response
+
+  apiInstance.interceptors.response.use(
+    (response)=>{
+      return response;
+    },
+    (error)=>{
+      
+      if(error.response && error.response.data.Message === "Token expired"){
+        localStorage.clear();
+        window.location.href = '/'
+        toast.info("Your session expired, please log in again.");
+      }
+      return Promise.reject(error)
+    }
+  )
+  
   const [cartItems, setCartItems] = useState({});
   // const [serviceList, setServiceList] = useState({});
  
@@ -77,129 +109,128 @@ export const StoreProvider = ({children}) =>{
         }
       };
 
-
+      	
 
       const addToCart = async(itemId) => {
-        try{
-        const token = localStorage.getItem("userdbtoken");
-        if(token){
-          const response = await axios.post(API_URL+"/api/cart/add",{s_id:itemId},{
-            headers: {
-              Authorization: `Bearer ${token}`
-          }
-          })
-          console.log("added")
-       
-       
-          
+        
+        if(!cartItems[itemId]){
+          setCartItems((prev)=>({...prev,[itemId]:1}))
+        }
+        else{
+          setCartItems((prev)=>({...prev,[itemId]:prev[itemId]+1}))
+        }
+          // const service = serviceList.find(service => service.s_id === itemId);
 
-          
+          // if(!service) return;
         // setCartItems((prev) => ({ ...prev, [itemId]:( prev[itemId] || 0) + qty })); //already clicked service
   //       If the item is already in the cart, prevCartItems[itemId] will return its current quantity.
   // If the item is not in the cart, prevCartItems[itemId] will be undefined.The || operator returns the right-hand operand (0 in this case) 
   //if the left-hand operand (prevCartItems[itemId]) is falsy (i.e., undefined, null, 0, false, etc.).
   // This ensures that when the item is not already in the cart (prevCartItems[itemId] is undefined), we start with a quantity of 0.
-        if(response.data.success){
-          setCartItems((prev)=>({
-            ...prev, [itemId]:(prev[itemId] || 0)+1
-          }))
-          toast.success("Added to cart");
+      
+        const token = localStorage.getItem("userdbtoken");
+        if(token){
+          await apiInstance.post("/api/cart/add",{s_id:itemId})
+          console.log("added")
         }
         else{
-          toast.error(response.data.message)
+          localStorage.setItem("cartItems",JSON.stringify({...cartItems, [itemId]: (cartItems[itemId] || 0)+1}))
         }
-      }}
-      catch(error){
-        toast.error("error adding to cart")
-      }
       }
 
     const removeFromCart = async (itemId) => {
 
-      try{
+      // serviceList.find(service => service.s_id === itemId);
+
+        setCartItems((prev) => {
+          const updatedItems = { ...prev };
+          if (updatedItems[itemId] > 1) {
+            updatedItems[itemId] -= 1;
+          } else {
+            delete updatedItems[itemId];
+          }
+          return updatedItems;
+          // const newCartItems = { ...prevCartItems };
+          // delete newCartItems[itemId];
+          // return newCartItems;
+        });
         const token = localStorage.getItem("userdbtoken");
         if(token){
-          const response = await axios.post(API_URL+"/api/cart/remove",{s_id:itemId},{
-            headers: {
-              Authorization: `Bearer ${token}`
-          }
-        })
+          await apiInstance.post("/api/cart/remove",{s_id:itemId})
           console.log("removed")
-          if(response.data.success){
-          setCartItems((prev) => {
-            const updatedItems = { ...prev };
-            if (updatedItems[itemId] > 1) {
-              updatedItems[itemId] -= 1;
-            } else {
-              delete updatedItems[itemId];
-            }
-            return updatedItems;
-           
-          })
-          toast.success("Removed from cart")
         }
         else{
-          toast.error(response.data.message)
-        }
-        
-      }}
-      catch(error){
-          toast.error("Error removing from cart")
-      }
-         
-      }
-
-
-      const loadCartData = async(token)=>{   
-        // const token = localStorage.getItem("userdbtoken");        //Dont have to send any data, so put empty object
-        const response = await axios.post(API_URL+"/api/cart/get",{},{  
-          headers: {
-              Authorization :`Bearer ${token}`
-          }
-        })
-          setCartItems(response.data.cartData)
-      }
-    
-      const deleteFromCart = async(itemId) =>{
-
-        try{
-          const token = localStorage.getItem("userdbtoken");
-          if(token){
-            const response = await axios.post(API_URL+"/api/cart/delete",{s_id:itemId},{
-              headers: {
-                Authorization: `Bearer ${token}`
-            }
-          })
-            console.log("deleted")
-            if(response.data.success){
-              setCartItems(prev => {
-                const updatedItems = { ...prev };
-                delete updatedItems[itemId];
-                return updatedItems;
-     
-            })
-            toast.success("Deleted from cart")
-          }
-          else{
-            toast.error(response.data.message)
-          }
           
-        }}
-        catch(error){
-            toast.error("Error Deleted from cart")
+          const localCartItems = { ...cartItems };
+          if (localCartItems[itemId] > 1) {
+              localCartItems[itemId] -= 1;
+          } else {
+              delete localCartItems[itemId];
+          }
+          localStorage.setItem("cartItems", JSON.stringify(localCartItems))
         }
-     
+      };
+
+      
+      const loadCartData = async (token) => {
+        try {
+          const response = await apiInstance.post("/api/cart/get", {}, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          setCartItems(response.data.cartData);
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+        
+            localStorage.clear(); 
+            navigate("/")
+          } else {
        
-      }
+            console.error("Error loading cart data:", error);
+           
+          }
+        }
+      };
       
     
-      const updateCartItemQuantity = (itemId, qty) => {
-        serviceList.find(service => service.s_id === itemId);
-        setCartItems(prevCartItems => ({
-          ...prevCartItems,
-          [itemId]: qty
-        }));
+      const deleteFromCart = async(itemId) =>{
+       
+        setCartItems((prev)=>{
+          const updatedItems = {...prev};
+          delete updatedItems[itemId]
+    
+          return updatedItems
+        })
+        const token = localStorage.getItem("userdbtoken")
+        if(token){
+           await apiInstance.post("/api/cart/delete",{s_id:itemId})
+          console.log("deleted")
+        }
+        else{
+          const localCartItems = { ...cartItems };
+        delete localCartItems[itemId];
+        localStorage.setItem("cartItems", JSON.stringify(localCartItems));
+        }
+      }
+      
+      const syncLocalCartToServer = async (localCartItems) => {
+        const token = localStorage.getItem("userdbtoken");
+        if (token) {
+          for (const [itemId, qty] of Object.entries(localCartItems)) {
+            for (let i = 0; i < qty; i++) {
+              await apiInstance.post("/api/cart/add", { s_id: itemId });
+            }
+          }
+        }
       };
+      // const updateCartItemQuantity = (itemId, qty) => {
+      //   serviceList.find(service => service.s_id === itemId);
+      //   setCartItems(prevCartItems => ({
+      //     ...prevCartItems,
+      //     [itemId]: qty
+      //   }));
+      // };
     
       const getTotalItems = () => {
         return Object.values(cartItems).reduce((total, qty) => total + qty, 0);
@@ -222,7 +253,7 @@ export const StoreProvider = ({children}) =>{
     //   setServiceList(response.data.data)
     // }
     const fetchServiceList = async () => {
-      const response = await axios.get(API_URL + "/api/homeservice/list");
+      const response = await apiInstance.get("/api/homeservice/list");
   
       if (response.data.success) {
         setServiceList(response.data.data);
@@ -236,45 +267,47 @@ export const StoreProvider = ({children}) =>{
     useEffect(() => {
       async function loadData() {
         await fetchServiceList();
+        const localCartItems = JSON.parse(localStorage.getItem("cartItems") || "{}");
   
         const token = localStorage.getItem("userdbtoken");
         if (token) {
           setIsLoggedIn(true);
-          await loadCartData (localStorage.getItem("userdbtoken"))
+          await loadCartData (token)
+          await syncLocalCartToServer(localCartItems);
         } else {
           setIsLoggedIn(false);
+          setCartItems(localCartItems);
         }
   
-        const handleStorageChange = (event) => {
-          if (event.key === "userdbtoken") {
-            if (event.newValue) {
-              setIsLoggedIn(true);
-            } else {
-              setIsLoggedIn(false);
-              toast.info("Login expired, please log in again.");
-            }
-          }
-        };
+        // const handleStorageChange = (event) => {
+        //   if (event.key === "userdbtoken") {
+        //     if (event.newValue) {
+        //       setIsLoggedIn(true);
+        //     } else {
+        //       setIsLoggedIn(false);
+        //       toast.info("Login expired, please log in again.");
+        //     }
+        //   }
+        // };
   
-        window.addEventListener("storage", handleStorageChange);
+        // window.addEventListener("storage", handleStorageChange);
   
-        return () => {
-          window.removeEventListener("storage", handleStorageChange);
-        };
+        // return () => {
+        //   window.removeEventListener("storage", handleStorageChange);
+        // };
 
         
       }
   
       loadData();
-    }, []);
+    }, [fetchServiceList,loadCartData,syncLocalCartToServer]);
 
     return(
         <StoreContext.Provider value={{
             isLoggedIn, setIsLoggedIn, logout, handleLogout,openLoginModal, closeLoginModal, loginModalOpen,
-            cartItems, addToCart, removeFromCart, updateCartItemQuantity,
-            getTotalItems, getGrandTotalPrice, deleteFromCart, serviceList, setServiceList, fetchServiceList,
+            cartItems, addToCart, removeFromCart, 
+            getTotalItems, getGrandTotalPrice, deleteFromCart, serviceList, setServiceList, fetchServiceList
         }}>
-
             {children}
         </StoreContext.Provider>
     )
