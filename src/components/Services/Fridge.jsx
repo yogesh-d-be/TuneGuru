@@ -20,7 +20,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 
 
-function Fridge({showCommon,showMotors, showElectrical, showParts, showService, setShowCommon, setShowElectrical, setShowParts, setShowMotors, setShowService}) {
+function Fridge() {
   const URL = "http://localhost:3420";
 
   const {

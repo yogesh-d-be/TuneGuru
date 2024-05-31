@@ -127,7 +127,7 @@ function Cartservices() {
             <p className="ml-6 mb-4 font-semibold">If you have a promo code, Enter it here</p>
             <div className="ml-6 flex flex-col w-[85%] de:flex-row">
               <input type="text" placeholder="Promo code" className="pl-2 mb-4 mt-4 border-none outline-none rounded-md de:w-[75%] de:h-[44px] de:rounded-l-lg de:rounded-none" />
-              <button className="w-[30%] mb-4 bg-blue-900 py-2 px-1 text-white rounded-md text-sm des_xl:w-[50%] des_search:w-[50%] de:rounded-none de:rounded-r-lg de:h-[44px]">Apply</button>
+              <button className="w-[30%] mb-4 bg-blue-900 py-2 px-1 text-white rounded-md text-sm des_xl:w-[50%] des_search:w-[50%] de:rounded-none de:rounded-r-lg de:mt-4 de:h-[44px]">Apply</button>
             </div>
           </div>
           <div className="bg-gray-300 ml-20 px-1 pt-6 items-center drop-shadow-2xl rounded-lg h-fit mt-4 mb-4 de:w-[80%] de:ml-12 de:mt-8 ta:w-[90%] ta:ml-8 ta:mt-8 mo:w-[90%] mo:ml-[5%] mo:mt-8">
