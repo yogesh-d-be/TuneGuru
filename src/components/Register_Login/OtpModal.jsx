@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Modal, Spin } from 'antd';
 import { useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import {  useNavigate, redirect } from "react-router-dom";
 import { toast } from 'react-toastify';
 import {userVerify} from '../../service/Api'
 import { StoreContext } from "../StoreContext";
@@ -12,7 +12,7 @@ function OtpModal({ isOpenOtp, closeOtpModal, email }) {
 
     const [otp,setOtp] = useState("");
     const [spiner,setSpiner] = useState(false);
-
+    
   
 
     const navigate = useNavigate();
@@ -35,14 +35,20 @@ function OtpModal({ isOpenOtp, closeOtpModal, email }) {
     
             try {
                 const response = await userVerify(data);
-                
                 if (response && response.status === 200) {
                     // setSpiner(false)
                     localStorage.setItem("userdbtoken", response.data.userToken);
                     toast.success(response.data.message);
+                    if(window.location.pathname === "/customer/register"){
                     setTimeout(() => {
-                        navigate("/");
+                        window.location.href="/"
                     }, 5000);
+                }
+                    else{
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 5000);
+                }
                 } else {
                     toast.error(response.response.data.error || "An error occurred");
                 }

@@ -123,7 +123,7 @@ const ThrowablesScene = () => {
         width: sceneRef.current.offsetWidth,
         height: sceneRef.current.offsetHeight,
         wireframes: false,
-        background: '#f0f0f0',
+        background: 'gray',
       },
     });
 
@@ -193,7 +193,7 @@ const ThrowablesScene = () => {
     <div
       ref={sceneRef}
       className="throwables-scene"
-      style={{ width: '100%', height: '100vh', position: 'relative' }}
+      style={{ width: '100%', height: '90vh', position: 'relative', overflow: 'hidden' }}
       onTouchStart={(event) => event.preventDefault()} // Prevent scrolling on touch devices
     >
       {elements.map((element, index) => (

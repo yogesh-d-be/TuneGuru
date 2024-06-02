@@ -1,57 +1,53 @@
 import React from "react";
+// import { API_URL } from "../../service/Helper";
+// import { StoreContext } from "../StoreContext";
+// import Cartservices from "./Cartservices";
 
-function CartData() {
-    const Data = [
-        {
-            type:"text",
-            placeholder:"First Name"
-        },
-        {
-            type:"text",
-            placeholder:"Last Name"
-        },
-        {
-            type:"email",
-            placeholder:"Email Address"
-        },
-        {
-            type:"text",
-            placeholder:"Street"
-        },
-        {
-            type:"text",
-            placeholder:"City"
-        },
-        {
-            type:"text",
-            placeholder:"State"
-        },
-        {
-            type:"text",
-            placeholder:"Pincode"
-        },
-        {
-            type:"text",
-            placeholder:"Mobile Number"
-        },
-        
-    ]
+ function CartData() {
+//   // const { token, cartItems, serviceList } = useContext(StoreContext);
+
+//   const [userData, setUserData] = useState({
+//     firstName: "",
+//     lastName: "",
+//     email: "",
+//     street: "",
+//     city: "",
+//     state: "",
+//     pincode: "",
+//     mobileNumber: ""
+//   });
+
+//   const onChangeHandle = (event) => {
+//     const { name, value } = event.target;
+//     setUserData((prevUserData) => ({ ...prevUserData, [name]: value }));
+//   };
+
+//   const placeBooking = async (event) => {
+//     event.preventDefault();
+//     let bookingServices = [];
+//     serviceList.forEach((service) => {
+//       if (cartItems[service.s_id] > 0) {
+//         let serviceInfo = { ...service, quantity: cartItems[service.s_id] };
+//         bookingServices.push(serviceInfo);
+//       }
+//     });
+//     console.log(bookingServices);
+//   };
+
+//   const Data = [
+//     { type: "text", placeholder: "First Name", name: "firstName", value: userData.firstName },
+//     { type: "text", placeholder: "Last Name", name: "lastName", value: userData.lastName },
+//     { type: "email", placeholder: "Email Address", name: "email", value: userData.email },
+//     { type: "text", placeholder: "Street", name: "street", value: userData.street },
+//     { type: "text", placeholder: "City", name: "city", value: userData.city },
+//     { type: "text", placeholder: "State", name: "state", value: userData.state },
+//     { type: "text", placeholder: "Pincode", name: "pincode", value: userData.pincode },
+//     { type: "text", placeholder: "Mobile Number", name: "mobileNumber", value: userData.mobileNumber },
+//   ];
+
   return (
-    <>
-      <div className="flex flex-row flex-wrap mb-6 ">
-        <form className=" mo:w-full  mo:bg-gray-300 mo:py-6 mo:rounded-lg" action="">
-            <h1 className="font-semibold text-xl ml-6 mo:text-lg">Enter Your Details</h1>
-            <div className="flex flex-wrap mt-6 pb-6 mo:flex mo:flex-col mo:mt-3">
-            {Data.map((data,i)=>(
-          <div key={i} className="w-1/2 px-2 mo:w-full   mo:px-6">
-            <input type={data.type} className="w-[90%] mt-4 h-[38px] mo:w-full rounded-lg   " placeholder={data.placeholder} />
-          </div>
-          ))}
-          </div>
-        </form>
-      </div>
-    </>
+  <></>
   );
-}
+ }
 
 export default CartData;

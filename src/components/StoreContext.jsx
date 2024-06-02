@@ -13,8 +13,8 @@ export const StoreProvider = ({ children }) => {
 
   apiInstance.interceptors.request.use(
     (config) => {
-      const authToken = localStorage.getItem("userdbtoken");
-      config.headers.Authorization = `Bearer ${authToken}`;
+      const token = localStorage.getItem("userdbtoken");
+      config.headers.Authorization = `Bearer ${token}`;
       return config;
     },
     (error) => {
@@ -38,8 +38,10 @@ export const StoreProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [serviceList, setServiceList] = useState([]);
+  const [userId, setUserId] = useState(null); // Add userId state
   const navigate = useNavigate();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+
 
   const openLoginModal = () => {
     setLoginModalOpen(true);
@@ -53,6 +55,7 @@ export const StoreProvider = ({ children }) => {
     localStorage.removeItem("userdbtoken");
     setIsLoggedIn(false);
     setCartItems({});
+    setUserId(null); // Clear userId on logout
   };
 
   const handleLogout = async () => {
@@ -138,8 +141,6 @@ export const StoreProvider = ({ children }) => {
     }, 0);
   };
 
-
-  //it sync local storage before login cart item to after login cartitem
   const syncLocalCartToServer = async (localCartItems) => {
     const token = localStorage.getItem("userdbtoken");
     if (token) {
@@ -155,9 +156,9 @@ export const StoreProvider = ({ children }) => {
     }
   };
 
-
-
+ 
   useEffect(() => {
+
     const fetchServiceList = async () => {
       const response = await apiInstance.get("/api/homeservice/list");
       if (response.data.success) {
@@ -187,12 +188,26 @@ export const StoreProvider = ({ children }) => {
       }
     };
 
+    const loadUserDetails = async (token) => {
+      try {
+        const response = await apiInstance.get("/customer/get", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setUserId(response.data.data._id); // Correctly set userId
+      } catch (error) {
+        console.error("Error loading user details:", error);
+      }
+    };
+
     const loadData = async () => {
       await fetchServiceList();
 
       const token = localStorage.getItem("userdbtoken");
       if (token) {
         setIsLoggedIn(true);
+        await loadUserDetails(token); // Load user details including userId
         const localCartItems = JSON.parse(localStorage.getItem("cartItems") || "{}");
         await syncLocalCartToServer(localCartItems);
         await loadCartData(token);
@@ -213,7 +228,7 @@ export const StoreProvider = ({ children }) => {
       openLoginModal, closeLoginModal, loginModalOpen,
       cartItems, addToCart, removeFromCart,
       getTotalItems, getGrandTotalPrice, deleteFromCart,
-      serviceList, setServiceList
+      serviceList, setServiceList, apiInstance, userId
     }}>
       {children}
     </StoreContext.Provider>

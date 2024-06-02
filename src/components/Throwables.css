@@ -2,10 +2,11 @@
 .lqd-throwable-scene {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: 60vh;
   background-color: #f0f0f0; /* Light background to see the elements */
   overflow: hidden;
   cursor: pointer;
+  
 }
 
 .lqd-throwable-element {
@@ -16,6 +17,7 @@
   white-space: nowrap;
   margin: 0;
   cursor: grab;
+  
 }
 
 .lqd-throwable-element:active {
