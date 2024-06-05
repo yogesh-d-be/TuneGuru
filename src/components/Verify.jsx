@@ -4,7 +4,7 @@ import { API_URL } from "../service/Helper";
 import axios from "axios";
 
 function Verify(){
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const success = searchParams.get("success")
     const bookingId = searchParams.get("bookingId")
     const navigate = useNavigate()
@@ -21,6 +21,7 @@ function Verify(){
 
     useEffect(()=>{
         verifyPayment();
+        // eslint-disable-next-line
     },[])
 
     return(
