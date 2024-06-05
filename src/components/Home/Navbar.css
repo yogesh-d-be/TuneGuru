@@ -18,6 +18,39 @@
 
       /* Inside your CSS file, add the following styles */
 
+     
+      /* .timing-dropdown {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .timing-dropdown .ant-dropdown-menu-submenu-title {
+        display: block;
+      }
+      
+      .timing-dropdown .ant-dropdown-menu-item {
+        padding-left: 24px; /* Adjust as needed */
+      /* } */ 
+
+      /* In cartservices page timepicker antd dropdown model shows in row above 1060px because of display:flex. */
+    
+/* Override flex display for dropdown menu items to display in a column */
+:where(.css-dev-only-do-not-override-1kuana8)[class^="ant-dropdown"], 
+:where(.css-dev-only-do-not-override-1kuana8)[class*=" ant-dropdown"] ul {
+  flex-direction: column !important; /* Change flex direction to column */
+  align-items: flex-start !important; /* Align items to the start (left) */
+  
+  
+}
+
+/* In cartservices page datepicker needconfirm ok button touches today button in mobileview */
+:where(.css-dev-only-do-not-override-1kuana8).ant-btn-sm {
+
+  margin-left: 10px;
+}
+
+
+
 
 
 /*Modal design*/

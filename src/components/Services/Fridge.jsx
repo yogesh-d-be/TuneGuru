@@ -14,6 +14,7 @@ import "../Home/Navbar.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { API_URL } from "../../service/Helper";
 
 
 
@@ -21,7 +22,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 
 function Fridge() {
-  const URL = "http://localhost:3420";
+ 
 
   const {
     
@@ -215,7 +216,7 @@ function Fridge() {
                 {detailShow === service.serviceName && (
                     <div className="mt-6 ml-14 flex flex-col transition-height duration-300 ease-in-out ta:m-auto ta:mt-3 mo:m-auto mo:mt-3">
                         <img
-                            src={`${URL}/images/${service.image}`}
+                            src={`${API_URL}/images/${service.image}`}
                             alt="AC clean"
                             className="w-[40%] mx-auto ta:w-[40%]"
                         />

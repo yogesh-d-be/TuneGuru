@@ -134,6 +134,7 @@ import Cartservices from "./components/Cart/Cartservices";
 import CartData from "./components/Cart/CartData";
 import EditProfile from "./components/Profile/EditProfile";
 import { StoreContext, StoreProvider } from "./components/StoreContext";
+import Verify from "./components/Verify";
 
 
 function App() {
@@ -157,7 +158,7 @@ function App() {
           <Route path='/fridge_repair' element={<Fridge />}/>
           <Route path='/cart' element={<Cartservices />}/>
           <Route path='/order' element={<PrivateRoute><CartData /></PrivateRoute>}/>
-          
+          <Route path="/verify" element={<Verify/>}/>
         </Routes>
         
       </div>

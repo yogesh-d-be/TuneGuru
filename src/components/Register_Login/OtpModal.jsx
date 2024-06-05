@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Modal, Spin } from 'antd';
 import { useState } from "react";
-import {  useNavigate, redirect } from "react-router-dom";
 import { toast } from 'react-toastify';
 import {userVerify} from '../../service/Api'
 import { StoreContext } from "../StoreContext";
@@ -15,7 +14,6 @@ function OtpModal({ isOpenOtp, closeOtpModal, email }) {
     
   
 
-    const navigate = useNavigate();
 
     const loginUser = async (e) => {
         e.preventDefault();
