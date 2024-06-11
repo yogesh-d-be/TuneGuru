@@ -7,6 +7,7 @@ import { API_URL } from '../service/Helper';
 export const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
+  
   const apiInstance = axios.create({
     baseURL: API_URL
   });
@@ -127,6 +128,15 @@ export const StoreProvider = ({ children }) => {
     }
   };
 
+  const clearCart = () => {
+    console.log("Clearing cart data...");
+    // Iterate over each item in cartItems and delete them from the cart
+    Object.keys(cartItems).forEach(itemId => {
+      deleteFromCart(itemId);
+    });
+    console.log("Cart data cleared.");
+  };
+
   const getTotalItems = () => {
     return Object.values(cartItems).reduce((total, qty) => total + qty, 0);
   };
@@ -228,7 +238,7 @@ export const StoreProvider = ({ children }) => {
       openLoginModal, closeLoginModal, loginModalOpen,
       cartItems, addToCart, removeFromCart,
       getTotalItems, getGrandTotalPrice, deleteFromCart,
-      serviceList, setServiceList, apiInstance, userId
+      serviceList, setServiceList, apiInstance, userId,clearCart
     }}>
       {children}
     </StoreContext.Provider>

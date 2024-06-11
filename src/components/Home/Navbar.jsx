@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdCancel } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 
@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 function Navbar() {
 const {isLoggedIn,  handleLogout, openLoginModal, getTotalItems} = useContext(StoreContext)
 
-  
+  const navigate = useNavigate()
   
 const quantity = getTotalItems();
   const [menu, setMenu] = useState(false);
@@ -77,6 +77,9 @@ const renderAuthButton = () => {
               <div className="py-2 w-full border-b border-gray-300 flex justify-center pb-2">
                   <Link to="/profile" >My profile</Link>
                 </div>
+              {/* <div className="py-2 w-full border-b border-gray-300 flex justify-center pb-2">
+                  <Link to="/mybookings" >My Bookings</Link>
+                </div> */}
                 <div className="w-full py-2 flex justify-center">
                 <button
                   onClick={handleLogout}
@@ -107,12 +110,15 @@ else {
 
   return (
     <>
+    
       <div className="relative flex justify-between h-20 items-center nav z-20">
         <img
           src={require("../../assests/images/Tuneguru logo.png")}
           className="logo"
           alt="logo"
+          onClick={()=>navigate("/")}
         />
+        
         <div className="nav-items ">
          
           <ul className={menu ? "mob open" : "desk"}  onClick={handleMenuOpen}>

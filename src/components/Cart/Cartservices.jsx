@@ -813,7 +813,7 @@ function Cartservices() {
   const [selectCart, setSelectCart] = useState("cart");
   const [showMore, setShowMore] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 550);
@@ -874,6 +874,7 @@ function Cartservices() {
 
   const placeBooking = async (event) => {
     event.preventDefault();
+    setLoading(true);
     let bookingServices = [];
     serviceList.forEach((service) => {
       if (cartItems[service.s_id] > 0) {
@@ -886,11 +887,13 @@ function Cartservices() {
       userId: userId,
       address: userData,
       bookings: bookingServices,
-      amount: grandTotalPrice,
+      amount: roundOffPrice,
       bookingDate: userData.bookingDate,
       bookingTime: userData.bookingTime,
       
     };
+
+   
 
     try {
       let response = await axios.post(`${API_URL}/api/book/place`, bookingData, {
@@ -898,13 +901,18 @@ function Cartservices() {
           Authorization: `Bearer ${token}`
         }
       });
-      if (response.data.success) {
-        const { session_url } = response.data;
-        window.location.replace(session_url);
-      } else {
-        alert("Error");
-      }
+      setTimeout(()=>{
+        setLoading(false);
+        if (response.data.success) {
+          const { session_url } = response.data;
+          window.location.replace(session_url);
+        } else {
+          alert("Error");
+        }
+      },4000)
+      
     } catch (error) {
+      setLoading(false); 
       console.error("Error placing booking:", error);
       if (error.response) {
         console.error("Response data:", error.response.data);
@@ -1020,6 +1028,11 @@ function Cartservices() {
   return (
     <>
       <h1 className="font-bold text-3xl mt-12 mb-6 ml-12">Your Cart</h1>
+      {loading && (
+        <div className="fixed top-0 left-0 h-full w-full backdrop-brightness-50 flex justify-center items-center z-[200]">
+          <img src={require('../../assests/gif/card gif.gif')} alt="Loading..." className="h-[200px] w-[200px]" />
+        </div>
+      )}
       <div className="ml-12 pt-2 w-[60%] flex flex-row justify-center space-x-36 px-8 mb-4 drop-shadow-2xl  de:w-[80%] ta:w-[85%] mo:w-[80%] mo:pt-2 mo:mb-3 mo:space-x-24 ">
         <img onClick={() => handleSelect("cart")} src={require('../../assests/Icons/add-to-cart.png')} alt="cart" className={`w-[40px] cursor-pointer ${selectCart === "cart" ? "border-[3px] border-blue-900 p-[3px]" : ''}`} />
         <img onClick={() => handleSelect("form")} src={require('../../assests/Icons/contact-form.png')} alt="form" className={`w-[40px] cursor-pointer ${selectCart === "form" ? "border-[3px] border-blue-900 p-[3px]" : ''}`} />
@@ -1196,6 +1209,8 @@ function Cartservices() {
 
   )
 }
+
+
 </div>
 </>
   )}

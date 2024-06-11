@@ -134,7 +134,8 @@ import Cartservices from "./components/Cart/Cartservices";
 import CartData from "./components/Cart/CartData";
 import EditProfile from "./components/Profile/EditProfile";
 import { StoreContext, StoreProvider } from "./components/StoreContext";
-import Verify from "./components/Verify";
+import Verify from "./components/Bookings/Verify";
+import MyBookings from "./components/Bookings/MyBookings";
 
 
 function App() {
@@ -159,6 +160,7 @@ function App() {
           <Route path='/cart' element={<Cartservices />}/>
           <Route path='/order' element={<PrivateRoute><CartData /></PrivateRoute>}/>
           <Route path="/verify" element={<Verify/>}/>
+          <Route path="/mybookings" element={<MyBookings/>}/>
         </Routes>
         
       </div>

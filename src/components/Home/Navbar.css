@@ -1,3 +1,59 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.row {
+  width: 100%;
+  text-align: center;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 992px) {
+  .row:nth-child(5), .row:nth-child(6) {
+    display: inline-block;
+    width: 48%;
+  }
+}
+
+@media (max-width: 768px) {
+  .row:nth-child(4), .row:nth-child(5), .row:nth-child(6) {
+    display: inline-block;
+    width: 31%;
+  }
+}
+
+@media (max-width: 576px) {
+  .row:nth-child(3), .row:nth-child(4), .row:nth-child(5), .row:nth-child(6) {
+    display: inline-block;
+    width: 23%;
+  }
+}
+
+@media (max-width: 360px) {
+  .row:nth-child(2), .row:nth-child(3), .row:nth-child(4), .row:nth-child(5), .row:nth-child(6) {
+    display: inline-block;
+    width: 18%;
+  }
+}
+
+@media (max-width: 320px) {
+  .row {
+    display: block;
+    width: 100%;
+  }
+}
 
 
 /* in AC page i want ac_div id element scroll */
