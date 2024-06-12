@@ -160,7 +160,7 @@ function App() {
           <Route path='/cart' element={<Cartservices />}/>
           <Route path='/order' element={<PrivateRoute><CartData /></PrivateRoute>}/>
           <Route path="/verify" element={<Verify/>}/>
-          <Route path="/mybookings" element={<MyBookings/>}/>
+          <Route path="/mybookings" element={<PrivateRoute><MyBookings /></PrivateRoute>} />
         </Routes>
         
       </div>
