@@ -82,3 +82,7 @@ export const updateProfilePic = async (formData) => {
         throw error; // Throw any errors encountered during the deletion process
     }
 };
+
+
+
+// Cart Functions

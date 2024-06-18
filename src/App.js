@@ -153,14 +153,16 @@ function App() {
           <Route path='/mender' element={<PrivateRoute><Mender /></PrivateRoute>} />
           <Route path='/login' element={<Login />} />
           <Route path='/customer/register' element={<Customer  />} />
-          <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
-          <Route path='/profile/edit' element={<PrivateRoute><EditProfile /></PrivateRoute>} />
+          {/* <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} /> */}
+          {/* <Route path='/profile/edit' element={<PrivateRoute><EditProfile /></PrivateRoute>} /> */}
+           <Route path='/profile' element={<Profile />} /> 
+           <Route path='/profile/edit' element={<EditProfile />} /> 
           <Route path='/ac_repair_service' element={<AC />}/>
           <Route path='/fridge_repair' element={<Fridge />}/>
           <Route path='/cart' element={<Cartservices />}/>
           <Route path='/order' element={<PrivateRoute><CartData /></PrivateRoute>}/>
           <Route path="/verify" element={<Verify/>}/>
-          <Route path="/mybookings" element={<PrivateRoute><MyBookings /></PrivateRoute>} />
+          <Route path="/mybookings" element={<MyBookings />} />
         </Routes>
         
       </div>

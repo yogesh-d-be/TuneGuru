@@ -36,6 +36,7 @@ function Verify() {
       const result = await verifyBooking(bookingId, success);
       if (result.success) {
         console.log("called");
+        console.log("book",bookingId)
         navigate("/mybookings");
       } else {
         navigate("/cart");

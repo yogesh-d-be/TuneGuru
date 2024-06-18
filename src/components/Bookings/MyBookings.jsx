@@ -54,10 +54,10 @@ const navigate = useNavigate()
       </div>
       <p className="mt-2 font-semibold w-[80px] ">&#x20B9;{book.amount}</p>
       <p className="mt-2 ">Booked services: {book.bookings.length}</p>
-      <p className="text-red-700 mt-2">
+      <p className="text-red-700 mt-2 w-60">
         &#x25cf;<b>{book.status}</b>
       </p>
-      <button className="px-4 py-2 bg-red-300 font-semibold rounded-lg transition duration-500 ease-in-out hover:text-red-600 hover:ring-2 hover:ring-red-600 hover:bg-white">Track Order</button>
+      <button onClick={fetchBookings} className="px-4 py-2 bg-red-300 font-semibold rounded-lg transition duration-500 ease-in-out hover:text-red-600 hover:ring-2 hover:ring-red-600 hover:bg-white">Track Booking</button>
     </div>
   ))}
 </div>

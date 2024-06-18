@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdCancel } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -7,10 +7,12 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import "./Navbar.css";
 import { StoreContext } from "../StoreContext";
 import { toast } from "react-toastify";
+import { API_URL } from "../../service/Helper";
+
 
 
 function Navbar() {
-const {isLoggedIn,  handleLogout, openLoginModal, getTotalItems} = useContext(StoreContext)
+const {isLoggedIn,  handleLogout, openLoginModal, getTotalItems, loadUserDetails, profilePic} = useContext(StoreContext)
 
   const navigate = useNavigate()
   
@@ -19,9 +21,41 @@ const quantity = getTotalItems();
   const [selectMenu, setSelectMenu] = useState("")
   const [dropdown, setDropdown] = useState(false);
   const [prevScroll, setPrevScroll] = useState(false);
+
+  // const [profilePic,setProfilePic] =useState(null)
  
+  useEffect(() => {
+    if (isLoggedIn) {
+      loadUserDetails();
+     
+    }
+  }, [isLoggedIn,loadUserDetails]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     fetchProfile();
+  //   }
+  // }, [isLoggedIn]);
 
-
+  // const fetchProfile = async () => {
+  //   let config = {
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem("userdbtoken")}`
+  //     },
+  //   }
+  //   try {
+  //     const response = await axios.get(`${API_URL}/customer/profile`,config );
+  //     if (response.data.success) {
+  //       setProfilePic(response.data.data.userPic);
+  //       console("home",profilePic)
+  //     } else {
+  //       toast.error("Failed to load profile picture!");
+  //       console.log(response.response.data.error);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Error fetching profile picture");
+  //     console.error("Error:", error);
+  //   }
+  // };
   prevScroll
     ? (document.body.style.overflow = "hidden")
     : (document.body.style.overflow = "auto");
@@ -66,9 +100,9 @@ const renderAuthButton = () => {
               className="no-underline block  rounded-md text-white mr-2"
             >
               <img
-                src={require("../../assests/Icons/profile.png")}
+                src={profilePic ? `${API_URL}/images/${profilePic}` : require("../../assests/Icons/profile.png")}
                 alt="profile"
-                className="w-[70px] cursor-pointer des_xl:w-[60px] des_2xl:[80px] des_search:absolute des_search:top-3 des_search:right-16 des_search:w-[45px] de:absolute de:top-3 de:right-16 de:w-[45px] ta:absolute ta:top-3 ta:right-8 ta:w-[40px] mo:absolute mo:top-3 mo:right-6 mo:w-[37px]"
+                className={`${profilePic ?"rounded-[50%] w-[40px] h-[40px] cursor-pointer des_xl:w-[40px] des_xl:h-[45px] des_2xl:[40px] des_2xl:h-[40px] des_search:absolute des_search:top-3 des_search:right-16 des_search:w-[40px] des_search:h-[43px] de:absolute de:top-3 de:right-16 de:w-[37px] de:h-[42px] ta:absolute ta:top-3 ta:right-8 ta:w-[35px] ta:h-[40px] mo:absolute mo:top-3 mo:right-6 mo:w-[32px] mo:h-[38px]" :"w-[70px] cursor-pointer des_xl:w-[60px] des_2xl:[80px] des_search:absolute des_search:top-3 des_search:right-16 des_search:w-[45px] de:absolute de:top-3 de:right-16 de:w-[45px] ta:absolute ta:top-3 ta:right-8 ta:w-[40px] mo:absolute mo:top-3 mo:right-6 mo:w-[37px]"}`}
               />
             </span>
             

@@ -43,6 +43,7 @@ export const StoreProvider = ({ children }) => {
   const navigate = useNavigate();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
+  const [profilePic,setProfilePic] = useState(null)
 
   const openLoginModal = () => {
     setLoginModalOpen(true);
@@ -166,6 +167,27 @@ export const StoreProvider = ({ children }) => {
     }
   };
 
+  const loadUserDetails = async (token) => {
+    try {
+      const response = await apiInstance.get("/customer/get", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setUserId(response.data.data._id); 
+      if (response.data.success) {
+        setProfilePic(response.data.data.userPic);
+        console.log("hello",profilePic)
+      } else {
+        toast.error("Failed to load profile picture!");
+        console.log(response.response.data.error);
+      }
+    } catch (error) {
+      console.error("Error loading user details:", error);
+    }
+  };
+
+
  
   useEffect(() => {
 
@@ -198,19 +220,7 @@ export const StoreProvider = ({ children }) => {
       }
     };
 
-    const loadUserDetails = async (token) => {
-      try {
-        const response = await apiInstance.get("/customer/get", {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setUserId(response.data.data._id); // Correctly set userId
-      } catch (error) {
-        console.error("Error loading user details:", error);
-      }
-    };
-
+    
     const loadData = async () => {
       await fetchServiceList();
 
@@ -229,8 +239,15 @@ export const StoreProvider = ({ children }) => {
     };
 
     loadData();
+
+ 
+
      // eslint-disable-next-line
   }, []);
+
+     useEffect(() => {
+      console.log("ProfilePic updated:", profilePic);
+    }, [profilePic]);
 
   return (
     <StoreContext.Provider value={{
@@ -238,7 +255,7 @@ export const StoreProvider = ({ children }) => {
       openLoginModal, closeLoginModal, loginModalOpen,
       cartItems, addToCart, removeFromCart,
       getTotalItems, getGrandTotalPrice, deleteFromCart,
-      serviceList, setServiceList, apiInstance, userId,clearCart
+      serviceList, setServiceList, apiInstance, userId,clearCart,loadUserDetails,profilePic,setProfilePic
     }}>
       {children}
     </StoreContext.Provider>
