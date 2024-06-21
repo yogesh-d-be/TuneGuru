@@ -187,7 +187,9 @@ export const StoreProvider = ({ children }) => {
     }
   };
 
-
+  // const setProfilePicState = (pic) => {
+  //   setProfilePic(pic);
+  // };
  
   useEffect(() => {
 

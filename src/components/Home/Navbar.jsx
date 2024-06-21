@@ -12,6 +12,24 @@ import { API_URL } from "../../service/Helper";
 
 
 function Navbar() {
+//   const { isLoggedIn, handleLogout, openLoginModal, getTotalItems, profilePic, setProfilePic } = useContext(StoreContext);
+//   const navigate = useNavigate();
+
+
+//   useEffect(() => {
+//       // Retrieve profilePic from localStorage on component mount
+//       const storedProfilePic = localStorage.getItem('profilePic');
+//       if (storedProfilePic) {
+//           setProfilePic(storedProfilePic);
+//       }
+//   }, [setProfilePic]);
+
+  
+// const quantity = getTotalItems();
+//   const [menu, setMenu] = useState(false);
+//   const [selectMenu, setSelectMenu] = useState("")
+//   const [dropdown, setDropdown] = useState(false);
+//   const [prevScroll, setPrevScroll] = useState(false);
 const {isLoggedIn,  handleLogout, openLoginModal, getTotalItems, loadUserDetails, profilePic} = useContext(StoreContext)
 
   const navigate = useNavigate()
@@ -30,6 +48,19 @@ const quantity = getTotalItems();
      
     }
   }, [isLoggedIn,loadUserDetails]);
+
+  useEffect(()=>{
+   
+  },[profilePic])
+
+  // const [profilePic,setProfilePic] =useState(null)
+ 
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     loadUserDetails();
+     
+  //   }
+  // }, [isLoggedIn,loadUserDetails]);
   // useEffect(() => {
   //   if (isLoggedIn) {
   //     fetchProfile();
