@@ -400,7 +400,7 @@
 // }
 
 // export default Profile;
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -410,11 +410,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import EditProfile from "./EditProfile";
 import '../Home/Navbar.css';
 import { API_URL } from "../../service/Helper";
+import { StoreContext } from "../StoreContext";
+// import { Modal } from "antd";
+import Swal from 'sweetalert2';
 
 
 
-function Profile({ handleLogout }) {
 
+function Profile() {
+
+    const {logout} = useContext(StoreContext)
     // const{setProfilePic:updateProfilePic} = useContext(StoreContext)
     const navigate = useNavigate();
     const [profile, setProfile] = useState({});
@@ -423,6 +428,7 @@ function Profile({ handleLogout }) {
     const [profileShow, setProfileShow] = useState(false);
     const [save, setSave] = useState(false)
 
+   
     // Profile pic
     const inputRef = useRef(null);
     const [profilePic, setProfilePic] = useState(null);
@@ -492,26 +498,130 @@ function Profile({ handleLogout }) {
     const handleEdit = () => {
         setEditing(true);
     };
+    // const handleDeleteAccount = async () => {
+    //             setDeleteModal(true);
+    //         };
 
+    //         const confirmDeleteAccount = async () => {
+    //             try {
+    //                 // Delete profile picture first
+    //                 try {
+    //                     await deleteProfilePic();//without toast notification
+    //                 } catch (error) {
+    //                     // If profile picture deletion fails, we might still want to proceed with account deletion
+    //                     console.error("Error during profile picture deletion, proceeding with account deletion:", error);
+    //                 }
+            
+    //                 // Delete the user profile
+    //                 const response = await deleteUserProfile();
+    //                 if (response && response.status === 200) {
+    //                     toast.success("Account successfully deleted");
+    //                     logout();
+    //                     setTimeout(() => {
+    //                         navigate('/customer/register');
+    //                     }, 2000);
+    //                 } else {
+    //                     toast.error("Failed to delete your account!");
+    //                     console.log(response.data.error);
+    //                 }
+    //             } catch (error) {
+    //                 console.error("Error deleting account:", error);
+    //                 toast.error("Failed to delete account");
+    //             }
+    //         };
+            
+            const deleteProfilePic = async () => {
+                if (profile.userPic) {
+                    const formData = new FormData();
+                    formData.append('userPic', profile.userPic);
+            
+                    const config = {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                            Authorization: `Bearer ${localStorage.getItem("userdbtoken")}`,
+                        },
+                    };
+            
+                    try {
+                        await axios.post(API_URL + '/customer/delete-profile-pic', formData, config);
+                    } catch (error) {
+                        console.error("Error:", error);
+                        throw error; // Propagate the error to be handled by the caller
+                    }
+                }
+            };
+            
+
+    // const cancelDeleteAccount = async () => {
+    //             setDeleteModal(false);
+    //         };
     const handleDeleteAccount = async () => {
-        try {
-            const response = await deleteUserProfile();
-            if (response && response.status === 200) {
-                toast.success("Account successfully deleted");
-                setTimeout(() => {
-                    handleLogout();
-                    navigate('/customer/register');
-                }, 2000);
-            } else {
-                toast.error("Failed to delete your account!");
-                console.log(response?.data?.error);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover your account!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel',
+            customClass: {
+                title: 'swal-title', // Custom class for title
+                htmlContainer: 'swal-text', // Custom class for text content
+            },
+            iconHtml: `<img src="${require('../../assests/gif/delete acount.gif')}" style="height: 164px;" />`,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    // Delete profile picture first
+                    try {
+                        await deleteProfilePic();
+                    } catch (error) {
+                        console.error('Error during profile picture deletion:', error);
+                        // Proceed with account deletion even if profile picture deletion fails
+                    }
+    
+                    // Delete the user profile
+                    const response = await deleteUserProfile();
+                    if (response && response.status === 200) {
+                        Swal.fire({
+                            title: 'Account Deleted!',
+                            text: 'Your account has been successfully deleted.',
+                            icon: 'success',
+                            
+                        }).then(() => {
+                            logout();
+                            setTimeout(() => {
+                                navigate('/customer/register');
+                            }, 2000);
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Failed to delete!',
+                            text: 'Unable to delete your account.',
+                            icon: 'error',
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error deleting account:', error);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Failed to delete your account.',
+                        icon: 'error',
+                    });
+                }
             }
-        } catch (error) {
-            console.error("Error deleting account:", error);
-            toast.error("Failed to delete account");
-        }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                  title: 'Cancelled',
+                  text: 'Your account data is safe :)',
+                  icon: 'error',
+                  iconHtml: `<img src="${require('../../assests/gif/login.gif')}" style="width: 264px; height:164px;" />`,
+                });
+              }
+        });
     };
-
+    
     useEffect(() => {
         fetchProfile(); // Fetch updated profile after image upload
         
@@ -774,7 +884,18 @@ function Profile({ handleLogout }) {
                 )}
             </div>
             {editing && <EditProfile profile={profile} fetchProfile={fetchProfile} setEditing={setEditing} />}
-            
+            {/* <Modal
+            title="Are you sure you want to delete your account?"
+            open={deleteModal}
+            onOk={confirmDeleteAccount}
+            onCancel={cancelDeleteAccount}
+            centered
+            width={450}
+            okText="Yes"
+            cancelText="No"
+            className="mx-4"
+            >
+            </Modal> */}
         </>
     );
 }

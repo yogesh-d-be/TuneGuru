@@ -1231,6 +1231,8 @@ import '../Home/Navbar.css'
 
 import { CloseOutlined } from '@ant-design/icons';
 import { toast } from "react-toastify";
+import Swal from 'sweetalert2'
+
 
 function Cartservices() {
   const { cartItems, deleteFromCart, serviceList, addToCart, removeFromCart, userId } = useContext(StoreContext);
@@ -1245,6 +1247,9 @@ const [repairVideo, setRepairVideo] = useState(null)
 const videoRef = useRef(null);
 const fileInputRef = useRef(null);
 const [error, setError] = useState(null) // video limit error
+
+const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -1310,6 +1315,7 @@ const [error, setError] = useState(null) // video limit error
   }
 
   const handleCheckOut = () => {
+    handleSelect("form")
     setOrder(true);
   };
 
@@ -1323,10 +1329,37 @@ const [error, setError] = useState(null) // video limit error
     setOpen(false);
   };
 
+  const handleLoading = (select) =>{
+    if(select === "cash"){
+      setLoading("cash")
+    }
+    else if( select === "card"){
+      setLoading("card")
+    }
+  }
+
+  const handlePaymentMethod = (pay) =>{
+    if(pay==="cash"){
+      setSelectedPaymentMethod("cash")
+      
+    }
+    else if(pay==="card"){
+      setSelectedPaymentMethod("card")
+     
+    }
+    
+  }
   const placeBooking = async (event) => {
     event.preventDefault();
-    setLoading(true);
+    handleLoading()
     setError(null);  // Reset error before starting a new request
+
+    if(selectedPaymentMethod=== "cash"){
+      handleLoading("cash")
+    }
+    else if(selectedPaymentMethod === "card"){
+      handleLoading("card")
+    }
 
     let bookingServices = [];
     serviceList.forEach((service) => {
@@ -1343,6 +1376,7 @@ const [error, setError] = useState(null) // video limit error
     bookingData.append('amount', roundOffPrice);
     bookingData.append('bookingDate', userData.bookingDate);
     bookingData.append('bookingTime', userData.bookingTime);
+    bookingData.append('paymentMethod', selectedPaymentMethod);
     if (repairVideo) {
       bookingData.append('repairVideo', repairVideo);
     }
@@ -1356,14 +1390,26 @@ const [error, setError] = useState(null) // video limit error
           'Content-Type':'multipart/form-data'
         }
       });
-    
-      setLoading(false);
-      if (response.data.success) {
+      setTimeout(()=>{
+        setLoading(false);
+      if(selectedPaymentMethod === "cash" ){
+        Swal.fire({
+          title: "Congratulations!",
+          text: "Your booking is confirmed. Get ready for an amazing experience!",
+          icon: "success"
+        });
+        setTimeout(()=>{
+          return window.location.href="/mybookings"
+        },4000)
+        
+        
+      }
+      else if (selectedPaymentMethod === "card" ) {
         const { session_url } = response.data;
         window.location.replace(session_url);
-      } else {
-        alert("Error");
-      }
+      } 
+      },5000)
+      
     } catch (error) {
       setLoading(false); 
       console.error("Error placing booking:", error);
@@ -1374,7 +1420,9 @@ const [error, setError] = useState(null) // video limit error
       }
       
     }
-  }    
+  }  
+  
+  
   console.log(error)
   dayjs.extend(customParseFormat);
 
@@ -1484,9 +1532,14 @@ const [error, setError] = useState(null) // video limit error
   return (
     <>
       <h1 className="font-bold text-3xl mt-12 mb-6 ml-12">Your Cart</h1>
-      {loading && (
-        <div className="fixed top-0 left-0 h-full w-full backdrop-brightness-50 flex justify-center items-center z-[200]">
+      {loading === "card" && (
+        <div className="fixed top-0 left-0 h-full w-full backdrop-brightness-50 flex justify-center items-center z-[200] overflow-hidden">
           <img src={require('../../assests/gif/card gif.gif')} alt="Loading..." className="h-[200px] w-[200px]" />
+        </div>
+      )}
+      {loading === "cash" && (
+        <div className="fixed top-0 left-0 h-full w-full backdrop-brightness-50 flex justify-center items-center z-[200] overflow-hidden">
+          <img src={require('../../assests/gif/cash-count.gif')} alt="Loading..." className="h-[200px] w-[200px]" />
         </div>
       )}
       <div className="ml-12 pt-2 w-[60%] flex flex-row justify-center space-x-36 px-8 mb-4 drop-shadow-2xl  de:w-[80%] ta:w-[85%] mo:w-[80%] mo:pt-2 mo:mb-3 mo:space-x-24 ">
@@ -1632,8 +1685,12 @@ const [error, setError] = useState(null) // video limit error
           <p className="ml-6 font-semibold text-sm">Upload the video that needs repair (Optional)</p>
         <div className={`w-[350px] mt-6 ml-4  rounded-xl mo:w-[220px] mo:px-0 mo:mx-auto ${repairVideo?"border-none":"border border-black"}`}>
           {!repairVideo?
-          <img src={ require('../../assests/images/Repair image.png')} onClick={handleRepairVideo} className="w-[350px] mo:w-[220px] rounded-xl cursor-pointer " alt="Repair"></img>:
-            
+          <div onClick={handleRepairVideo} className="relative w-[350px] mo:w-[220px] ">
+          
+          <img src={ require('../../assests/images/Repair image.png')}  className="w-[350px] filter brightness-50 mo:w-[220px] rounded-xl cursor-pointer " alt="Repair"></img>
+          <button type="button" id="uploadVideo" className="px-3 py-2 bg-blue-500 rounded-lg absolute left-[30%] top-[50%] mo:left-[25%] mo:top-[40%] font-bold text-white mo:text-sm hover:scale-105 hover:bg-blue-900 transition-all ease-in-out duration-300 ">Upload Video</button> 
+           </div>
+           :
               <><video   ref={videoRef} width='260' height='150' controls className="rounded-lg">
       <source src={repairVideo ? URL.createObjectURL(repairVideo) : ''} />
      Your browser does not support the video tag.
@@ -1648,6 +1705,7 @@ const [error, setError] = useState(null) // video limit error
             
             }
             <input id="uploadVideo" ref={fileInputRef} type="file" name="repairVideo" accept="video/*" onChange={onChangeHandle} className="w-[90%] mt-4 h-[38px] mo:w-full rounded-lg hidden" />
+        
           </div>
           
           </div>
@@ -1664,6 +1722,22 @@ const [error, setError] = useState(null) // video limit error
         <button className="w-[30%] mb-4 bg-blue-900 py-2 px-1 text-white rounded-md text-sm des_xl:w-[50%] des_search:w-[50%] de:rounded-none de:rounded-r-lg de:mt-4 de:h-[44px]">Apply</button>
       </div>
     </div>
+
+    {/* payment Methods */}
+    <div className="bg-gray-300 ml-20 px-1 pt-6 items-center drop-shadow-2xl rounded-lg h-fit mt-4 mb-4 de:w-[80%] de:ml-12 de:mt-8 ta:w-[90%] ta:ml-8 ta:mt-8 mo:w-[90%] mo:ml-[5%] mo:mt-8">
+      <h2 className="ml-6 mb-4 font-bold">Payment Methods</h2>
+      <div className="ml-6 mt-6 w-[85%] flex items-center">
+      <input type="radio" name="paymentMethod" id="cash" value={selectedPaymentMethod}  checked={selectedPaymentMethod === "cash"} onChange={()=>handlePaymentMethod("cash")}/>
+      <label htmlFor="cash" className="ml-2">Cash</label>
+      </div>
+      <div className="ml-6 mt-6 w-[85%] flex items-center mb-6">
+      <input type="radio" name="paymentMethod" id="card" value={selectedPaymentMethod}  checked={selectedPaymentMethod === "card"} onChange={()=>handlePaymentMethod("card")} />
+      <label htmlFor="card" className="ml-2">Card</label>
+      </div>
+     
+    </div>
+
+    {/* Summary */}
     <div className="bg-gray-300 ml-20 px-1 pt-6 items-center drop-shadow-2xl rounded-lg h-fit mt-4 mb-4 de:w-[80%] de:ml-12 de:mt-8 ta:w-[90%] ta:ml-8 ta:mt-8 mo:w-[90%] mo:ml-[5%] mo:mt-8">
       <h2 className="ml-6 mb-4 font-bold">Summary</h2>
       <div className="ml-6 mt-6 w-[85%] flex flex-row justify-between">

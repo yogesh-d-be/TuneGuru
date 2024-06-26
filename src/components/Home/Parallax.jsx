@@ -28,12 +28,12 @@ function Parallax() {
       // Animate the text, doors, and background image based on scroll position
       if (scrollY > windowHeight / 2) {
         gsap.to(compRef.current, { y: 300, opacity: 0, duration: 1, ease: "power1.out" });
-        gsap.to(doorLRef.current, { x: 0, duration: 1, ease: "power1.inOut" });
-        gsap.to(doorRRef.current, { x: 0, duration: 1, ease: "power1.inOut" });
+        gsap.to(doorLRef.current, { x: 0, duration: 0.5, ease: "power1.inOut" });
+        gsap.to(doorRRef.current, { x: 0, duration: 0.5, ease: "power1.inOut" });
       } else {
         gsap.to(compRef.current, { y: 0, opacity: 1, duration: 1, ease: "power1.out" });
-        gsap.to(doorLRef.current, { x: -250, duration: 1, ease: "power1.inOut" });
-        gsap.to(doorRRef.current, { x: 250, duration: 1, ease: "power1.inOut" });
+        gsap.to(doorLRef.current, { x: -250, duration: 0.5, ease: "power1.inOut" });
+        gsap.to(doorRRef.current, { x: 250, duration: 0.5, ease: "power1.inOut" });
       }
 
       // Apply zoom effect to background images

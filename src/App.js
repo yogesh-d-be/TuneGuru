@@ -121,7 +121,7 @@ import Navbar from './components/Home/Navbar'
 import Home from "./components/Home/Home";
 import Services from "./components/Services/Services";
 import About from "./components/About/About";
-import Support from "./components/Support/Support";
+
 import Login from "./components/Register_Login/LoginModal";
 import Customer from "./components/Register_Login/Customer";
 import Mender from "./components/Register_Login/Mender";
@@ -136,6 +136,7 @@ import EditProfile from "./components/Profile/EditProfile";
 import { StoreContext, StoreProvider } from "./components/StoreContext";
 import Verify from "./components/Bookings/Verify";
 import MyBookings from "./components/Bookings/MyBookings";
+import ContactForm from "./components/Contact/Contact";
 
 
 function App() {
@@ -149,7 +150,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/services' element={<Services />} />
           <Route path='/about' element={<PrivateRoute><About /></PrivateRoute>} />
-          <Route path='/support' element={<PrivateRoute><Support /></PrivateRoute>} />
+          <Route path='/contactus' element={<PrivateRoute><ContactForm /></PrivateRoute>} />
           <Route path='/mender' element={<PrivateRoute><Mender /></PrivateRoute>} />
           <Route path='/login' element={<Login />} />
           <Route path='/customer/register' element={<Customer  />} />

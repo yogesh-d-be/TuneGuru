@@ -8,9 +8,10 @@ import "./Navbar.css";
 import { StoreContext } from "../StoreContext";
 import { toast } from "react-toastify";
 import { API_URL } from "../../service/Helper";
-
-
-
+import Swal from 'sweetalert2';
+import "../Home/Navbar.css"
+import logoutPic from "../../assests/Icons/logout.png"
+import infoPic from "../../assests/gif/login-animate.gif"
 function Navbar() {
 //   const { isLoggedIn, handleLogout, openLoginModal, getTotalItems, profilePic, setProfilePic } = useContext(StoreContext);
 //   const navigate = useNavigate();
@@ -30,7 +31,7 @@ function Navbar() {
 //   const [selectMenu, setSelectMenu] = useState("")
 //   const [dropdown, setDropdown] = useState(false);
 //   const [prevScroll, setPrevScroll] = useState(false);
-const {isLoggedIn,  handleLogout, openLoginModal, getTotalItems, loadUserDetails, profilePic} = useContext(StoreContext)
+const {isLoggedIn,  logout, openLoginModal, getTotalItems, loadUserDetails, profilePic} = useContext(StoreContext)
 
   const navigate = useNavigate()
   
@@ -98,6 +99,56 @@ const quantity = getTotalItems();
       setPrevScroll(!prevScroll);
     };
   
+   
+
+const confirmLogOut = async () => {
+    try {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'You want to logout from the account',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, logout!',
+            cancelButtonText: 'No, cancel',
+            customClass: {
+                title: 'swal-title', // Custom class for title
+                htmlContainer: 'swal-text', // Custom class for text content
+            },
+            iconHtml: `<img src="${logoutPic}" style="width: 64px; height: 64px;" />` // Replace with your custom webp icon and adjust size as needed
+        });
+
+        if (result.isConfirmed) {
+            await logout(); // Call the logout function
+            Swal.fire({
+                title: 'Logged Out!',
+                text: 'You have been successfully logged out.',
+                icon: 'success',
+            }).then(() => {
+                navigate('/customer/register'); // Redirect to login page
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire({
+                title: 'Cancelled',
+                text: 'Your account is still logged in :)',
+                icon: 'info',
+                iconHtml: `<img src="${infoPic}" style="width: 204px; height: 164px;" />`, // Use infoPic for info icon
+            });
+            
+        }
+    } catch (error) {
+        console.error('Error logging out:', error);
+        Swal.fire({
+            title: 'Error!',
+            text: 'Failed to logout your account.',
+            icon: 'error',
+        });
+    }
+    
+};
+
+    
     
 
   // const searchClick = (e) => {
@@ -147,7 +198,7 @@ const renderAuthButton = () => {
                 </div> */}
                 <div className="w-full py-2 flex justify-center">
                 <button
-                  onClick={handleLogout}
+                  onClick={confirmLogOut}
                   className="no-underline block px-4 py-2 rounded-md text-white bg-red-500 mo:w-[70px] mo:px-2 mo:py-1"
                 >
                   Logout
@@ -177,13 +228,15 @@ else {
     <>
     
       <div className="relative flex justify-between h-20 items-center nav z-20">
+        <div>
+      <img src={require('../../assests/gif/Robot Logo.gif')} alt="robot" className="h-8 absolute left-3 mo:left-0 mo:top-3 mo:ml-4 mo:z-10 ta:left-0 ta:top-3 ta:ml-4 ta:z-10 de:left-0 de:top-3 de:ml-4 de:z-10 des_search:left-0 des_search:top-3 des_search:ml-4 des_search:z-10" />
         <img
-          src={require("../../assests/images/Tuneguru logo.png")}
-          className="logo"
+          src={require("../../assests/images/Tuneguru logo1.png")}
+          className="logo cursor-pointer"
           alt="logo"
           onClick={()=>navigate("/")}
         />
-        
+        </div>
         <div className="nav-items ">
          
           <ul className={menu ? "mob open" : "desk"}  onClick={handleMenuOpen}>
@@ -223,11 +276,11 @@ else {
             </li> */}
             <li  className={`list-none list `}>
               <Link
-                to="/support"
+                to="/contactus"
                 onClick={()=>setSelectMenu("support")}
                 className={`no-underline block px-4 py-2 rounded-md text-white  mr-2 link ${selectMenu === "support"?"active":""}`}
               >
-                Support
+                Contact
               </Link>
             </li>
             <li  className={`list-none list nav-item  ta:mb-6 des_xl:mr-4 des_2xl:mr-4 des_search:mb-6 relative drop`}  onClick={toggleDropdown}>
