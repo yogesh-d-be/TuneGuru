@@ -44,6 +44,8 @@ export const StoreProvider = ({ children }) => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const [profilePic,setProfilePic] = useState(null)
+  const [profileUserName, setProfileUserName] = useState("")
+  const [profileUserEmail,setProfileUserEmail] = useState("")
 
   const openLoginModal = () => {
     setLoginModalOpen(true);
@@ -177,6 +179,8 @@ export const StoreProvider = ({ children }) => {
       setUserId(response.data.data._id); 
       if (response.data.success) {
         setProfilePic(response.data.data.userPic);
+        setProfileUserName(response.data.data.username);
+        setProfileUserEmail(response.data.data.email);
         console.log("hello",profilePic)
       } else {
         toast.error("Failed to load profile picture!");
@@ -257,7 +261,7 @@ export const StoreProvider = ({ children }) => {
       openLoginModal, closeLoginModal, loginModalOpen,
       cartItems, addToCart, removeFromCart,
       getTotalItems, getGrandTotalPrice, deleteFromCart,
-      serviceList, setServiceList, apiInstance, userId,clearCart,loadUserDetails,profilePic,setProfilePic
+      serviceList, setServiceList, apiInstance, userId,clearCart,loadUserDetails,profilePic,setProfilePic,profileUserName,profileUserEmail
     }}>
       {children}
     </StoreContext.Provider>

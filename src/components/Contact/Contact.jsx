@@ -1,208 +1,187 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
-import { Link } from "react-router-dom";
+
 import "react-toastify/dist/ReactToastify.css";
+import { StoreContext } from "../StoreContext";
 
-
+import { API_URL } from "../../service/Helper";
+import { toast } from 'react-toastify';
+import '../Contact/Contact.css'
 
 const ContactForm = () => {
-  const intialData = {
-    name: "",
-    emailid: "",
-    phone: "",
-    option: "",
-    message: "",
-  };
-  const apiURL = process.env.REACT_APP_API_URL;
-  const [UserData, setData] = useState(intialData);
-  const handleOnChange = (e) => {
-    setData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSumbit = async(event) => {
-    event.preventDefault();
-    try {
-      const response=  await axios
-      .post(`${apiURL}/post`, UserData)
-      if (response.data.success) {
-        console.success(response.data.message);
-        
-        
-    } else {
-        console.error(response.data.message);
-    }
-   
-} catch (error) {
-    console.error("Something went wrong");
+  const {profileUserName,profileUserEmail} = useContext(StoreContext);
   
-    // console.log("Data", data);
-  };
+  const [contactUser, setContactUser] = useState({
+    name: profileUserName||"",
+    emailId: profileUserEmail||"",
+    mobileNumber:"",
+    message:""
+  })
+
+ const [editName,setEditName] = useState(false)
+ const [editEmail,setEditEmail] = useState(false)
+ const [showPopup, setShowPopup] = useState(false);
+ 
+  const handleOnChange = (e) =>{
+    setContactUser((prev)=>({
+      ...prev,
+      [e.target.name]:e.target.value,
+    }))
+  }
+let config = {
+  headers:{
+    Authorization: `Bearer ${localStorage.getItem("userdbtoken")}`
+  }
 }
+  const handleSubmit = async(event) =>{
+    event.preventDefault();
+    const {name,emailId,mobileNumber,message} = contactUser
+    // if(!name&&!emailId&&!mobileNumber&&!message){
+    //   toast.error("Enter All Contact details")
+    //   return;
+    // }
+  if(name === ""){
+      toast.error("Enter Your FullName!");
+      return;
+    }
+    else if(emailId === ""){
+      toast.error("Enter Your Email!");
+      return;
+    }
+    else if(!emailId.includes("@")){
+      toast.error("Enter Valid Email!");
+      return;
+    }
+    else if(mobileNumber === ""){
+      toast.error("Enter Your Mobile Number!");
+      return;
+    }
+    else if(mobileNumber.length!==10){
+      toast.error("Enter valid Mobile Number!");
+      return;
+    }
+    else if(message === ""){
+      toast.error("Enter Message!");
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${API_URL}/api/contact/form`,contactUser,config);
+      if (response.data.success) {
+        toast.success(response.data.message);
+        setContactUser({
+          name: profileUserName||"",
+          emailId: profileUserEmail||"",
+          mobileNumber:"",
+          message:""
+        })
+        setEditEmail(false)
+        setEditName(false)
+      } else {
+        toast.error(response.response.data.error);
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  }
+
+  const handleChat = () =>{
+    const {name,emailId,mobileNumber} = contactUser;
+
+    if(name === ""){
+      toast.error("Enter Your FullName!");
+      return;
+    }
+    else if(emailId === ""){
+      toast.error("Enter Your Email!");
+      return;
+    }
+    else if(!emailId.includes("@")){
+      toast.error("Enter Valid Email!");
+      return;
+    }
+    else if(mobileNumber === ""){
+      toast.error("Enter Your Mobile Number!");
+      return;
+    }
+    else if(mobileNumber.length!==10){
+      toast.error("Enter valid Mobile Number!");
+      return;
+    }
+
+    const companyNumber = '7305799500'
+    const message = `I need your assistance.\nMy Name is ${name}.\nMy Email Address: ${emailId}.\nMy Contact Number: ${mobileNumber}`
+    const whatsappUrl = `https://wa.me/${companyNumber}?text=${encodeURIComponent(message)}`;
+
+    window.open(whatsappUrl,'_blank')
+  }
+
+ useEffect(()=>{
+  const interval = setInterval(()=>{
+    setShowPopup((prevPopup)=>!prevPopup);
+  },5000)
+  return () => clearInterval(interval)
+ },[])
 
   return (
-    <div>
-       <h1 className="text-3xl mt-8 md:mt-10 sm:text-6xl lg:text-4xl tracking-wide text-center">
-              CONTACT{" "}
-              <span className="bg-gradient-to-r from-orange-500 to-red-800 text-transparent bg-clip-text">
-                US
-              </span>
-            </h1>
-      <section className="backdrop-blur-lg">
-        <div className="mx-auto my-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
-            <div className="lg:col-span-2 lg:py-12">
-              <p className="max-w-xl text-lg">
-                Our complete independence from manufacturers and external group
-                control ensures that our recommendations are solely focused on
-                what best suits your needs, offering you the assurance and
-                confidence in our commitment to your project's success.
-              </p>
-
-              <div className="mt-8">
-                <Link to="#" className="text-2xl font-bold text-orange-600">
-                  {" "}
-                  9566 0137 27{" "}
-                </Link>
-
-                <address className="mt-2 not-italic">
-                  Anna nagar, Chennai 600040
-                </address>
+    <>
+      <div className="overflow-hidden">
+        <div className="flex de:flex-col  ta:flex-col mo:flex-col flex-wrap justify-center">
+          <div className="w-[40%] flex flex-col justify-center pl-12 mt-12 des_search:pl-8 de:w-full ta:w-full mo:w-full de:pl-0 de:ml-12 ta:pl-12 ta:pr-12 mo:pl-12 mo:pr-12 "><h1 className="font-bold text-3xl mb-4 mo:text-[23px]">Let's Get In <span className="font-bold text-blue-500">Touch!</span></h1>
+              <p className="">Have a question or need assistance? Reach out to us via email, phone, or the contact form below. </p><p>We're eager to assist you.</p>
+              <p className="text-blue-900">Nice hearing from you!</p><img src={require('../../assests/images/Personal_email.png')} alt="email" className="w-[500px]" /></div>
+          <div className="w-[60%] flex flex-col justify-center items-center de:w-full ta:w-full mo:w-full">
+            <form onSubmit={handleSubmit} className=" mt-2 w-[70%] rounded-2xl des_search:w-[80%] de:w-[80%] ta:w-[80%] mo:w-[83%] mo:px-6 mo:mx-12 bg-blue-200 px-12 py-4">
+              
+<div className="flex flex-col gap-2 flex-wrap mt-6">
+  
+<label htmlFor="name" className="font-semibold">Full Name</label>
+<div className="relative">
+              <input type="text" name="name" id="name" value={contactUser.name} onChange={handleOnChange} readOnly={!editName} className={`mb-4 rounded-2xl border border-blue-700 w-full ${editName?"mb-0":""}`}/>{editName?<button type="button" onClick={() => setEditName(!editName)} className="text-blue-500 absolute right-4 top-2 ">Save</button>:<button type="button" onClick={() => setEditName(!editName)} className="text-blue-500 absolute right-4 top-2 ">Edit</button>} 
+              {editName&&<p className="mb-3 text-[13px] ml-2 text-red-700">Now you can edit the Full Name</p>}
+              </div> </div>
+              <div className="flex flex-col gap-2">
+              <label htmlFor="emailId" className={`font-semibold relative`}>Email</label>
+              <div className="relative">
+              <input type="email" name="emailId" id="emailId" value={contactUser.emailId} onChange={handleOnChange} readOnly={!editEmail} className={`mb-4 rounded-2xl border border-blue-700 w-full ${editEmail?"mb-0":""}`}/>{editEmail?<button type="button" onClick={() => setEditEmail(!editEmail)} className="text-blue-500 absolute right-4 top-2 ">Save</button>:<button type="button" onClick={() => setEditEmail(!editEmail)} className="text-blue-500 absolute right-4 top-2 ">Edit</button>} 
+              {editEmail&&<p className="mb-3 text-[13px] ml-2 text-red-700">Now you can edit the Email</p>}
+              </div> </div>
+              <div className="flex flex-col gap-2">
+              <label htmlFor="mobileNumber" className="font-semibold">Mobile Number (Whatsapp Number)</label>
+              <input type="number" name="mobileNumber" id="mobileNumber" value={contactUser.mobileNumber} onChange={handleOnChange} className="mb-4 rounded-2xl border border-blue-700"/>
               </div>
+              <div className="flex flex-col gap-2">
+              <label htmlFor="message" className=" font-semibold">Message</label>
+              <textarea name="message" id="message" value={contactUser.message} onChange={handleOnChange} cols="35" rows="5" className="mb-4 rounded-2xl border border-blue-700"></textarea>
+              </div>
+            
+              <button type="submit" className="px-4 py-2 bg-blue-800 text-white rounded-xl mb-4">Submit</button>
+             
+            </form>
+            <div className="w-full  flex relative mt-2  de:mt-24 ta:mt-24 mo:mt-24">
+            <img src={require('../../assests/Icons/whatsapp.png')} alt="whatsapp" onClick={handleChat} className="cursor-pointer w-14  absolute right-3 bottom-0 mb-4"/>
+          
+          {
+            showPopup&&(
+              <div className="popup-animation absolute bottom-16 right-16 bg-white border border-gray-300 p-4 rounded shadow-lg  de:w-[145px] ta:w-[145px] mo:w-[145px]">
+              <div className="typing-animation">Chat with expert</div>
+  
             </div>
-
-            <div className="rounded-lg p-8 shadow-lg lg:col-span-3 lg:p-12">
-              <form action="#" onSubmit={handleSumbit} className="space-y-4">
-                <div>
-                  <label className="sr-only" htmlFor="name">
-                    Name
-                  </label>
-                  <input
-                    className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                    placeholder="Name"
-                    type="text"
-                    required
-                    id="name"
-                    name="name"
-                    value={UserData.name}
-                    onChange={handleOnChange}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div>
-                    <label className="sr-only" htmlFor="email">
-                      Email
-                    </label>
-                    <input
-                      className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                      placeholder="Email address"
-                      type="email"
-                      id="email"
-                      required
-                      name="emailid"
-                      value={UserData.emailid}
-                      onChange={handleOnChange}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="sr-only" htmlFor="phone">
-                      Phone
-                    </label>
-                    <input
-                      className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                      placeholder="Phone Number"
-                      type="tel"
-                      id="phone"
-                      required
-                      name="phone"
-                      value={UserData.phone}
-                      onChange={handleOnChange}
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
-                 
-
-                  <div>
-                    <label
-                      htmlFor="Option2"
-                      className="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white"
-                      tabIndex="0"
-                    >
-                      <input
-                        className="sr-only"
-                        id="Option2"
-                        type="radio"
-                        tabIndex="-1"
-                        name="option"
-                        value="COMMERCIAL"
-                        onChange={handleOnChange}
-                      />
-
-                      <span className="text-sm"> COMMERCIAL </span>
-                    </label>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="Option3"
-                      className="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white"
-                      tabIndex="0"
-                    >
-                      <input
-                        className="sr-only"
-                        id="Option3"
-                        type="radio"
-                        tabIndex="-1"
-                        name="option"
-                        value="INTERIOR DESIGN"
-                        onChange={handleOnChange}
-                      />
-
-                      <span className="text-sm"> INTERIOR DESIGN </span>
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="sr-only" htmlFor="message">
-                    Message
-                  </label>
-
-                  <textarea
-                    className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                    placeholder="Message"
-                    rows="8"
-                    id="message"
-                    name="message"
-                    value={UserData.message}
-                    onChange={handleOnChange}
-                  ></textarea>
-                </div>
-
-                <div className="mt-4">
-                  <button
-                    
-                    type="submit"
-                    className="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto hover:text-orange-500"
-                  >
-                    Send Enquiry
-                  </button>
-                </div>
-              </form>
-            </div>
+            )
+          }
+         </div>
           </div>
+          
         </div>
-      </section>
-   
-    </div>
-  );
-};
-
+        
+      </div>
+      {/* <div className="w-full flex justify-end mt-6 des:hidden pr-4">
+            <img src={require('../../assests/Icons/whatsapp.png')} alt="whatsapp" onClick={handleChat} className="cursor-pointer w-14  mb-4 "/>
+          </div> */}
+         
+    </>
+  )
+       
+}
 export default ContactForm;

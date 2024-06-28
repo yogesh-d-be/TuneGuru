@@ -18,7 +18,7 @@ import img8 from "../../assests/Icons/mechanic.png";
 import img9 from "../../assests/Icons/technology.png";
 import img10 from "../../assests/Icons/paint-roller.png";
 
-import ServiceModal from "../Services/ServiceModal";
+import ServiceModal from "./ServiceModal";
 import { StoreContext } from "../StoreContext";
 import ThrowablesScene from "../ThrowableScenes";
 // // Dynamically import ThrowablesScene component
@@ -270,7 +270,7 @@ const navigate = useNavigate();
     <div className="grid justify-items-center mb-8 grid-cols-1 mo:grid-cols-2 ta:grid-cols-3 de:grid-cols-4 des:grid-cols-5 w-full gap-4 pt-8 mo:w-[90%] ta:w-[80%] de:w-[90%] des:w-[80%]">
       {services.map((service, i) => (
   <Link key={i} to={`/?service=${service.queryParam}`} onClick={() => openServiceModal(service)}>
-    <div className="rounded-xl hover:shadow-lg hover:scale-105 hover:transition hover:ease-out hover:duration-300">
+    <div className="rounded-xl hover:shadow-lg hover:scale-105 hover:transition hover:ease-in-out hover:duration-300">
       <img
         src={service.src}
         alt={service.alt}

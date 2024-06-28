@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { StoreContext } from "../StoreContext";
-import { useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import "../Bookings/Bookings.css"
 function MyBookings() {
   const { apiInstance} = useContext(StoreContext);
   const token = localStorage.getItem("userdbtoken");
@@ -44,10 +44,14 @@ const getStatusColor = (status) =>{
 
   return (
     <>
-      <div className="">
+      <div className="mb-4 overflow-x-hidden">
         <h2 className="font-bold mb-14 mt-6 ml-4 text-2xl">My Bookings</h2>
+        
 
-        <div className="flex flex-col gap-4 justify-center items-center mo:mb-12">
+        <div className="flex flex-col gap-4 justify-center items-center mb-16 mo:mb-12">
+          {
+             data.length === 0 ? <div className="bg-orange-200 flex flex-col mx-4 rounded-2xl py-4 items-center"><div className="flex items-center ml-6"><img src={require('../../assests/Icons/house.png')} alt="house" className="w-16"/><p className="font-semibold text-base mr-4">Transform your home with ease – book now for a seamless maintenance experience!</p></div><Link to="/services"><button className="px-4 py-2 bg-gradient-to-r from-cyan-500 via-bg-blue-400 to-blue-500 text-white font-bold rounded-lg hover:from-pink-500 hover:to-yellow-500">Explore Services</button></Link></div>:""
+          }
   {data.map((book, index) => (
     <div key={index} className="w-[85%] flex flex-wrap justify-center items-start gap-12 border border-black px-3 py-4  rounded-xl  ">
       <img
@@ -75,8 +79,9 @@ const getStatusColor = (status) =>{
     </div>
   ))}
 </div>
-      
-      </div>
+<div className="flex justify-center ">
+<Link to="/services" className=""><button className="px-4 py-2 bg-gradient-to-r from-cyan-500 via-bg-blue-400 to-blue-500 text-white font-bold rounded-lg hover:from-pink-500 hover:to-yellow-500">Explore More Services</button></Link>
+</div> </div>
     </>
   );
 }

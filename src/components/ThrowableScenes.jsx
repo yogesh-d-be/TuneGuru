@@ -114,7 +114,70 @@ const ThrowablesScene = () => {
   const engineRef = useRef(Matter.Engine.create());
   const [elements, setElements] = useState([]);
 
+  const getInitialElements = () => {
+    const width = window.innerWidth;
+    if (width >= 990) {
+      return [
+        { text: 'Devices', x: 100, y: 0, color: 'red' },
+        { text: 'Vehicles', x: 200, y: 0, color: 'blue' },
+        { text: 'Electrician', x: 300, y: 0, color: 'green' },
+        { text: 'Carpenter', x: 400, y: 0, color: 'orange' },
+        { text: 'Painting', x: 500, y: 0, color: 'purple' },
+        { text: 'Appliances', x: 600, y: 0, color: 'cyan' },
+        { text: 'Water Purifier', x: 700, y: 0, color: 'magenta' },
+        { text: 'Cleaning', x: 800, y: 0, color: 'yellow' },
+        { text: 'Pest control', x: 900, y: 0, color: 'brown' },
+        { text: 'Plumbing', x: 920, y: 0, color: 'gray' },
+      ];
+    } else if((width<=990)&&(width>=768)) {
+      return [
+        { text: 'Devices', x: 50, y: 0, color: 'red' },
+        { text: 'Vehicles', x: 130, y: 0, color: 'blue' },
+        { text: 'Electrician', x: 180, y: 0, color: 'green' },
+        { text: 'Carpenter', x: 230, y: 0, color: 'orange' },
+        { text: 'Painting', x: 280, y: 0, color: 'purple' },
+        { text: 'Appliances', x: 330, y: 0, color: 'cyan' },
+        { text: 'Water Purifier', x: 380, y: 0, color: 'magenta' },
+        { text: 'Cleaning', x: 430, y: 0, color: 'yellow' },
+        { text: 'Pest control', x: 480, y: 0, color: 'brown' },
+        { text: 'Plumbing', x: 530, y: 0, color: 'gray' },
+      ];
+    }
+    else if((width<=768)&&(width>=550)) {
+      return [
+        { text: 'Devices', x: 50, y: 0, color: 'red' },
+        { text: 'Vehicles', x: 100, y: 0, color: 'blue' },
+        { text: 'Electrician', x: 150, y: 0, color: 'green' },
+        { text: 'Carpenter', x: 200, y: 0, color: 'orange' },
+        { text: 'Painting', x: 250, y: 0, color: 'purple' },
+        { text: 'Appliances', x: 300, y: 0, color: 'cyan' },
+        { text: 'Water Purifier', x: 350, y: 0, color: 'magenta' },
+        { text: 'Cleaning', x: 400, y: 0, color: 'yellow' },
+        { text: 'Pest control', x: 450, y: 0, color: 'brown' },
+        { text: 'Plumbing', x: 500, y: 0, color: 'gray' },
+      ];
+    }
+    else if((width<=550)&&(width>=300)) {
+      return [
+        { text: 'Devices', x: 50, y: 0, color: 'red' },
+        { text: 'Vehicles', x: 100, y: 0, color: 'blue' },
+        { text: 'Electrician', x: 100, y: 0, color: 'green' },
+        { text: 'Carpenter', x: 150, y: 0, color: 'orange' },
+        { text: 'Painting', x: 200, y: 0, color: 'purple' },
+        { text: 'Appliances', x: 200, y: 0, color: 'cyan' },
+        { text: 'Water Purifier', x: 250, y: 0, color: 'magenta' },
+        { text: 'Cleaning', x: 300, y: 0, color: 'yellow' },
+        { text: 'Pest control', x: 300, y: 0, color: 'brown' },
+        { text: 'Plumbing', x: 300, y: 0, color: 'gray' },
+      ];
+    }
+    
+  };
+
+  
+
   useEffect(() => {
+    const width = window.innerWidth;
     const engine = engineRef.current;
     const render = Matter.Render.create({
       element: sceneRef.current,
@@ -153,7 +216,48 @@ const ThrowablesScene = () => {
 
     Matter.Engine.run(engine);
     Matter.Render.run(render);
-
+    if (width >= 990){
+    const initialElements = getInitialElements();
+    initialElements.forEach((element) => {
+      const newBody = Matter.Bodies.rectangle(element.x, element.y, 150, 50, {
+        frictionAir: 0.05,
+        restitution: 0.8,
+      });
+      Matter.World.add(engine.world, newBody);
+      setElements((prevElements) => [
+        ...prevElements,
+        { body: newBody, label: element.text, color: element.color },
+      ]);
+    });
+  }
+  else if((width<=990)&&(width>=768)){
+    const initialElements = getInitialElements();
+    initialElements.forEach((element) => {
+      const newBody = Matter.Bodies.rectangle(element.x, element.y, 130, 50, {
+        frictionAir: 0.05,
+        restitution: 0.8,
+      });
+      Matter.World.add(engine.world, newBody);
+      setElements((prevElements) => [
+        ...prevElements,
+        { body: newBody, label: element.text, color: element.color },
+      ]);
+    });
+  }
+  else{
+    const initialElements = getInitialElements();
+    initialElements.forEach((element) => {
+      const newBody = Matter.Bodies.rectangle(element.x, element.y, 100, 50, {
+        frictionAir: 0.05,
+        restitution: 0.8,
+      });
+      Matter.World.add(engine.world, newBody);
+      setElements((prevElements) => [
+        ...prevElements,
+        { body: newBody, label: element.text, color: element.color },
+      ]);
+    });
+  }
     return () => {
       Matter.Engine.clear(engine);
       Matter.Render.stop(render);
@@ -162,38 +266,11 @@ const ThrowablesScene = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const initialElements = [
-      { text: 'Devices', x: 100, y: 0, color: 'red' },
-      { text: 'Vehicles', x: 200, y: 0, color: 'blue' },
-      { text: 'Electrician', x: 300, y: 0, color: 'green' },
-      { text: 'Carpenter', x: 400, y: 0, color: 'orange' },
-      { text: 'Painting', x: 500, y: 0, color: 'purple' },
-      { text: 'Appliances', x: 600, y: 0, color: 'cyan' },
-      { text: 'Water Purifier', x: 700, y: 0, color: 'magenta' },
-      { text: 'Cleaning', x: 800, y: 0, color: 'yellow' },
-      { text: 'Pest control', x: 900, y: 0, color: 'brown' },
-      { text: 'Plumbing', x: 1000, y: 0, color: 'gray' },
-    ];
-
-    initialElements.forEach((element) => {
-      const newBody = Matter.Bodies.rectangle(element.x, element.y, 150, 50, {
-        frictionAir: 0.05,
-        restitution: 0.8,
-      });
-      Matter.World.add(engineRef.current.world, newBody);
-      setElements((prevElements) => [
-        ...prevElements,
-        { body: newBody, label: element.text, color: element.color },
-      ]);
-    });
-  }, []);
-
   return (
     <div
       ref={sceneRef}
       className="throwables-scene"
-      style={{ width: '100%', height: '90vh', position: 'relative', overflow: 'hidden' }}
+      style={{ width: '100%', height: '80vh', position: 'relative', overflow: 'hidden' }}
       onTouchStart={(event) => event.preventDefault()} // Prevent scrolling on touch devices
     >
       {elements.map((element, index) => (

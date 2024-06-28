@@ -37,14 +37,14 @@ function ServiceModal({ isOpenSevice, closeModalService, serviceDetails }) {
           {serviceDetails.images.map((image, i) => (
             <Link key={i} to={serviceDetails.path[i]} className="group">
               <div
-              className="rounded-xl hover:shadow-lg hover:scale-105 hover:transition hover:ease-out hover:duration-250 flex flex-col items-center  p-4 ta:p-2 mo:p-2 group-hover:bg-gray-600 hover:text-white"
+              className="rounded-xl hover:shadow-lg hover:scale-105 transition ease-in-out duration-300 flex flex-col items-center  p-4 ta:p-2 mo:p-2 group-hover:bg-gray-600 hover:text-white"
             >
               <img
                 src={image}
                 alt={`${serviceDetails.alt} ${i + 1}`}
                 className="w-20 h-20 bg-gray-600 box content p-2 rounded-md ta:w-16 mo:w-12"
               />
-              <p className="text-center text-black font-semibold mt-2 text-pretty group-hover:text-white">
+              <p className="text-center text-black font-semibold mt-2 text-pretty group-hover:text-white ">
                 {serviceDetails.capt[i]}
               </p>
             </div></Link>
