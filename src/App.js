@@ -124,7 +124,7 @@ import About from "./components/About/About";
 
 import Login from "./components/Register_Login/LoginModal";
 import Customer from "./components/Register_Login/Customer";
-import Mender from "./components/Register_Login/Mender";
+
 import Profile from './components/Profile/Profile';
 
 
@@ -137,6 +137,7 @@ import { StoreContext, StoreProvider } from "./components/StoreContext";
 import Verify from "./components/Bookings/Verify";
 import MyBookings from "./components/Bookings/MyBookings";
 import ContactForm from "./components/Contact/Contact";
+import Mender from "./components/Mender/Mender";
 
 
 function App() {
@@ -154,6 +155,7 @@ function App() {
           <Route path='/mender' element={<PrivateRoute><Mender /></PrivateRoute>} />
           <Route path='/login' element={<Login />} />
           <Route path='/customer/register' element={<Customer  />} />
+          <Route path='/customer/mender' element={<Mender/>} />
           {/* <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} /> */}
           {/* <Route path='/profile/edit' element={<PrivateRoute><EditProfile /></PrivateRoute>} /> */}
            <Route path='/profile' element={<Profile />} /> 

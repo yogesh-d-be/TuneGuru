@@ -763,7 +763,7 @@ function Profile() {
                                     <div className="mt-6 py-2 border-2 w-48 bg-orange-500 rounded-xl cursor-pointer text-white font-bold border-gray-400"><Link to="/">Home</Link></div>
                                     <div className="mt-6 py-2 border-2 w-48 bg-orange-500 rounded-xl cursor-pointer text-white font-bold border-gray-400"><Link to="/services">Services</Link></div>
                                     <div className="mt-6 py-2 border-2 w-48 bg-orange-500 rounded-xl cursor-pointer text-white font-bold border-gray-400"><Link to="/mybookings">My Bookings</Link></div>
-                                    <div className="mt-6 py-2 border-2 w-48 bg-orange-500 rounded-xl cursor-pointer text-white font-bold border-gray-400"><Link to="/support">Support</Link></div>
+                                    <div className="mt-6 py-2 border-2 w-48 bg-orange-500 rounded-xl cursor-pointer text-white font-bold border-gray-400"><Link to="/contactus">Contact Us</Link></div>
                                 </div>
                             </div>
                         </div>
@@ -808,7 +808,7 @@ function Profile() {
                                     <div className="mt-6 py-2 border-2 w-48 bg-orange-500 rounded-xl cursor-pointer text-white font-bold border-gray-400"><Link to="/">Home</Link></div>
                                     <div className="mt-6 py-2 border-2 w-48 bg-orange-500 rounded-xl cursor-pointer text-white font-bold border-gray-400"><Link to="/services">Services</Link></div>
                                     <div className="mt-6 py-2 border-2 w-48 bg-orange-500 rounded-xl cursor-pointer text-white font-bold border-gray-400"><Link to="/mybookings">My Bookings</Link></div>
-                                    <div className="mt-6 py-2 border-2 w-48 bg-orange-500 rounded-xl cursor-pointer text-white font-bold border-gray-400"><Link to="/support">Support</Link></div>
+                                    <div className="mt-6 py-2 border-2 w-48 bg-orange-500 rounded-xl cursor-pointer text-white font-bold border-gray-400"><Link to="/contactus">Contact Us</Link></div>
                                     <button onClick={handleDeleteAccount} className="mt-6 py-2 border-2 w-48 bg-red-500 rounded-xl cursor-pointer text-white font-bold border-gray-400">Delete My Account</button>
                                 </div>
                             </div>

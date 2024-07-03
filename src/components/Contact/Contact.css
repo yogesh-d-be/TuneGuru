@@ -1,3 +1,8 @@
+.swal2-title {
+  font-size: 17px !important;
+}
+
+
 @keyframes typing{
   from{width: 0;}
   to {width: 100%}

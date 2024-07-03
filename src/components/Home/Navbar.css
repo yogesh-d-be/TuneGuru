@@ -209,6 +209,8 @@ ul{
   
 } 
 
+
+
 .active{
     background-color: rgb(22, 139, 185);
     box-shadow: 1px 1px 1px 1px rgb(153, 222, 210);
@@ -469,11 +471,12 @@ ul{
         position: absolute;
         margin-left: 45px;
     } 
-   
+   /* .contact{
+    width: 169px;
+   } */
 } 
 
 /* Extra large devices (large desktops, 1440px and up) */
 
-  
   
   

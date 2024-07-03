@@ -151,10 +151,14 @@ const confirmLogOut = async () => {
     
     
 
-  // const searchClick = (e) => {
-  //   e.stopPropagation();
-  //   setMenu(true);
-  // };
+  const registerPreventClose = (e) => { // to prevent auto close of navbar when i click register in mobile view
+    e.stopPropagation();
+    setSelectMenu("register")
+  };
+
+  const profilePreventClose = (e) =>{
+    e.stopPropagation();
+  }
 
   const toggleDropdown = () => {
     setDropdown(!dropdown);
@@ -178,7 +182,7 @@ const renderAuthButton = () => {
         <div className="des_search:absolute des_search:top-0 des_search:right-0 des_search:w-[80px] de:absolute de:top-0 de:right-0 de:w-[80px] ta:absolute ta:top-0 ta:right-0 ta:w-[80px] mo:absolute mo:top-0 mo:right-0 mo:w-[50px]">
           <div className="relative drop ">
             <span
-              
+              onClick={profilePreventClose}
               className="no-underline block  rounded-md text-white mr-2"
             >
               <img
@@ -215,7 +219,7 @@ else {
     return (
       <button
         onClick={openLoginModal}
-        className="login no-underline px-4 py-2  rounded-md text-white  bg-orange-600 flex justify-center right-[50%] des_search:absolute des_search:top-3 des_search:right-12 de:absolute de:top-3 de:right-12 ta:absolute ta:top-3 ta:right-8 mo:absolute mo:top-3 mo:right-3 mo:px-3 mo:py-2 mo:text-sm"
+        className="login no-underline px-4 py-2  rounded-md text-white  bg-orange-600 flex justify-center right-[50%] duration-300 transition-all ease-in-out hover:scale-105 des_search:absolute des_search:top-3 des_search:right-12 de:absolute de:top-3 de:right-12 ta:absolute ta:top-3 ta:right-8 mo:absolute mo:top-3 mo:right-3 mo:px-3 mo:py-2 mo:text-sm"
       >
         Login
       </button>
@@ -274,19 +278,19 @@ else {
                 About
               </Link>
             </li> */}
-            <li  className={`list-none list `}>
+            <li  className={`list-none list contact `}>
               <Link
                 to="/contactus"
                 onClick={()=>setSelectMenu("support")}
-                className={`no-underline block px-4 py-2 rounded-md text-white  mr-2 link ${selectMenu === "support"?"active":""}`}
+                className={`no-underline block px-4 py-2 rounded-md text-white  mr-2 link ${selectMenu === "support"?"active":""} ${isLoggedIn?"des_xl:w-[110px] des_2xl:w-[110px]":"des_xl:w-[110px] des_2xl:w-[110px]"}`}
               >
-                Contact
+                Contact Us
               </Link>
             </li>
-            <li  className={`list-none list nav-item  ta:mb-6 des_xl:mr-4 des_2xl:mr-4 des_search:mb-6 relative drop`}  onClick={toggleDropdown}>
+            <li  className={`list-none list nav-item  ta:mb-6 des_xl:mr-4 des_2xl:mr-4 des_search:mb-6 relative drop ${!isLoggedIn?"des_xl:mr-0 des_2xl:mr-0":""}`}  onClick={toggleDropdown}>
               <Link
-                to=""
-                onClick={()=>setSelectMenu("register")}
+               
+                onClick={registerPreventClose}
                 className={`no-underline block px-4 py-2 rounded-md text-white mr-2 link ${selectMenu === "register"?"active":""}`}
               >
                 Register
@@ -299,7 +303,7 @@ else {
                   <Link  onClick={handleRegister}><p className="text-black text-sm hover:text-blue-900 hover:font-semibold des_search:text-base">Register as customer</p></Link>
                 </div>}
                 <div className="w-full py-4 flex justify-center border-t border-gray-300">
-                <Link to="/customer/register" onClick={handleMenuOpen}><p className="text-black text-sm hover:text-blue-900 hover:font-semibold des_search:text-base">Register as mender</p></Link>
+                <Link to="/customer/mender" onClick={handleMenuOpen}><p className="text-black text-sm hover:text-blue-900 hover:font-semibold des_search:text-base">Register as mender</p></Link>
                 </div>
                 </div>
               </div>
@@ -312,16 +316,16 @@ else {
                 to="/cart"
                 className=" relative"
               >
-               <span className=""><img src={require('../../assests/Icons/shopping-cart.png')} alt="shopping-cart" className="w-[97px] des_search:w-[32px] de:w-[32px] ta:w-[32px] mo:w-[28px]"/>
+               <span className=""><img src={require('../../assests/Icons/shopping-cart.png')} alt="shopping-cart" className="w-[45px] des_search:w-[32px] de:w-[32px] ta:w-[32px] mo:w-[28px]"/>
                {(quantity>0) && <span className="absolute top-[-8px] left-6 w-[18px] h-[18px] bg-orange-500 text-white pb-1 rounded-[60%]  flex justify-center items-center text-[12px]  text-center font-semibold">{quantity}</span> }</span>
               </Link>
               
-            </span>):( <span id= "cart" className=" ta:mb-6 mr-6 des_search:absolute des_search:right-32 des_search:top-4 de:absolute de:right-32 de:top-4 ta:absolute ta:right-28 ta:top-4 mo:absolute mo:right-16 mo:top-4" >
+            </span>):( <span id= "cart" className=" ta:mb-6 mr-8 des_search:absolute des_search:right-32 des_search:top-4 de:absolute de:right-32 de:top-4 ta:absolute ta:right-28 ta:top-4 mo:absolute mo:right-16 mo:top-4" >
               <Link
                 to="/cart"
                 className=" relative"
               >
-               <span className=""><img src={require('../../assests/Icons/shopping-cart.png')} alt="shopping-cart" className="w-[97px] des_xl:w-[50px] des_2xl:w-[60px] des_search:w-[32px] de:w-[32px] ta:w-[32px] mo:w-[28px]"/>
+               <span className=""><img src={require('../../assests/Icons/shopping-cart.png')} alt="shopping-cart" className="w-[55px] des_xl:w-[55px] des_2xl:w-[55px] des_search:w-[32px] de:w-[32px] ta:w-[32px] mo:w-[28px]"/>
                {(quantity>0) && <span className="absolute top-[-8px] left-6 w-[18px] h-[18px] bg-orange-500 text-white pb-1 rounded-[60%]  flex justify-center items-center text-[12px]  text-center font-semibold">{quantity}</span> }</span>
               </Link>
               

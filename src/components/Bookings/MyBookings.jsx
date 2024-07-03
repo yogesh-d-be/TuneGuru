@@ -2,6 +2,8 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { StoreContext } from "../StoreContext";
 import { Link, useNavigate } from "react-router-dom";
 import "../Bookings/Bookings.css"
+import { toast } from "react-toastify";
+import Swal from 'sweetalert2';
 function MyBookings() {
   const { apiInstance} = useContext(StoreContext);
   const token = localStorage.getItem("userdbtoken");
@@ -16,6 +18,53 @@ function MyBookings() {
       console.error("Error fetching bookings:", error);
     }
   }, [apiInstance]);
+
+
+  const cancelBookings = async(bookingId)=>{
+    try {
+       
+
+      const response = await Swal.fire({
+        title: 'Are you sure?',
+        text: 'You want to cancel the booking',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        customClass: {
+            title: 'swal-title', // Custom class for title
+            htmlContainer: 'swal-text', // Custom class for text content
+        },
+        // iconHtml: `<img src="${logoutPic}" style="width: 64px; height: 64px;" />` // Replace with your custom webp icon and adjust size as needed
+    });
+
+    if (response.isConfirmed) {
+      await apiInstance.post("/api/book/cancel",{bookingId})
+      
+        Swal.fire({
+            title: 'Booking cancelled',
+            text: 'Booking cancelled successfully.',
+            icon: 'success',
+        })
+        fetchBookings();
+        
+    } else if (response.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+            title: 'Cancelled',
+            text: 'Ready for awesome service experience :)',
+            icon: 'info',
+            // iconHtml: `<img src="${infoPic}" style="width: 204px; height: 164px;" />`, // Use infoPic for info icon
+        });
+        
+    }
+} catch (error) {
+    console.error('Error logging out:', error);
+    toast.error("Error cancel booking")
+     
+  }
+}
 
 const navigate = useNavigate()
 
@@ -32,11 +81,13 @@ const navigate = useNavigate()
 const getStatusColor = (status) =>{
   switch(status){
     case "TuneGuru Mender Searching":
-    return "text-red-700";
+    return "text-orange-900";
     case "TuneGuru Mender Assigned":
       return "text-blue-700"
     case "TuneGuru Mender On Way":
       return "text-green-700";
+    case "Cancel":
+      return "text-red-700"
     default:
       return "text-black";
   }
@@ -72,16 +123,21 @@ const getStatusColor = (status) =>{
       </div>
       <p className="mt-2 font-semibold w-[80px] ">&#x20B9;{book.amount}</p>
       <p className="mt-2 ">Booked services: {book.bookings.length}</p>
-      <p className= {`mt-2 w-60 ${getStatusColor(book.status)}`}>
+      <p className= {`mt-2 w-60 flex justify-center ${getStatusColor(book.status)}`}>
         &#x25cf;<b>{book.status}</b>
       </p>
-      <button onClick={fetchBookings} className="px-4 py-2 bg-red-300 font-semibold rounded-lg transition duration-500 ease-in-out hover:text-red-600 hover:ring-2 hover:ring-red-600 hover:bg-white">Track Booking</button>
+      <button onClick={fetchBookings} className="px-4 py-2 bg-green-300 font-semibold rounded-lg transition duration-500 ease-in-out hover:text-green-600 hover:ring-2 hover:ring-green-600 hover:bg-white">Track Booking</button>
+      {book.status!=="Cancel" ?
+      <button onClick={()=>cancelBookings(book._id)} className="px-4 py-2 bg-red-300 font-semibold rounded-lg transition duration-500 ease-in-out hover:text-red-600 hover:ring-2 hover:ring-red-600 hover:bg-white">Cancel Booking</button>
+    :<div className="px-4 py-2 w-[140px] text-center bg-red-700 font-semibold rounded-lg transition duration-500 ease-in-out text-white">Cancelled</div>
+    }
     </div>
   ))}
 </div>
+{data.length!==0&&
 <div className="flex justify-center ">
 <Link to="/services" className=""><button className="px-4 py-2 bg-gradient-to-r from-cyan-500 via-bg-blue-400 to-blue-500 text-white font-bold rounded-lg hover:from-pink-500 hover:to-yellow-500">Explore More Services</button></Link>
-</div> </div>
+</div> }</div>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 
@@ -7,16 +7,20 @@ import { StoreContext } from "../StoreContext";
 
 import { API_URL } from "../../service/Helper";
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 import '../Contact/Contact.css'
 
 const ContactForm = () => {
   const {profileUserName,profileUserEmail} = useContext(StoreContext);
-  
+  const contactFileRef = useRef(null);
+  const [fileName, setFileName] = useState("");
+
   const [contactUser, setContactUser] = useState({
     name: profileUserName||"",
     emailId: profileUserEmail||"",
     mobileNumber:"",
-    message:""
+    message:"",
+    contactFile:null,
   })
 
  const [editName,setEditName] = useState(false)
@@ -29,14 +33,50 @@ const ContactForm = () => {
       [e.target.name]:e.target.value,
     }))
   }
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const validTypes = ['image/jpeg', 'image/png', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    
+    if(file && validTypes.includes(file.type)){
+      setContactUser((prev)=>({
+        ...prev, contactFile:file
+      }))
+
+      setFileName(file.name)
+    }
+    else{
+      toast.error("Invalid file type")
+      setFileName("")
+      contactFileRef.current.value = ""; // Clear the file input if invalid
+    }
+  };
+
+  const handleContactFile = () =>{
+    contactFileRef.current.click()
+  }
+
+  const clearContactFile = () =>{
+    setContactUser((prev)=>({
+      ...prev, contactFile:null
+    }));
+    setFileName("")
+      contactFileRef.current.value = ""; // Clear the file input if invalid
+      // Disable file input temporarily after clearing
+    contactFileRef.current.setAttribute("disabled", true);
+    setTimeout(() => {
+      contactFileRef.current.removeAttribute("disabled");
+    }, 100);
+  }
+  
 let config = {
   headers:{
-    Authorization: `Bearer ${localStorage.getItem("userdbtoken")}`
+    Authorization: `Bearer ${localStorage.getItem("userdbtoken")}`,
+    'Content-Type': 'multipart/form-data'
   }
 }
   const handleSubmit = async(event) =>{
     event.preventDefault();
-    const {name,emailId,mobileNumber,message} = contactUser
+    const {name,emailId,mobileNumber,message, contactFile} = contactUser
     // if(!name&&!emailId&&!mobileNumber&&!message){
     //   toast.error("Enter All Contact details")
     //   return;
@@ -67,6 +107,16 @@ let config = {
     }
 
     try {
+
+      const formData = new FormData();
+      formData.append("name",name);
+      formData.append("emailId",emailId);
+      formData.append("mobileNumber",mobileNumber)
+      formData.append("message",message);
+      if(contactFile){
+        formData.append("contactFile",contactFile);
+      }
+
       const response = await axios.post(`${API_URL}/api/contact/form`,contactUser,config);
       if (response.data.success) {
         toast.success(response.data.message);
@@ -74,48 +124,97 @@ let config = {
           name: profileUserName||"",
           emailId: profileUserEmail||"",
           mobileNumber:"",
-          message:""
+          message:"",
+          contactFile: null
         })
         setEditEmail(false)
         setEditName(false)
+        setFileName("")
       } else {
-        toast.error(response.response.data.error);
+        toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      if (error.response) {
+        // Server-side errors
+        toast.error(error.response.data.message || "Something went wrong on the server");
+      } else if (error.request) {
+        // Network errors
+        toast.error("Network error, please try again later");
+      } else {
+        // Other errors
+        toast.error("An unexpected error occurred");
+      }
     }
-  }
+  };
+  
 
-  const handleChat = () =>{
-    const {name,emailId,mobileNumber} = contactUser;
-
-    if(name === ""){
+  const handleChat = async() => {
+    const { name, emailId, mobileNumber } = contactUser;
+  
+    if (name === "") {
       toast.error("Enter Your FullName!");
       return;
-    }
-    else if(emailId === ""){
+    } else if (emailId === "") {
       toast.error("Enter Your Email!");
       return;
-    }
-    else if(!emailId.includes("@")){
+    } else if (!emailId.includes("@")) {
       toast.error("Enter Valid Email!");
       return;
     }
-    else if(mobileNumber === ""){
-      toast.error("Enter Your Mobile Number!");
-      return;
-    }
-    else if(mobileNumber.length!==10){
-      toast.error("Enter valid Mobile Number!");
-      return;
-    }
+   
+  try{
+    const {value: whatsappNumber} = await Swal.fire({
+      title: 'Enter Whatsapp Number',
+      input:'text',
+      inputValue: mobileNumber,
+      showCancelButton:true,
+      confirmButtonText: 'OK',
+      cancelButtonText:'Cancel', customClass: {
+        title: 'swal-title'
+      } ,
+      inputValidator: (value) =>{
+        if(!value){
+          return "Enter Mobile Number!";
+        }
+        else if(value.length !== 10){
+          return "Enter Valid Mobile Number!"
+        }
+        return null;
+      }
+    });
 
-    const companyNumber = '7305799500'
-    const message = `I need your assistance.\nMy Name is ${name}.\nMy Email Address: ${emailId}.\nMy Contact Number: ${mobileNumber}`
-    const whatsappUrl = `https://wa.me/${companyNumber}?text=${encodeURIComponent(message)}`;
+    if(whatsappNumber){
+      const result = await Swal.fire({
+         title: `Your Whatsapp Number is ${whatsappNumber}`,
+         showCancelButton: true,
+         confirmButtonText: "Confirm",
+         cancelButtonText:"Edit",
+         customClass: {
+          title: 'swal-title'
+        } 
+      });
 
-    window.open(whatsappUrl,'_blank')
+      if(result.isConfirmed){
+        const companyNumber = '6374694062';
+        const message = `I need your assistance.\nMy Name is ${name}.\nMy Email Address: ${emailId}.\nMy Contact Number: ${whatsappNumber}`;
+        const whatsappUrl = `https://wa.me/${companyNumber}?text=${encodeURIComponent(message)}`;
+
+
+        window.open(whatsappUrl,'_blank');
+      }
+
+      else if(result.dismiss === Swal.DismissReason.cancel){
+        handleChat(); //call the function again after click edit button
+      }
+
+    }    
   }
+  catch(error){
+    toast.error("Something went wrong, check after sometime!")
+  }
+    
+  };
+  
 
  useEffect(()=>{
   const interval = setInterval(()=>{
@@ -155,11 +254,15 @@ let config = {
               <label htmlFor="message" className=" font-semibold">Message</label>
               <textarea name="message" id="message" value={contactUser.message} onChange={handleOnChange} cols="35" rows="5" className="mb-4 rounded-2xl border border-blue-700"></textarea>
               </div>
-            
-              <button type="submit" className="px-4 py-2 bg-blue-800 text-white rounded-xl mb-4">Submit</button>
+              <div onClick={handleContactFile} className="flex items-center gap-2 mb-6 mt-2 " >
+              <img src={require('../../assests/Icons/upload-file.png')} alt="upload" className="w-8 cursor-pointer" id="contactFile" /> <div className="flex flex-col"><div className="flex"><p id="contactFile" className="cursor-pointer"  >Upload File (Optional) </p>{fileName?<button onClick={clearContactFile} className="ml-2 py-1 px-2 rounded-ld font-bold bg-gray-200">x</button>:""}</div><p className="text-[12px]">{fileName || "Choose file .jpg, .jpeg, .png, .doc, .pdf, .docx not more than 5MB"}</p></div>
+              
+              </div>
+              <input type="file" ref={contactFileRef} value=""  name="contactFile" id="contactFile"  onChange={handleFileChange}  className="mb-4 rounded-2xl border border-blue-700" hidden/>
+              <button type="submit" value="" className="px-4 py-2 bg-blue-800 text-white rounded-xl mb-4">Submit</button>
              
             </form>
-            <div className="w-full  flex relative mt-2  de:mt-24 ta:mt-24 mo:mt-24">
+            <div className="sticky z-100 w-full  flex  mt-2  de:mt-24 ta:mt-24 mo:mt-24">
             <img src={require('../../assests/Icons/whatsapp.png')} alt="whatsapp" onClick={handleChat} className="cursor-pointer w-14  absolute right-3 bottom-0 mb-4"/>
           
           {
