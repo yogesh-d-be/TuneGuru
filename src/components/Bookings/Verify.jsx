@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
-import { API_URL } from "../../service/Helper";
+import apiInstance from "../ApiInstance";
 
 
 function Verify() {
@@ -12,16 +11,16 @@ function Verify() {
   const navigate = useNavigate();
 
   const verifyBooking = async (bookingId, success) => {
-    let config = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("userdbtoken")}`,
-      },
-    };
+    // let config = {
+    //   headers: {
+    //     Authorization: `Bearer ${localStorage.getItem("userdbtoken")}`,
+    //   },
+    // };
     try {
-      const response = await axios.post(
-        `${API_URL}/api/book/verify`,
+      const response = await apiInstance.post(
+        `/api/book/verify`,
         { bookingId, success },
-        config
+        // config
       );
 
       return response.data;

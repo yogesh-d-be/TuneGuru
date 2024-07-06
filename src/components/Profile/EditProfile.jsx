@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { updateUserProfile } from "../../service/Api"; // Import API function to update user profile
 
+
 function EditProfile({ profile, fetchProfile, setEditing}) {
+
+   
+
     const [formData, setFormData] = useState({
         username: profile.username || "",
         email: profile.email || "",
         mobilenumber: profile.mobilenumber || "",
         address: profile.address || "",
     });
+
+   
 
     const handleChange = (e) => {
         const { name, value } = e.target;

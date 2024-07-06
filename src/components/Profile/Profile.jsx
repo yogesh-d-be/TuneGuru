@@ -403,7 +403,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
+
 
 import { customerProfile, deleteUserProfile} from "../../service/Api";
 import 'react-toastify/dist/ReactToastify.css';
@@ -413,6 +413,7 @@ import { API_URL } from "../../service/Helper";
 import { StoreContext } from "../StoreContext";
 // import { Modal } from "antd";
 import Swal from 'sweetalert2';
+import apiInstance from "../ApiInstance";
 
 
 
@@ -543,7 +544,7 @@ function Profile() {
                     };
             
                     try {
-                        await axios.post(API_URL + '/customer/delete-profile-pic', formData, config);
+                        await apiInstance.post('/customer/delete-profile-pic', formData, config);
                     } catch (error) {
                         console.error("Error:", error);
                         throw error; // Propagate the error to be handled by the caller
@@ -654,7 +655,7 @@ function Profile() {
                     Authorization: `Bearer ${localStorage.getItem('userdbtoken')}`,
                 },
             };
-            const response = await axios.post(API_URL + '/customer/upload-profile-pic', formData, config);
+            const response = await apiInstance.post('/customer/upload-profile-pic', formData, config);
 
             if (response.data.message === 'Profile picture uploaded successfully') {
                 toast.success(response.data.message);
@@ -688,7 +689,7 @@ function Profile() {
            
             try {
 
-                const response = await axios.post(API_URL+'/customer/delete-profile-pic', formData, config);
+                const response = await apiInstance.post('/customer/delete-profile-pic', formData, config);
             if (response.data.message) {
                 
                 toast.success(response.data.message);
@@ -819,14 +820,30 @@ function Profile() {
                     <div className="w-[25%] border-r border-gray-400 h-screen flex flex-col items-center relative mo:w-full">
                         <div className="h-[50%] nav-c w-full flex flex-col justify-center items-center">
                             <div className="flex items-center justify-center z-10 bg-white rounded-full ">
-                                <img id="profilepic"
-                                    src={profile.userPic ? `/uploads/${profile.userPic}` : require('../../assests/Icons/profile.png')}
-                                    alt="profile"
-                                    className="w-32 border-2 border-white rounded-full pb-1 ta:w-28 mo:w-[80px]"
-                                />
-                                 <div>
+                            {profilePic ? (
+                                    <div className="flex flex-col bg-blue-100 rounded-[40%]">
+                                        <img src={URL.createObjectURL(profilePic)} onClick={handleProfileClick} className=" w-28 rounded-[50%]" alt="profile"/>
+                                        
+                                    </div>
+                                ) : (
+                                    <div className="flex">
+                                    <img
+                                        src={profile.userPic ? `${API_URL}/images/${profile.userPic}` : require('../../assests/Icons/profile.png')}
+                                        alt="profile"
+                                        onClick={handleProfileClick}
+                                        className="w-32 h-[140px] border-2 border-white rounded-[50%] pb-1 ta:w-28 mo:w-[110px] relative"
+                                    />
+                                    <img src={require('../../assests/Icons/pen.png')} alt="edit" className="w-8 mr-2 absolute bottom-0 right-0" onClick={handleEditPic}/>
+                                    </div>
+                                )}
+                                 {/* <button onClick={handleProfilePicUpload} className="bg-blue-100 pt-2">Save</button> */}
+                                <input type="file" accept="image/*" ref={inputRef} onChange={handleProfilePic} className="hidden" />
+                                <div className={`${profilePic?"mb-2":"mb-4"}`}>
+                            {
+                                        picEdit?<div className="mt-6 duration-500 transition-all" onClick={handleEditPic}><button onClick={handleProfileClick} className=" px-3 py-1 bg-green-600 text-white font-semibold rounded-xl">Upload</button> <button onClick={handleProfilePicDelete} className="ml-2 px-3 py-1 bg-red-600 text-white font-semibold rounded-xl">Remove</button></div>  :""
+                                    }
                                     {
-                                        profilePic ?  <button onClick={handleProfilePicUpload  } className={`mt-6 px-3 py-2 bg-green-700 text-white font-semibold rounded-xl`}>Save</button>: ""
+                                        profilePic && save ?  <button onClick={handleProfilePicUpload  } className={`mt-6 px-3 py-2 bg-green-700 text-white font-semibold rounded-xl`}>Save</button>: ""
                                     }
                                 </div>
                             </div>

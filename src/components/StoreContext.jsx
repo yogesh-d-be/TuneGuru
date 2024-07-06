@@ -1,40 +1,46 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-import axios from 'axios';
-import { API_URL } from '../service/Helper';
+
+
+import apiInstance from './ApiInstance';
 
 export const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
   
-  const apiInstance = axios.create({
-    baseURL: API_URL
-  });
+  // const apiInstance = axios.create({
+  //   baseURL: API_URL
+  // });
 
-  apiInstance.interceptors.request.use(
-    (config) => {
-      const token = localStorage.getItem("userdbtoken");
-      config.headers.Authorization = `Bearer ${token}`;
-      return config;
-    },
-    (error) => {
-      console.error("Request Error", error);
-      return Promise.reject(error);
-    }
-  );
+  // apiInstance.interceptors.request.use(
+  //   (config) => {
+  //     const token = localStorage.getItem("userdbtoken");
+  //     config.headers.Authorization = `Bearer ${token}`;
+  //     return config;
+  //   },
+  //   (error) => {
+  //     console.error("Request Error", error);
+  //     return Promise.reject(error);
+  //   }
+  // );
 
-  apiInstance.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      if (error.response && error.response.data.Message === "Token expired") {
-        localStorage.clear();
-        window.location.href = '/';
-        toast.info("Your session expired, please log in again.");
-      }
-      return Promise.reject(error);
-    }
-  );
+  // apiInstance.interceptors.response.use(
+  //   (response) => response,
+  //   (error) => {
+  //     if (error.response && error.response.data.Message === "Token expired") {
+  //       localStorage.clear();
+  //       window.location.href = '/';
+  //       // toast.info("Your session expired, please log in again.");
+  //       Swal.fire({
+  //         // title: "Good job!",
+  //         text: "Your session expired, please log in again.",
+  //         icon: "info"
+  //       });
+  //     }
+  //     return Promise.reject(error);
+  //   }
+  // );
 
   const [cartItems, setCartItems] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -159,7 +165,7 @@ export const StoreProvider = ({ children }) => {
     if (token) {
       for (const [itemId, qty] of Object.entries(localCartItems)) {
         for (let i = 0; i < qty; i++) {
-          await axios.post(API_URL + "/api/cart/add", { s_id: itemId }, {
+          await apiInstance.post("/api/cart/add", { s_id: itemId }, {
             headers: {
               Authorization: `Bearer ${token}`
             }

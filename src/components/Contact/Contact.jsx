@@ -1,14 +1,13 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import axios from "axios";
 
 
 import "react-toastify/dist/ReactToastify.css";
 import { StoreContext } from "../StoreContext";
 
-import { API_URL } from "../../service/Helper";
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import '../Contact/Contact.css'
+import apiInstance from "../ApiInstance";
 
 const ContactForm = () => {
   const {profileUserName,profileUserEmail} = useContext(StoreContext);
@@ -26,6 +25,13 @@ const ContactForm = () => {
  const [editName,setEditName] = useState(false)
  const [editEmail,setEditEmail] = useState(false)
  const [showPopup, setShowPopup] = useState(false);
+
+ const scrollToChat = () =>{
+  const chat = document.getElementById("chat")
+  if(chat){
+    chat.scrollIntoView({behavior:"smooth"})
+  }
+ }
  
   const handleOnChange = (e) =>{
     setContactUser((prev)=>({
@@ -117,7 +123,7 @@ let config = {
         formData.append("contactFile",contactFile);
       }
 
-      const response = await axios.post(`${API_URL}/api/contact/form`,contactUser,config);
+      const response = await apiInstance.post(`/api/contact/form`,contactUser,config);
       if (response.data.success) {
         toast.success(response.data.message);
         setContactUser({
@@ -229,7 +235,10 @@ let config = {
         <div className="flex de:flex-col  ta:flex-col mo:flex-col flex-wrap justify-center">
           <div className="w-[40%] flex flex-col justify-center pl-12 mt-12 des_search:pl-8 de:w-full ta:w-full mo:w-full de:pl-0 de:ml-12 ta:pl-12 ta:pr-12 mo:pl-12 mo:pr-12 "><h1 className="font-bold text-3xl mb-4 mo:text-[23px]">Let's Get In <span className="font-bold text-blue-500">Touch!</span></h1>
               <p className="">Have a question or need assistance? Reach out to us via email, phone, or the contact form below. </p><p>We're eager to assist you.</p>
-              <p className="text-blue-900">Nice hearing from you!</p><img src={require('../../assests/images/Personal_email.png')} alt="email" className="w-[500px]" /></div>
+              <p className="text-blue-900">Nice hearing from you!</p>
+              
+              <p className="font-semibold my-3 des_search:hidden des_xl:hidden des_2xl:hidden">If you want to chat with expert <span onClick={scrollToChat} className="text-blue-600 cursor-pointer" >Click here</span></p>
+              <img src={require('../../assests/images/Personal_email.png')} alt="email" className="w-[500px]" /></div>
           <div className="w-[60%] flex flex-col justify-center items-center de:w-full ta:w-full mo:w-full">
             <form onSubmit={handleSubmit} className=" mt-2 w-[70%] rounded-2xl des_search:w-[80%] de:w-[80%] ta:w-[80%] mo:w-[83%] mo:px-6 mo:mx-12 bg-blue-200 px-12 py-4">
               
@@ -237,16 +246,16 @@ let config = {
   
 <label htmlFor="name" className="font-semibold">Full Name</label>
 <div className="relative">
-              <input type="text" name="name" id="name" value={contactUser.name} onChange={handleOnChange} readOnly={!editName} className={`mb-4 rounded-2xl border border-blue-700 w-full ${editName?"mb-0":""}`}/>{editName?<button type="button" onClick={() => setEditName(!editName)} className="text-blue-500 absolute right-4 top-2 ">Save</button>:<button type="button" onClick={() => setEditName(!editName)} className="text-blue-500 absolute right-4 top-2 ">Edit</button>} 
-              {editName&&<p className="mb-3 text-[13px] ml-2 text-red-700">Now you can edit the Full Name</p>}
+              <input type="text" name="name" id="name" value={contactUser.name} onChange={handleOnChange} readOnly={!editName} className={`mb-4 rounded-2xl border border-blue-700 w-full ${editName?"mb-0":""}`}/>{editName?<button type="button" onClick={() => setEditName(!editName)} className="text-blue-500 absolute right-4 top-2 save">Save</button>:<button type="button" onClick={() => setEditName(!editName)} className="text-blue-500 absolute right-4 top-2 edit">Edit</button>} 
+              {editName&&<p className="mb-3 text-[13px] ml-2 text-red-700 edit-text">Now you can edit the Full Name</p>}
               </div> </div>
-              <div className="flex flex-col gap-2">
+              <div className={`flex flex-col gap-2 ${!editName?"editbut":""}`} >
               <label htmlFor="emailId" className={`font-semibold relative`}>Email</label>
               <div className="relative">
-              <input type="email" name="emailId" id="emailId" value={contactUser.emailId} onChange={handleOnChange} readOnly={!editEmail} className={`mb-4 rounded-2xl border border-blue-700 w-full ${editEmail?"mb-0":""}`}/>{editEmail?<button type="button" onClick={() => setEditEmail(!editEmail)} className="text-blue-500 absolute right-4 top-2 ">Save</button>:<button type="button" onClick={() => setEditEmail(!editEmail)} className="text-blue-500 absolute right-4 top-2 ">Edit</button>} 
-              {editEmail&&<p className="mb-3 text-[13px] ml-2 text-red-700">Now you can edit the Email</p>}
+              <input type="email" name="emailId" id="emailId" value={contactUser.emailId} onChange={handleOnChange} readOnly={!editEmail} className={`mb-4 rounded-2xl border border-blue-700 w-full ${editEmail?"mb-0":""}`}/>{editEmail?<button type="button" onClick={() => setEditEmail(!editEmail)} className="text-blue-500 absolute right-4 top-2 save">Save</button>:<button type="button" onClick={() => setEditEmail(!editEmail)} className="text-blue-500 absolute right-4 top-2 edit ">Edit</button>} 
+              {editEmail&&<p className="mb-3 text-[13px] ml-2 text-red-700 edit-text">Now you can edit the Email</p>}
               </div> </div>
-              <div className="flex flex-col gap-2">
+              <div className={`flex flex-col gap-2 ${!editEmail?"editbut":""} `} >
               <label htmlFor="mobileNumber" className="font-semibold">Mobile Number (Whatsapp Number)</label>
               <input type="number" name="mobileNumber" id="mobileNumber" value={contactUser.mobileNumber} onChange={handleOnChange} className="mb-4 rounded-2xl border border-blue-700"/>
               </div>
@@ -255,15 +264,15 @@ let config = {
               <textarea name="message" id="message" value={contactUser.message} onChange={handleOnChange} cols="35" rows="5" className="mb-4 rounded-2xl border border-blue-700"></textarea>
               </div>
               <div onClick={handleContactFile} className="flex items-center gap-2 mb-6 mt-2 " >
-              <img src={require('../../assests/Icons/upload-file.png')} alt="upload" className="w-8 cursor-pointer" id="contactFile" /> <div className="flex flex-col"><div className="flex"><p id="contactFile" className="cursor-pointer"  >Upload File (Optional) </p>{fileName?<button onClick={clearContactFile} className="ml-2 py-1 px-2 rounded-ld font-bold bg-gray-200">x</button>:""}</div><p className="text-[12px]">{fileName || "Choose file .jpg, .jpeg, .png, .doc, .pdf, .docx not more than 5MB"}</p></div>
+              <img src={require('../../assests/Icons/upload-file.png')} alt="upload" className="w-8 cursor-pointer" id="contactFile" /> <div className="flex flex-col"><div className="flex"><p id="contactFile" className="cursor-pointer"  >Upload File (Optional) </p>{fileName?<img onClick={clearContactFile} src={require('../../assests/Icons/cancel.png')} className="ml-3 h-5 mt-1 cursor-pointer" alt="cancel"/>:""}</div><p className="text-[12px]">{fileName || "Choose file .jpg, .jpeg, .png, .doc, .pdf, .docx not more than 5MB"}</p></div>
               
               </div>
               <input type="file" ref={contactFileRef} value=""  name="contactFile" id="contactFile"  onChange={handleFileChange}  className="mb-4 rounded-2xl border border-blue-700" hidden/>
               <button type="submit" value="" className="px-4 py-2 bg-blue-800 text-white rounded-xl mb-4">Submit</button>
              
             </form>
-            <div className="sticky z-100 w-full  flex  mt-2  de:mt-24 ta:mt-24 mo:mt-24">
-            <img src={require('../../assests/Icons/whatsapp.png')} alt="whatsapp" onClick={handleChat} className="cursor-pointer w-14  absolute right-3 bottom-0 mb-4"/>
+            <div id="chat" className="sticky z-100 w-full  flex   de:mt-24 ta:mt-24 mo:mt-24">
+            <img src={require('../../assests/Icons/whatsapp.png')} alt="whatsapp" onClick={handleChat} className="cursor-pointer w-14  absolute right-3 bottom-0 mb-8 de:mb-3 ta:mb-3 mo:mb-3"/>
           
           {
             showPopup&&(

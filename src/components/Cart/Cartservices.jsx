@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../StoreContext";
 import { API_URL } from "../../service/Helper";
-import axios from "axios";
+
 
 import { DatePicker, Space, Button, Dropdown, Menu } from 'antd';
 import dayjs from 'dayjs';
@@ -12,11 +12,12 @@ import '../Home/Navbar.css'
 import { CloseOutlined } from '@ant-design/icons';
 import { toast } from "react-toastify";
 import Swal from 'sweetalert2'
+import apiInstance from "../ApiInstance";
 
 
 function Cartservices() {
   const { cartItems, deleteFromCart, serviceList, addToCart, removeFromCart, userId } = useContext(StoreContext);
-  const token = localStorage.getItem("userdbtoken");
+  // const token = localStorage.getItem("userdbtoken");
   const [order, setOrder] = useState(false);
   const [selectCart, setSelectCart] = useState("cart");
   const [showMore, setShowMore] = useState(false);
@@ -169,12 +170,14 @@ const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
    
 
     try {
-      let response = await axios.post(`${API_URL}/api/book/place`, bookingData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type':'multipart/form-data'
-        }
-      });
+      let response = await apiInstance.post(`/api/book/place`, bookingData, 
+      //   {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //     'Content-Type':'multipart/form-data'
+      //   }
+      // }
+    );
       setTimeout(()=>{
         setLoading(false);
       if(selectedPaymentMethod === "cash" ){
