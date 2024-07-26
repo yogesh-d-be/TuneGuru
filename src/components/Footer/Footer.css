@@ -1,0 +1,153 @@
+.footer {
+    position: relative;
+    background-color: #526ac4;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+    padding: 20px 40px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 40px;
+}
+.footer-category{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 160px;
+    row-gap: 40px;
+    margin-left: 30px;
+}
+
+/* .footer-left, .footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px; /* Space between the icons */
+/* } */ 
+.footer-left {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px; Space between the icons */
+    position: absolute;
+    left: 0;
+    padding-left: 20px;
+}
+.footer-right{
+    position: absolute;
+    right: 0;
+    padding-right: 20px;
+}
+
+.shape {
+    
+    width: 40px;
+    height: 40px;
+    animation: moveUpDown 10s infinite ease-in-out;
+}
+
+.shape-1 {
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    animation-delay: 2s;
+}
+
+.shape-3 {
+    animation-delay: 8s;
+}
+
+.house-container {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.footer-main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+@keyframes moveUpDown {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(300px);
+    }
+}
+
+@media screen  and (max-width:1245px) {
+    @keyframes moveUpDown {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(390px);
+        }
+    }
+    
+}
+
+@media screen and (max-width:640px) {
+    .footer-category{
+        
+            flex-direction: column; 
+            align-items: center; 
+            column-gap: 0; 
+            row-gap: 20px; 
+    
+}
+.service{
+    padding-right:15px ;
+}
+.social{
+    padding-left: 26px;
+}
+@keyframes moveUpDown {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(620px);
+    }
+}
+}
+
+@media screen and (max-width:400px){
+    .footer-category{
+        
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center;
+        width: 100%;
+        column-gap: 0; 
+        row-gap: 20px; 
+
+}
+.footer-main-content{
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.service{
+padding-right:15px ;
+}
+.social{
+padding-left: 26px;
+}
+
+
+}
+

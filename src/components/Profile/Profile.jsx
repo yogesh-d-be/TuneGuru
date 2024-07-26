@@ -435,6 +435,8 @@ function Profile() {
     const [profilePic, setProfilePic] = useState(null);
     const [picEdit, setPicEdit] = useState(false)
 
+    
+
     const handleProfile = () => {
         setProfileShow(!profileShow);
     };
@@ -649,13 +651,13 @@ function Profile() {
         formData.append('userPic', profilePic);
 
         try {
-            let config = {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${localStorage.getItem('userdbtoken')}`,
-                },
-            };
-            const response = await apiInstance.post('/customer/upload-profile-pic', formData, config);
+            // let config = {
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data',
+            //         Authorization: `Bearer ${localStorage.getItem('userdbtoken')}`,
+            //     },
+            // };
+            const response = await apiInstance.post('/customer/upload-profile-pic', formData);
 
             if (response.data.message === 'Profile picture uploaded successfully') {
                 toast.success(response.data.message);

@@ -43,7 +43,7 @@ export const StoreProvider = ({ children }) => {
   // );
 
   const [cartItems, setCartItems] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [serviceList, setServiceList] = useState([]);
   const [userId, setUserId] = useState(null); // Add userId state
   const navigate = useNavigate();
@@ -53,6 +53,13 @@ export const StoreProvider = ({ children }) => {
   const [profileUserName, setProfileUserName] = useState("")
   const [profileUserEmail,setProfileUserEmail] = useState("")
 
+
+
+  const [isLoggedIn, setIsLoggedIn] = useState(() => { //this prevent when private router page reload then redirect to the register page if still have token
+    
+    return localStorage.getItem('isLoggedIn') === 'true';
+  });
+
   const openLoginModal = () => {
     setLoginModalOpen(true);
   };
@@ -60,9 +67,18 @@ export const StoreProvider = ({ children }) => {
   const closeLoginModal = () => {
     setLoginModalOpen(false);
   };
+  // const token = localStorage.getItem("userdbtoken");
+  // useEffect(()=>{
+   
+  //   if (token) {
+  //     setIsLoggedIn(true);
+  //     console.log("login")
+  //   }
+  // },[token])
 
   const logout = () => {
     localStorage.removeItem("userdbtoken");
+    localStorage.setItem('isLoggedIn', 'false');
     setIsLoggedIn(false);
     setCartItems({});
     setUserId(null); // Clear userId on logout
@@ -237,8 +253,9 @@ export const StoreProvider = ({ children }) => {
       await fetchServiceList();
 
       const token = localStorage.getItem("userdbtoken");
+     
       if (token) {
-        setIsLoggedIn(true);
+        
         await loadUserDetails(token); // Load user details including userId
         const localCartItems = JSON.parse(localStorage.getItem("cartItems") || "{}");
         await syncLocalCartToServer(localCartItems);

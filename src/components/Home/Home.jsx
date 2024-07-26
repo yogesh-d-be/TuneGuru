@@ -21,6 +21,7 @@ import img10 from "../../assests/Icons/paint-roller.png";
 import ServiceModal from "./ServiceModal";
 import { StoreContext } from "../StoreContext";
 import ThrowablesScene from "../ThrowableScenes";
+import Footer from "../Footer/Footer";
 // // Dynamically import ThrowablesScene component
 // const ThrowablesScene = React.lazy(() => import("../ThrowableScenes"));
 
@@ -298,11 +299,11 @@ const navigate = useNavigate();
       <ThrowablesScene  />
     </div>
 
-      
-<footer className="bg-blue-900 text-white text-center py-4">
+      <Footer/>
+{/* <footer className="bg-blue-900 text-white text-center py-4">
         {/* Footer content */}
-        © 2024 TuneGuru. All rights reserved.
-      </footer>
+        {/* © 2024 TuneGuru. All rights reserved.
+      </footer> */} 
     </>
   )
 }

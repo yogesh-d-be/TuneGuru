@@ -1,10 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Select, { components } from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { toast } from 'react-toastify';
 import '../Home/Navbar'
 import apiInstance from "../ApiInstance";
+import axios from "axios";
+import Swal from 'sweetalert2';
+import { API_URL } from "../../service/Helper";
+import '../Contact/Contact.css'
+import { StoreContext } from "../StoreContext";
+import LoginModal from "../Register_Login/LoginModal";
+
 function Mender(){
+
+    const { closeLoginModal, loginModalOpen } = useContext(StoreContext)
+
 
     const [menderData, setMenderData] = useState({
         name:"",
@@ -13,17 +23,22 @@ function Mender(){
         currentAddress:"",
         expertise:[],
         experience:"",
+        profilePicture:null,
         aadhaar:null,
         pancard:null,
         bank:null
     })
 
+    const [profilePicture, setProfilePicture] = useState(null);
     const [aadhaar, setAadhaar] = useState(null);
     const [pancard, setPancard] = useState(null);
     const [bankDetails, setBankDetails] = useState(null)
 
     const [selectedExpertise, setSelectedExpertise] = useState([]);
 
+    const [showPopup, setShowPopup] = useState(false);
+
+    const profileRef = useRef(null);
     const aadhaarRef = useRef(null);
     const panRef = useRef(null);
     const bankRef = useRef(null);
@@ -34,6 +49,73 @@ function Mender(){
             form.scrollIntoView({behavior:"smooth"})
         }
     }
+
+    useEffect(()=>{
+        const interval = setInterval(()=>{
+          setShowPopup((prevPopup)=>!prevPopup);
+        },5000)
+        return () => clearInterval(interval)
+       },[])
+    
+       const handleChat = async() => {
+        
+       
+      try{
+        const {value: whatsappNumber} = await Swal.fire({
+          title: 'Enter Whatsapp Number',
+          input:'text',
+        //   inputValue: mobileNumber,
+          showCancelButton:true,
+          confirmButtonText: 'OK',
+          cancelButtonText:'Cancel', customClass: {
+            title: 'swal-title'
+          } ,
+          inputValidator: (value) =>{
+            if(!value){
+              return "Enter Mobile Number!";
+            }
+            else if(value.length !== 10){
+              return "Enter Valid Mobile Number!"
+            }
+            return null;
+          }
+        });
+    
+        if(whatsappNumber){
+          const result = await Swal.fire({
+             title: `Your Whatsapp Number is ${whatsappNumber}`,
+             showCancelButton: true,
+             confirmButtonText: "Confirm",
+             cancelButtonText:"Edit",
+             customClass: {
+              title: 'swal-title'
+            } 
+          });
+    
+          if(result.isConfirmed){
+            const companyNumber = '6374694062';
+            const message = `I need your assistance. \nI am willing to join with Tuneguru family`;
+            const whatsappUrl = `https://wa.me/${companyNumber}?text=${encodeURIComponent(message)}`;
+    
+    
+            window.open(whatsappUrl,'_blank');
+          }
+    
+          else if(result.dismiss === Swal.DismissReason.cancel){
+            handleChat(); //call the function again after click edit button
+          }
+    
+        }    
+      }
+      catch(error){
+        toast.error("Something went wrong, check after sometime!")
+      }
+        
+      };
+
+      const handleProfilePic = () =>{
+        profileRef.current.click();
+      }
 
     const handleAadhaar = () =>{
         aadhaarRef.current.click();
@@ -47,41 +129,80 @@ function Mender(){
         bankRef.current.click();
     }
 
-    const handleClearAadhaar = () =>{
-        setMenderData((prev)=>({
-            ...prev, aadhaar:null
-        }))
-        setAadhaar(null);
-        aadhaarRef.current.value= "";
-        // Disable file input temporarily after clearing
-        aadhaarRef.current.setAttribute("disabled", true);
-    setTimeout(() => {
-      aadhaarRef.current.removeAttribute("disabled");
-    }, 100);
+    const handleClearProfile = () => {
+        setMenderData(prev => ({
+            ...prev, profilePicture: null
+        }));
+        setProfilePicture(null)
+        if (profileRef.current) {
+            profileRef.current.value = "";
+            // Disable file input temporarily after clearing
+            profileRef.current.setAttribute("disabled", true);
+            setTimeout(() => {
+                if (profileRef.current) {
+                    profileRef.current.removeAttribute("disabled");
+                }
+            }, 1000);
+        } else {
+            console.error("aadhaarRef.current is null");
+        }
     }
-    const handleClearPancard = () =>{
-        setMenderData((prev)=>({
-            ...prev, pancard:null
-        }))
+
+    const handleClearAadhaar = () => {
+        setMenderData(prev => ({
+            ...prev, aadhaar: null
+        }));
+        setAadhaar(null)
+        if (aadhaarRef.current) {
+            aadhaarRef.current.value = "";
+            // Disable file input temporarily after clearing
+            aadhaarRef.current.setAttribute("disabled", true);
+            setTimeout(() => {
+                if (aadhaarRef.current) {
+                    aadhaarRef.current.removeAttribute("disabled");
+                }
+            }, 1000);
+        } else {
+            console.error("aadhaarRef.current is null");
+        }
+    }
+
+    const handleClearPancard = () => {
+        setMenderData(prev => ({
+            ...prev, pancard: null
+        }));
         setPancard(null);
-        panRef.current.value= "";
-        // Disable file input temporarily after clearing
-        panRef.current.setAttribute("disabled", true);
-    setTimeout(() => {
-      panRef.current.removeAttribute("disabled");
-    }, 100);
+        if (panRef.current) {
+            panRef.current.value = "";
+            // Disable file input temporarily after clearing
+            panRef.current.setAttribute("disabled", true);
+            setTimeout(() => {
+                if (panRef.current) {
+                    panRef.current.removeAttribute("disabled");
+                }
+            }, 100);
+        } else {
+            console.error("panRef.current is null");
+        }
     }
-    const handleClearBank = () =>{
-        setMenderData((prev)=>({
-            ...prev, bank:null
-        }))
+
+    const handleClearBank = () => {
+        setMenderData(prev => ({
+            ...prev, bank: null
+        }));
         setBankDetails(null);
-        bankRef.current.value= "";
-        // Disable file input temporarily after clearing
-        bankRef.current.setAttribute("disabled", true);
-    setTimeout(() => {
-      bankRef.current.removeAttribute("disabled");
-    }, 100);
+        if (bankRef.current) {
+            bankRef.current.value = "";
+            // Disable file input temporarily after clearing
+            bankRef.current.setAttribute("disabled", true);
+            setTimeout(() => {
+                if (bankRef.current) {
+                    bankRef.current.removeAttribute("disabled");
+                }
+            }, 100);
+        } else {
+            console.error("bankRef.current is null");
+        }
     }
 
     const onChangeHandle = (event) =>{
@@ -91,6 +212,15 @@ function Mender(){
         //     toast.error("Invalid file type. Only pdf files are allowed")
         // }
 
+
+        if(name === 'profilePicture'){
+            const file = files[0];
+            if(!file) return;
+            setMenderData((prev)=>({
+                ...prev, profilePicture:file
+            }))
+            setProfilePicture(file)
+        }
         if(name === 'aadhaar'){
             const file = files[0];
             if(!file) return;
@@ -222,12 +352,19 @@ function Mender(){
 
     let config = {
         headers:{
-            Authorization: `Bearer ${localStorage.getItem("userdbtoken")}`,
+            // Authorization: `Bearer ${localStorage.getItem("userdbtoken")}`,
             'Content-Type':'multipart/form-data'
         }
     }
 
-    const handleSubmit = async (event) => {
+    const handleRegisteredSubmit = (event) =>{
+        event.preventDefault();
+        toast.info("You Are Already Registered With Tuneguru Family")
+    }
+    
+    
+    
+        const handleSubmit = async (event) => {
         event.preventDefault();
     
         const { name, emailId, mobileNumber, currentAddress, expertise, experience, aadhaar, pancard, bank } = menderData;
@@ -249,6 +386,8 @@ function Mender(){
             return toast.error("Enter Your Expertise Field!");
         } else if (experience === "") {
             return toast.error("Enter Your Year Of Experience!");
+        }else if(!profilePicture){
+            return toast.error("Upload Your Picture!");
         }else if(!aadhaar){
             return toast.error("Upload Your Aadhaar!");
         }else if(!pancard){
@@ -260,7 +399,7 @@ function Mender(){
     
         try {
             // Step 1: Validate the form data (excluding files)
-            const validationResponse = await apiInstance.post(`/api/mender/validate`, { emailId, mobileNumber });
+            const validationResponse = await axios.post(`${API_URL}/api/mender/validate`, { emailId, mobileNumber });
     
             if (validationResponse.status === 200) {
                 // Proceed only if validation is successful
@@ -273,6 +412,9 @@ function Mender(){
                 formData.append("experience", experience);
     
                 
+                if (profilePicture) {
+                    formData.append("profilePicture", profilePicture);
+                }
                 if (aadhaar) {
                     formData.append("aadhaar", aadhaar);
                 }
@@ -296,14 +438,19 @@ function Mender(){
                         currentAddress: "",
                         expertise: [],
                         experience: "",
+                        profilePicture:null,
                         aadhaar: null,
                         pancard: null,
                         bank: null
                     });
                     setSelectedExpertise([]);
+                    handleClearProfile();
                     handleClearAadhaar();
                     handleClearPancard();
                     handleClearBank();
+                    setIsRegistered(true);
+                
+                    localStorage.setItem('menderRegistrationState', JSON.stringify(true));
                 } else {
                     toast.error(response.data.message);
                 }
@@ -326,8 +473,21 @@ function Mender(){
 
             return <components.MenuList {...props} options={filteredOptions} />
     }
+
+    const [isRegistered, setIsRegistered] = useState(false)
+
+    useEffect(() => {
+        const storedState = localStorage.getItem('menderRegistrationState');
+        if (storedState) {
+          setIsRegistered(JSON.parse(storedState));
+        }
+      }, []);
+ 
 return(
 <>
+{loginModalOpen && (
+        <LoginModal isOpen={true} closeModal={closeLoginModal} />
+      )}
 <div className="flex w-[80%] justify-center ml-[10%] de:flex-col de:justify-center de:items-center de:w-full de:ml-0 de:mt-14 ta:flex-col ta:justify-center ta:items-center ta:mt-12 mo:mt-12 mo:flex-col mo:justify-center mo:items-center ta:overflow-x-hidden mo:overflow-x-hidden">
     <div className="flex flex-col items-center justify-center w-[40%] text-balance ml-12 lead space-y-8 de:w-full de:ml-0 ta:w-full ta:ml-0 mo:w-full mo:ml-0"><h1 className="text-4xl font-bold ta:text-3xl ta:text-center mo:text-xl mo:text-center">Work Flexibly. Earn Steadily. Thrive Safely.</h1>
     <p className="font-semibold text-lg mt-6 ta:text-base ta:text-center mo:text-center mo:text-base">Join Today, Work Tomorrow: Easy Registration for Top Professionals!</p>
@@ -383,14 +543,17 @@ return(
     <div className="w-[90%] bg-blue-900 rounded-xl px-6 py-4 mt-8 flex flex-col justify-center items-center">
         <h1 className="text-lg font-bold mt-6 text-white">Ready to Get Started?</h1>
         <p className="my-6 text-white">Click the button below to form then register and become a part of our trusted network.</p>
-        <button onClick={scrollToForm} className="w-[200px] px-4 py-2 bg-orange-500 rounded-xl text-white font-semibold hover:ring hover:ring-orange-500 hover:text-orange-500 hover:bg-white hover:scale-105 duration-300 transition-all ease-in-out">Register Now</button>
+        {!isRegistered ?<button onClick={scrollToForm} className="w-[200px] px-4 py-2 bg-orange-500 rounded-xl text-white font-semibold hover:ring hover:ring-orange-500 hover:text-orange-500 hover:bg-white hover:scale-105 duration-300 transition-all ease-in-out">Register Now</button>
+        :
+        <div className="w-[200px] px-4 py-2 bg-orange-500 rounded-xl text-white font-semibold text-center">You Are Registered</div>}
     </div>
 
 </div>
 
 {/* Form */}
-<div id="form" className="mt-12 flex flex-col justify-center items-center w-full">
-        <form onSubmit={handleSubmit} className="flex flex-col bg-blue-900 px-14 py-4 w-[80%]  shadow-2xl rounded-xl ta:w-[90%]  mo:w-full mo:rounded-none">
+ 
+<div id="form" className="mt-12 flex flex-col justify-center items-center w-full mb-12">
+        <form  onSubmit={!isRegistered ? handleSubmit : handleRegisteredSubmit} className="flex flex-col bg-blue-900 px-14 py-4 w-[80%]  shadow-2xl rounded-xl ta:w-[90%]  mo:w-full mo:rounded-none">
             <div className="flex flex-col gap-2 w-[80%] ml-[10%] ta:ml-[5%] mo:w-full mo:ml-0">
             <h1 className="text-2xl font-bold my-12 text-white">Register Your Details</h1>
             <input type="text" name="name" id="" value={menderData.name} placeholder="Full Name" onChange={onChangeHandle} className="rounded-xl "/>
@@ -449,11 +612,18 @@ return(
                 <option value="more than 5 years">more than 5 years</option>
             </select>
             <textarea name="currentAddress" id="" cols="30" rows="6" value={menderData.currentAddress} placeholder="Current Address" onChange={onChangeHandle} className="mt-3 rounded-xl"></textarea>
+            <div onClick={handleProfilePic } className="mt-3 ">
+                {profilePicture ? <div className="flex flex-col gap-2 justify-center items-center cursor-pointer"><img src={URL.createObjectURL(profilePicture)} className="w-40" alt="Mender"/><div className="flex"><p className="text-white font-semibold text-center">{profilePicture.name}</p><img onClick={handleClearProfile} src={require('../../assests/Icons/cancel.png')} className="ml-3 h-5 mt-1 cursor-pointer" alt="cancel"/></div></div>
+                        :
+                        <div className="flex flex-col gap-2 justify-center items-center cursor-pointer"><img src={require('../../assests/Icons/photo.png')} className="w-40" alt="Mender"/> 
+                        <p className="text-white font-semibold">Upload Your Photo</p></div>}
+            </div>
+            <input ref={profileRef} type="file" name="profilePicture"  accept="image/*"  onChange={onChangeHandle} hidden/>
             <div onClick={handleAadhaar } className="mt-3 ">
                 {aadhaar? <div className="flex flex-col gap-2 justify-center items-center cursor-pointer"><embed src={URL.createObjectURL(aadhaar)}
                         type="application/pdf"
                         width="100%"
-                        height="300px" /><div className="flex"><p className="text-white font-semibold">{aadhaar.name}</p><img onClick={handleClearAadhaar} src={require('../../assests/Icons/cancel.png')} className="ml-3 h-5 mt-1 cursor-pointer" alt="cancel"/></div></div>
+                        height="300px" /><div className="flex"><p className="text-white font-semibold text-center">{aadhaar.name}</p><img onClick={handleClearAadhaar} src={require('../../assests/Icons/cancel.png')} className="ml-3 h-5 mt-1 cursor-pointer" alt="cancel"/></div></div>
                         :
                         <div className="flex flex-col gap-2 justify-center items-center cursor-pointer"><img src={require('../../assests/images/aadhaar-card.png')} className="w-40" alt="aadhaar card"/> 
                         <p className="text-white font-semibold">Upload Aadhaar PDF</p></div>}
@@ -463,7 +633,7 @@ return(
                 {pancard?<div className="flex flex-col gap-2 justify-center items-center cursor-pointer"><embed src={URL.createObjectURL(pancard)}
                         type="application/pdf"
                         width="100%"
-                        height="300px" /><div className="flex"><p className="text-white font-semibold">{pancard.name}</p><img onClick={handleClearPancard} src={require('../../assests/Icons/cancel.png')} className="ml-3 h-5 mt-1 cursor-pointer" alt="cancel"/></div></div>
+                        height="300px" /><div className="flex"><p className="text-white font-semibold text-center">{pancard.name}</p><img onClick={handleClearPancard} src={require('../../assests/Icons/cancel.png')} className="ml-3 h-5 mt-1 cursor-pointer" alt="cancel"/></div></div>
                         :
                         <div className="flex flex-col gap-2 justify-center items-center cursor-pointer"><img src={require('../../assests/images/pan-card.png')} className="w-40" alt="pancard"/> 
                         <p className="text-white font-semibold">Upload Pancard PDF</p></div>}
@@ -473,7 +643,7 @@ return(
                 {bankDetails? <div className="flex flex-col gap-2 justify-center items-center cursor-pointer"><embed src={URL.createObjectURL(bankDetails)}
                         type="application/pdf"
                         width="100%"
-                        height="300px" /><div className="flex"><p className="text-white font-semibold">{bankDetails.name}</p><img onClick={handleClearBank} src={require('../../assests/Icons/cancel.png')} className="ml-3 h-5 mt-1 cursor-pointer" alt="cancel"/></div></div>
+                        height="300px" /><div className="flex"><p className="text-white font-semibold text-center">{bankDetails.name}</p><img onClick={handleClearBank} src={require('../../assests/Icons/cancel.png')} className="ml-3 h-5 mt-1 cursor-pointer" alt="cancel"/></div></div>
                         :
                         <div className="flex flex-col gap-2 justify-center items-center cursor-pointer"><img src={require('../../assests/images/bank passbook.png')} className="w-40" alt="bank passbook"/> 
                         <p className="text-white font-semibold">Upload Bank Passbook PDF</p></div>}
@@ -485,7 +655,27 @@ return(
             <button type="submit" className="mt-12 px-4 py-2 rounded-xl bg-orange-500 text-white font-bold hover:bg-white hover:ring hover:ring-orange-500 hover:text-orange-500 hover:scale-105 duration-300 transition-all ease-in-out w-[200px] mx-auto">Submit</button>
             </div>
         </form>
-    </div>
+    </div>{isRegistered &&
+    <div id="form" className="mt-12 flex flex-col justify-center items-center w-full mb-14">
+        <div  className="flex flex-col bg-blue-900 px-14 py-4 w-[80%]  shadow-2xl rounded-xl ta:w-[90%]  mo:w-full mo:rounded-none">
+                <p className="text-white font-semibold mt-6">Welcome aboard the TuneGuru journey! Your registration is a success, and we're thrilled to have you on our team of professionals.</p>
+                <div  className="mt-8 mb-4 px-4 py-2 bg-blue-500 rounded-xl text-white font-semibold  text-center w-fit mx-auto">Further Update Contact Support Team</div>
+            </div>
+            </div>
+    }
+
+<div id="chat" className="sticky z-100 w-full  flex  bottom-0">
+            <img src={require('../../assests/Icons/whatsapp.png')} alt="whatsapp" onClick={handleChat} className={`cursor-pointer w-14  absolute right-3 bottom-0 ${!isRegistered ?"mb-8":"mb-2"}` }/>
+          
+          {
+            showPopup&&(
+              <div className="popup-animation absolute bottom-16 right-16 bg-white border border-gray-300 p-4 rounded shadow-lg  de:w-[145px] ta:w-[145px] mo:w-[145px]">
+              <div className="typing-animation">Chat with Team</div>
+  
+            </div>
+            )
+          }
+         </div>
 </>
 )
 }

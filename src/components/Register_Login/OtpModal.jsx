@@ -36,6 +36,7 @@ function OtpModal({ isOpenOtp, closeOtpModal, email }) {
                 if (response && response.status === 200) {
                     // setSpiner(false)
                     localStorage.setItem("userdbtoken", response.data.userToken);
+                    localStorage.setItem('isLoggedIn', 'true');
                     toast.success(response.data.message);
                     if(window.location.pathname === "/customer/register"){
                     setTimeout(() => {

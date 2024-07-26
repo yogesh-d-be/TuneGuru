@@ -40,6 +40,7 @@ const quantity = getTotalItems();
   const [selectMenu, setSelectMenu] = useState("")
   const [dropdown, setDropdown] = useState(false);
   const [prevScroll, setPrevScroll] = useState(false);
+  const [windowWidth] = useState(window.innerWidth);
 
   // const [profilePic,setProfilePic] =useState(null)
  
@@ -53,6 +54,19 @@ const quantity = getTotalItems();
   useEffect(()=>{
    
   },[profilePic])
+
+  // useEffect(() => {
+  //   if (menu) {
+  //     document.body.style.overflow = "hidden";
+  //   } else {
+  //     document.body.style.overflow = "auto";
+  //   }
+  
+    
+  //   return () => {
+  //     document.body.style.overflow = "auto";
+  //   };
+  // }, [menu]);
 
   // const [profilePic,setProfilePic] =useState(null)
  
@@ -88,9 +102,18 @@ const quantity = getTotalItems();
   //     console.error("Error:", error);
   //   }
   // };
-  prevScroll
-    ? (document.body.style.overflow = "hidden")
-    : (document.body.style.overflow = "auto");
+  useEffect(() => { //to prevent overflow hide while navbar content select  in desktop
+    if (windowWidth < 1060) {
+      document.body.style.overflow = prevScroll ? "hidden" : "auto";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [prevScroll, windowWidth]);
+
 
     const handleMenuOpen = (e) => {
     
@@ -295,14 +318,14 @@ else {
               >
                 Register
                 </Link>
-                <div className="absolute top-full  bg-white opacity-90  shadow-md p-2 rounded-md  hidden drop-menu des_search:mt-[50px] des_search:top-4 des_search:right-72  de:mt-[50px] de:top-4 de:right-[30%] ta:mt-[45px] ta:top-0 ta:right-[28%] mo:mt-[45px] mo:p-1 mo:top-0 mo:right-[28%]">
-              <div className="w-36 flex flex-col gap-2 items-center justify-center des_search:w-52 de:w-44 mo:w-40">
-              {!isLoggedIn ? <div className="py-4 w-full  flex justify-center pb-2 ">
+                <div className="absolute top-full  bg-white opacity-90  shadow-md  rounded-md  hidden drop-menu des_search:mt-[50px] des_search:top-4 des_search:right-72  de:mt-[50px] de:top-4 de:right-[30%] ta:mt-[45px] ta:top-0 ta:right-[28%] mo:mt-[45px] mo:p-1 mo:top-0 mo:right-[28%]">
+              <div className="w-40 flex flex-col  items-center justify-center des_search:w-52 de:w-44 mo:w-40">
+              {!isLoggedIn ? <div className="pt-4 w-full  flex justify-center  px-2">
                   <Link to="/customer/register" onClick={handleMenuOpen}><p className="text-black text-sm hover:text-blue-900 hover:font-semibold des_search:text-base">Register as customer</p></Link>
-                </div>: <div className="py-4 w-full  flex justify-center pb-2 ">
+                </div>: <div className="pt-4 px-2  w-full  flex justify-center ">
                   <Link  onClick={handleRegister}><p className="text-black text-sm hover:text-blue-900 hover:font-semibold des_search:text-base">Register as customer</p></Link>
                 </div>}
-                <div className="w-full py-4 flex justify-center border-t border-gray-300">
+                <div className="w-full pt-4 px-2 pb-2 flex justify-center border-t border-gray-300">
                 <Link to="/customer/mender" onClick={handleMenuOpen}><p className="text-black text-sm hover:text-blue-900 hover:font-semibold des_search:text-base">Register as mender</p></Link>
                 </div>
                 </div>
@@ -316,7 +339,7 @@ else {
                 to="/cart"
                 className=" relative"
               >
-               <span className=""><img src={require('../../assests/Icons/shopping-cart.png')} alt="shopping-cart" className="w-[45px] des_search:w-[32px] de:w-[32px] ta:w-[32px] mo:w-[28px]"/>
+               <span className=""><img src={require('../../assests/Icons/shopping-cart.png')} alt="shopping-cart" className="w-[95px] des_search:w-[52px] de:w-[32px] ta:w-[32px] mo:w-[28px]"/>
                {(quantity>0) && <span className="absolute top-[-8px] left-6 w-[18px] h-[18px] bg-orange-500 text-white pb-1 rounded-[60%]  flex justify-center items-center text-[12px]  text-center font-semibold">{quantity}</span> }</span>
               </Link>
               

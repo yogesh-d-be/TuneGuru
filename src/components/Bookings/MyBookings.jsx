@@ -12,8 +12,12 @@ function MyBookings() {
   const fetchBookings = useCallback(async () => {
     try {
       const response = await apiInstance.post("/api/book/userbookings", {});
-      setData(response.data.data);
+      if(response.status === 200){
+        const sortedBookings = response.data.data.sort((a,b)=> new Date(b.date)- new Date(a.date));
+        setData(sortedBookings);
       console.log(response.data.data);
+      }
+      
     } catch (error) {
       console.error("Error fetching bookings:", error);
     }
