@@ -5,23 +5,23 @@ import {
   faAnglesDown,
   faSquareCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import { StoreContext } from "../StoreContext";
-import ACI from "../../assests/images/AC.jpg";
-import ProfessionalTeamImage from "../../assests/images/professional-team.jpg";
-import LoginModal from "../Register_Login/LoginModal";
+import { StoreContext } from "../../StoreContext";
+import ACI from "../../../assests/images/AC.jpg";
+import ProfessionalTeamImage from "../../../assests/images/professional-team.jpg";
+import LoginModal from "../../Register_Login/LoginModal";
 import AC_RATE_CARD from "./Ac_Rate_Card";
-import "../Home/Navbar.css";
+import "../../Home/Navbar.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { API_URL } from "../../service/Helper";
+import { API_URL } from "../../../service/Helper";
+import '../Service.css'
 
 
 
 
 
-
-function Fridge() {
+function AC() {
  
 
   const {
@@ -86,6 +86,23 @@ function Fridge() {
     }
   };
 
+  const scrollToElementInContainer = (elementId, containerId) =>{
+    const element = document.getElementById(elementId);
+    const container = document.getElementById(containerId);
+
+    if(element&& container){
+      const elementRect = element.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+
+      const scrollTop = elementRect.top - containerRect.top + container.scrollTop;
+
+      container.scrollTo({
+        top: scrollTop,
+        behavior: 'smooth'
+      })
+    }
+  }
+
   const scrollToTable = (selectId) =>{
     const select = document.getElementById(selectId);
     if(select){
@@ -108,18 +125,18 @@ function Fridge() {
   const serviceType = [
     {
       s_type: "Service",
-      s_img: require("../../assests/images/AC service.jpg"),
-      s_scroll: () => scrollToElement("service"),
+      s_img: require("../../../assests/images/AC service.jpg"),
+      s_scroll: () => scrollToElementInContainer("service", "c_div"),
     },
     {
       s_type: "Repair & Gas fill",
-      s_img: require("../../assests/images/AC Repair.jpeg"),
-      s_scroll: () => scrollToElement("repair"),
+      s_img: require("../../../assests/images/AC Repair.jpeg"),
+      s_scroll: () => scrollToElementInContainer("repair", "c_div"),
     },
     {
       s_type: "Installation & Uninstallation",
-      s_img: require("../../assests/images/AC install.jpg"),
-      s_scroll: () => scrollToElement("install"),
+      s_img: require("../../../assests/images/AC install.jpg"),
+      s_scroll: () => scrollToElementInContainer("install", "c_div"),
     },
   ];
 
@@ -298,23 +315,23 @@ function Fridge() {
 
 const dataTable = [
   {
-    images:[require('../../assests/images/ac_common.png')],
+    images:[require('../../../assests/ratecard/ac_common.png')],
     alt:["common_table"]
   },
   {
-    images:[require('../../assests/images/ac_electrical.png')],
+    images:[require('../../../assests/ratecard/ac_electrical.png')],
     alt:["electrical_table"]
   },
   {
-    images:[require('../../assests/images/ac_motors.png')],
+    images:[require('../../../assests/ratecard/ac_motors.png')],
     alt:["motors_table"]
   },
   {
-    images:[require('../../assests/images/ac_service.png')],
+    images:[require('../../../assests/ratecard/ac_service.png')],
     alt:["sevice_table"]
   },
   {
-    images:[require('../../assests/images/ac_parts.png')],
+    images:[require('../../../assests/ratecard/ac_parts.png')],
     alt:["parts_table"]
   },
 ]
@@ -439,8 +456,8 @@ const settings = {
               className="mt-16 w-[52%] overflow-auto des_xl:w-[58%] des_search:w-[62%] de:ml-[5%] de:w-[90%] ta:w-[95%] ta:ml-[5%] mo:w-[96%] mo:ml-2"
               style={{ maxHeight: "80vh" }}
             >
-              <h1 className="text-3xl font-semibold flex justify-center ta:text-2xl mo:text-xl">
-                Fridge Service & Maintenance Plans
+              <h1 className="text-3xl mt-8 font-semibold flex justify-center ta:text-2xl mo:text-xl">
+                AC Repair & Maintenance Plans
               </h1>
               <h1 className="text-center text-xl font-semibold mt-6 mb-8 ta:text-lg mo:text-base">
                 Select the type of Air Conditioner
@@ -467,8 +484,9 @@ const settings = {
                   Window AC
                 </button>
               </div>
-               <div className="mt-12 bg-gray-300 px-6 py-4 rounded-3xl mb-4 des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
-                <h1 id="service" className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
+              
+               <div id="service" className="mt-12 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
+                <h1  className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
                   Service
                 </h1>
                 
@@ -476,9 +494,9 @@ const settings = {
   { selectedType === "Window" && showServiceList("AC", "window", "service") }
 
               </div>
-
-              <div className="mt-12 bg-gray-300 px-6 py-4 rounded-3xl mb-4 des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
-                <h1 id="repair" className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
+              
+              <div id="repair" className="mt-12 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
+                <h1 className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
                   Repair & Gas Fill
                 </h1>
                 { selectedType === "Split" &&
@@ -488,9 +506,9 @@ const settings = {
                 showServiceList("AC", "window", "repair")
 }
               </div>
-
-              <div className="mt-12 bg-gray-300 px-6 py-4 rounded-3xl mb-4 des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
-                <h1 id="install" className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
+              
+              <div id="install" className="mt-12 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
+                <h1 className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
                   Installation & Uninstallation
                 </h1>
                 { selectedType === "Split" &&
@@ -508,6 +526,8 @@ const settings = {
 
 
         {mobileTableView && tableView && (
+          <>
+          <div id="table" className=""></div>
   <div  className="w-3/4 m-auto">
     <div className="mt-20">
       <Slider {...settings}>
@@ -516,7 +536,6 @@ const settings = {
               <div  className="rounded-lg ">
               <img src={tab.images} alt={tab.alt} className=" "/>
               </div>
-              <div id="table"></div>
             </div>
           ))
 
@@ -524,7 +543,7 @@ const settings = {
           </Slider>
     </div>
   </div>
-)}
+  </>)}
 
 
 
@@ -534,4 +553,4 @@ const settings = {
   );
 }
 
-export default Fridge;
+export default AC;

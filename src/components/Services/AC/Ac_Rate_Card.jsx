@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronUp, faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { rateCards } from "./Rate_Card";
-import Fridge from "./Fridge";
+import { rateCards } from "../Rate_Card";
+
 
 const Section = ({ title, show, toggle, data }) => (
   <div className="relative m-auto mb-8">
@@ -268,8 +268,8 @@ function AC_RATE_CARD({ isOpenCard, closeCard }) {
           />
         </div>
       </Modal>
-      <Fridge showCommon={showCommon} showElectrical={showElectrical} showMotors={showMotors} showService={showService} showParts={showParts} 
-      setShowCommon={setShowCommon} setShowElectrical={setShowElectrical} setShowMotors={setShowMotors} setShowService={setShowService}  setShowParts={setShowParts}/>
+      {/* <AC showCommon={showCommon} showElectrical={showElectrical} showMotors={showMotors} showService={showService} showParts={showParts}  */}
+      {/* setShowCommon={setShowCommon} setShowElectrical={setShowElectrical} setShowMotors={setShowMotors} setShowService={setShowService}  setShowParts={setShowParts}/> */}
     </>
   );
 }

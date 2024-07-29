@@ -1,0 +1,12 @@
+@media only screen and (max-width: 600px) {
+   .content{
+    padding: 0 10px!important;
+   }
+   .term-container{
+    padding:10px!important;
+   }
+    /* .ant-card {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    } */
+}

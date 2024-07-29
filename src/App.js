@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Home/Navbar'
@@ -14,8 +14,8 @@ import Customer from "./components/Register_Login/Customer";
 import Profile from './components/Profile/Profile';
 
 
-import AC from "./components/Services/AC";
-import Fridge from "./components/Services/Fridge";
+import AC from "./components/Services/AC/AC";
+import Fridge from "./components/Services/Fridge/Fridge";
 import Cartservices from "./components/Cart/Cartservices";
 import CartData from "./components/Cart/CartData";
 import EditProfile from "./components/Profile/EditProfile";
@@ -26,16 +26,18 @@ import ContactForm from "./components/Contact/Contact";
 import Mender from "./components/Mender/Mender";
 import TermsAndConditions from "./components/Footer/Terms";
 import PrivacyPolicy from "./components/Footer/Privacy";
+import Footer from '../src/components/Footer/Footer'
 
 
 function App() {
   
-  
+  const location = useLocation();
   return (
       <StoreProvider>
       <div className="App">
         <ToastContainer />
         <Navbar />
+        
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/services' element={<Services />} />
@@ -58,6 +60,7 @@ function App() {
           <Route path="/terms&conditions" element={<TermsAndConditions />} />
           <Route path="/privacypolicy" element={< PrivacyPolicy/>} />
         </Routes>
+        {location.pathname !== '/customer/register' && <Footer/>}
         
       </div>
       </StoreProvider>

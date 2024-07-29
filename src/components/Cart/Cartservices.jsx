@@ -346,15 +346,15 @@ const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
                 key={itemId}
                 className="flex flex-row items-center w-full bg-gray-300 rounded-xl shadow-xl px-4 py-4 mb-4"
               >
-                <div className="flex flex-row items-center w-[50%]">
+                <div className="flex flex-row items-center w-[50%] mo:w-[60%]">
                   <img
                     src={API_URL + "/images/" + item.image || ""}
                     alt={item.serviceName || "Service Image"}
                     className="w-16 h-16 rounded-lg"
                   />
-                  <p className="w-44 ml-6 ta:text-sm mo:text-[13px]">{item.serviceName}</p>
+                  <p className="w-44 ml-6 ta:text-sm mo:text-[12px] mo:ml-3">{item.serviceName}</p>
                 </div>
-                <div className="flex flex-row justify-around w-[50%] mo:flex mo:justify-center mo:items-center">
+                <div className="flex flex-row justify-around w-[50%] mo:flex mo:justify-center mo:items-center mo:w-[40%]">
                   <div className="flex flex-row justify-around w-[50%] mo:flex mo:flex-col mo:justify-evenly mo:mb-1">
                     <div id="add" className="w-[63px] text-sm text-left mo:h-[25px] mo:flex mo:flex-col">
                       <div className="flex flex-row w-[100%] border-2 border-blue-900 justify-center items-center rounded-[4px] bg-white">
@@ -371,7 +371,7 @@ const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
                     src={require('../../assests/Icons/delete.png')}
                     alt="Remove"
                     onClick={() => deleteFromCart(item.s_id)}
-                    className="w-8 cursor-pointer mo:w-6 mo:h-6  mo:mb-10 mo:ml-3 "
+                    className="w-8 cursor-pointer mo:w-6 mo:h-6  mo:mb-10 mo:ml-5 "
                   />
                 </div>
               </div>

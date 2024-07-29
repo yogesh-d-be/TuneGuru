@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Footer.css';
 import { Link } from 'react-router-dom';
+import { StoreContext } from '../StoreContext';
+import { toast } from 'react-toastify';
 
 const Footer = () => {
+    const {isLoggedIn} = useContext(StoreContext);
+
+    const handleRegister = () =>{
+        
+        toast.info("You are already registered..!")
+      }
+
     return (
+        <>
         <footer className="footer">
             <div className="footer-content">
                 <div className="footer-left">
@@ -18,8 +28,8 @@ const Footer = () => {
                 </div>
                 <div className='footer-main-content'>
                     <div className='grid relative'>
-                        <img src={require('../../assests/gif/Hammer-gif-2.gif')} alt="robot" className="w-12 absolute" />
-                        <img src={require('../../assests/images/Tuneguru_logo2.png')} alt="logo" className='w-44 ml-8' />
+                        <img src={require('../../assests/gif/Hammer-gif-2.gif')} alt="robot" className="w-12 absolute robot" />
+                        <img src={require('../../assests/images/Tuneguru_logo2.png')} alt="logo" className='w-44 ml-8 f-logo' />
                     </div>
                     <div className='mt-6  footer-category mb-20'>
                         {/* Company */}
@@ -37,7 +47,10 @@ const Footer = () => {
                             <h2 className='mb-2 text-lg font-semibold'>Customers</h2>
                             <div className='flex flex-col leading-8'>
                                 <Link to="/services">Services</Link>
-                                <Link to="/customer/register">Register as customer</Link>
+                                {!isLoggedIn ? <Link to="/customer/register">Register as customer</Link>
+               : 
+                  <Link  onClick={handleRegister}>Register as customer</Link>
+               }
                                 <Link to="/contactus">Contact Us</Link>
                             </div>
                         </div>
@@ -52,10 +65,10 @@ const Footer = () => {
                         <div className='text-white social'>
                             <h2 className='mb-2 text-lg font-semibold'>Social Links</h2>
                             <div className='flex gap-4'>
-                                <Link to="/customer/mender"><img src={require('../../assests/Icons/facebook.png')} alt="facebook" className='w-8' /></Link>
-                                <Link to="/customer/mender"><img src={require('../../assests/Icons/social.png')} alt="instagram" className='w-8' /></Link>
-                                <Link to="/customer/mender"><img src={require('../../assests/Icons/twitter.png')} alt="twitter" className='w-8' /></Link>
-                                <Link to="/customer/mender"><img src={require('../../assests/Icons/linkedin.png')} alt="linkedin" className='w-8' /></Link>
+                                <Link to="/customer/mender"><img src={require('../../assests/Icons/facebook.png')} alt="facebook" className='w-7' /></Link>
+                                <Link to="/customer/mender"><img src={require('../../assests/Icons/social.png')} alt="instagram" className='w-7' /></Link>
+                                <Link to="/customer/mender"><img src={require('../../assests/Icons/twitter.png')} alt="twitter" className='w-7' /></Link>
+                                <Link to="/customer/mender"><img src={require('../../assests/Icons/linkedin.png')} alt="linkedin" className='w-7' /></Link>
                             </div>
                         </div>
                     </div>
@@ -63,8 +76,14 @@ const Footer = () => {
                 <div className='house-container'>
                     <img src={require('../../assests/images/House.png')} alt="house" className='w-32' />
                 </div>
+               
             </div>
+            
         </footer>
+         <div className="bg-blue-900 text-white  h-fit">
+         <p className='flex items-center justify-center py-3 font-semibold'>Powered By Yogesh Mern Stack Developer</p>
+       </div>
+       </>
     );
 };
 

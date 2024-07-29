@@ -1,16 +1,19 @@
 import React from 'react';
 import { Layout, Typography,Card } from 'antd';
+import { useMediaQuery } from 'react-responsive';
 import 'antd/dist/reset.css'; 
+import '../Footer/Terms.css'
 
 const { Title, Paragraph } = Typography;
 const { Content } = Layout;
 
 const TermsAndConditions = () => {
+  const isMobile = useMediaQuery({ maxWidth: 600 });
   return (
     <Layout>
-      <Content style={{ padding: '0 50px', marginTop: '30px' }}>
-        <div style={{ padding: '24px', background: '#fff', minHeight: 280 }}>
-          <Title level={2}>Terms and Conditions</Title>
+      <Content style={{ padding: '0 50px', marginTop: '30px' }} className='content'>
+        <div style={{ padding: '24px', background: '#fff', minHeight: 280 }} className='term-container'>
+          <Title level={isMobile ? 3 : 2} style={{marginLeft: '20px'}}>Terms and Conditions</Title>
 
           <Card bordered={false}>
             <Title level={4}>1. Introduction</Title>
