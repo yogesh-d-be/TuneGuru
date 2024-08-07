@@ -1,0 +1,27 @@
+.custom-search__control {
+    background-color: white; /* Custom background for the search control */
+   width: 400px;
+  }
+  
+  .custom-search__menu {
+    background: rgba(255, 255, 255, 0.8) /* Custom background for the dropdown menu */!important;
+    backdrop-filter: blur(10px); 
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    
+  }
+  
+  .custom-search__option--is-focused {
+    background-color: rgb(153, 216, 237)!important; /* Custom background for focused option */
+    backdrop-filter: blur(10px); 
+   
+  }
+
+  @media screen and (max-width:470px){
+    .custom-search__control{
+        width: 300px;
+    }
+  }
+
+  

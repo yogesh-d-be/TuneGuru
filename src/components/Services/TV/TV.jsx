@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAnglesUp,
@@ -6,22 +6,19 @@ import {
   faSquareCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { StoreContext } from "../../StoreContext";
-import ACI from "../../../assests/images/AC.jpg";
+import TELE from "../../../assests/images/TV.png";
 import ProfessionalTeamImage from "../../../assests/images/professional-team.jpg";
 import LoginModal from "../../Register_Login/LoginModal";
-import AC_RATE_CARD from "./Ac_Rate_Card";
 import "../../Home/Navbar.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { API_URL } from "../../../service/Helper";
 import '../Service.css'
+import WASHING_MACHINE_RATE_CARD from "../Washing_Machine/Washing_Machine_Rate_Card";
 
 
-
-
-
-function AC() {
+function TV() {
  
 
   const {
@@ -35,9 +32,9 @@ function AC() {
     serviceList
   } = useContext(StoreContext);
 
-  const [selectedType, setSelectedType] = useState("Split");
+  
   const [detailShow, setDetailShow] = useState("");
-  const [acRateCard, setAcRateCard] = useState(false);
+  const [wmRateCard, setwmRateCard] = useState(false);
  
 
   const [mobileTableView, setMobileTableView] = useState(false);
@@ -56,19 +53,12 @@ function AC() {
   }, []);
 
   
-
-  
-
-  const handleTypeSelect = (type) => {
-    setSelectedType(type);
-  };
-
   const openRateCard = () => {
-    setAcRateCard(true);
+    setwmRateCard(true);
   };
 
   const closeRateCard = () => {
-    setAcRateCard(false);
+    setwmRateCard(false);
   };
 
   const toggle = (box) => {
@@ -79,36 +69,50 @@ function AC() {
     }
   };
 
-  const scrollToElement = (elementId) => {
-    const element = document.getElementById(elementId);
+
+
+  const scrollToElement = (divId) => {
+    const element = document.getElementById(divId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+   
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    
     }
   };
 
-  const scrollToElementInContainer = (elementId, containerId) =>{
+  
+
+  const scrollToElementInContainer = (elementId, containerId) => {
     const element = document.getElementById(elementId);
     const container = document.getElementById(containerId);
-
-    if(element&& container){
+  
+    if (element && container) {
+      
       const elementRect = element.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
-
+  
+      // Calculate the scroll position to make the element appear at the top of the container
       const scrollTop = elementRect.top - containerRect.top + container.scrollTop;
-
+  
       container.scrollTo({
         top: scrollTop,
         behavior: 'smooth'
-      })
-    }
-  }
+      });
 
-  const scrollToTable = (selectId) =>{
-    const select = document.getElementById(selectId);
-    if(select){
-      select.scrollIntoView({behavior:"smooth"})
-    }
+    } 
+  };
+  
+  const scrollToTable = (containerId, elementId) =>{
+    const container = document.getElementById(containerId);
+    
+    if (container) {
+          //  console.log(`Scrolling to table with ID ${selectId}`);
+           container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+         }
+
   }
+  
 
   const openTable = () =>{
     setTableView(!tableView);
@@ -124,19 +128,19 @@ function AC() {
 
   const serviceType = [
     {
-      s_type: "Service",
-      s_img: require("../../../assests/images/AC service.jpg"),
-      s_scroll: () => scrollToElementInContainer("service", "c_div"),
+      s_type: "Repair",
+      s_img: require("../../../assests/images/tv_repair.jpeg"),
+      s_scroll: () =>scrollToElementInContainer('repair', 'c_div'),
     },
     {
-      s_type: "Repair & Gas fill",
-      s_img: require("../../../assests/images/AC Repair.jpeg"),
-      s_scroll: () => scrollToElementInContainer("repair", "c_div"),
+      s_type: "Installation",
+      s_img: require("../../../assests/images/tv_install.png"),
+      s_scroll: () => scrollToElementInContainer('install', 'c_div'),
     },
     {
-      s_type: "Installation & Uninstallation",
-      s_img: require("../../../assests/images/AC install.jpg"),
-      s_scroll: () => scrollToElementInContainer("install", "c_div"),
+      s_type: "Uninstallation",
+      s_img: require("../../../assests/images/tv_uninstall.png"),
+      s_scroll: () => scrollToElementInContainer('uninstall', 'c_div'),
     },
   ];
 
@@ -155,7 +159,7 @@ function AC() {
                 key={index}
                 className="mt-6 flex flex-col shadow-2xl px-6 py-4 bg-gray-100 rounded-xl m-auto ta:justify-start mo:mx-auto"
             >
-                <div className="flex flex-row items-center mo:flex-col">
+                <div className="flex flex-row items-center mo:flex-col ">
                     <div
                         className="border-e-2 border-black mr-4 des_xl:basis-[45%] de:m-auto ta:m-auto mo:border-none mo:mr-0"
                         style={{ flexBasis: "50%" }}
@@ -166,14 +170,14 @@ function AC() {
                         <h1 className="font-semibold text-base mb-1 mo:text-sm">
                             {service.serviceName}
                         </h1>
-                        <p className="text-pretty w-[90%] text-sm des_xl:w-[85%] ta:w-[85%] ta:text-[12px] ta:mb-2 mo:text-[11px]">
+                        <p className="text-pretty w-[90%] text-sm des_xl:w-[85%] ta:w-[85%] ta:text-[12px] ta:mb-2 mo:text-[11px] mo:w-full">
                             {service.description}
                         </p>
                     </div>
                     <div className="flex flex-row items-center justify-center mo:justify-around mo:w-full">
-                    <div className="flex flex-row items-center w-9 mr-12 ml-4 des_xl:mr-6 des_search:mr-6 ta:mr-6 ta:ml-2 ta:mt-[-3px] mo:mr-6 mo:ml-0 mo:pt-[10px]">
+                    <div className="flex flex-row mt-3 w-9 mr-12 ml-4 des_xl:mr-6 des_search:mr-6 ta:mr-6 ta:ml-2 ta:mt-[-3px] mo:mr-6 mo:ml-0">
                         <p
-                            className="font-semibold text-lg ta:text-base ta:m-auto mo:text-[15px] "
+                            className="font-semibold text-lg ta:text-base ta:m-auto mo:text-[15px]"
                             style={{ flexBasis: "10%" }}
                         >
                             &#x20B9;{service.price}
@@ -233,11 +237,11 @@ function AC() {
                     </div>
                 </div>
                 {detailShow === service.serviceName && (
-                    <div className="mt-8 ml-14 flex flex-col transition-height duration-300 ease-in-out ta:m-auto ta:mt-3 mo:m-auto mo:mt-3 mo:border-t-2 mo:border-black">
+                    <div className="mt-8 ml-14 flex flex-col transition-height duration-300 ease-in-out ta:m-auto ta:mt-3 mo:m-auto mo:mt-3 mo:border-t-[1px] mo:border-black ">
                         <img
                             src={`${API_URL}/images/${service.image}`}
-                            alt="AC clean"
-                            className="w-[40%] mx-auto ta:w-[40%] mt-6"
+                            alt="Fridge service"
+                            className="w-[40%] mx-auto ta:w-[40%] mo:mt-6"
                         />
                         <ul className="flex flex-col ta:flex ta:justify-start ta:w-[97%] mo:w-[97%] mb-4 mt-4">
                             {service.details.map((detail, index) => (
@@ -269,118 +273,87 @@ function AC() {
 
 
 
-// const renderTable = () => {
-//   return (
-//     <div id="table">
-//       {rateCards[0].acRateCard.map((categoryObj, index) => (
-//         <div key={index}>
-//           {Object.keys(categoryObj).map((categoryKey) => (
-//             <div key={categoryKey}>
-//               <h2 className="text-2xl font-medium mt-8 mb-4">{categoryKey}</h2>
-//               <table className="border border-black   border-collapse  ">
-//                 <thead>
-//                   <tr>
-//                     <th className="border border-black p-2 mo:text-sm mo:p-1 ">Description</th>
-//                     <th className="border border-black p-2 mo:text-sm mo:p-1 ">Total Price (incl. of GST)</th>
-//                   </tr>
-//                 </thead>
-//                 <tbody>
-//                   {categoryObj[categoryKey].map((item, itemIndex) => (
-//                     <tr key={itemIndex}>
-//                       <td className="border border-black p-2  mo:text-[10px] ">
-//                         {item.description.map((desc, descIndex) => (
-//                           <span key={descIndex} className="py-1 flex flex-col items-start justify-center ta:mb-[5px] ta:py-[5px] ">
-//                             {desc}
-//                           </span>
-//                         ))}
-//                       </td>
-//                       <td className="border border-black p-2  mo:text-[10px] ">
-//                         {item.price.map((price, priceIndex) => (
-//                           <span key={priceIndex} className="py-1 flex flex-col items-start justify-center ">
-//                             ₹{price}
-//                           </span>
-//                         ))}
-//                       </td>
-//                     </tr>
-//                   ))}
-//                 </tbody>
-//               </table>
-//             </div>
-//           ))}
-//         </div>
-//       ))}
-
-
-//     </div>
-//   );
-// };
-
 const dataTable = [
   {
-    images:[require('../../../assests/ratecard/ac_common.png')],
-    alt:["common_table"]
+    images: [require('../../../assests/ratecard/wm_1.png')],
+    alt: ["wm1"]
   },
   {
-    images:[require('../../../assests/ratecard/ac_electrical.png')],
-    alt:["electrical_table"]
+    images: [require('../../../assests/ratecard/wm_2.png')],
+    alt: ["wm2"]
   },
   {
-    images:[require('../../../assests/ratecard/ac_motors.png')],
-    alt:["motors_table"]
+    images: [require('../../../assests/ratecard/wm_3.png')],
+    alt: ["wm3"]
   },
   {
-    images:[require('../../../assests/ratecard/ac_service.png')],
-    alt:["sevice_table"]
+    images: [require('../../../assests/ratecard/wm_4.png')],
+    alt: ["wm4"]
   },
   {
-    images:[require('../../../assests/ratecard/ac_parts.png')],
-    alt:["parts_table"]
+    images: [require('../../../assests/ratecard/wm_5.png')],
+    alt: ["wm5"]
   },
-]
+  {
+    images: [require('../../../assests/ratecard/wm_6.png')],
+    alt: ["wm6"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_7.png')],
+    alt: ["wm7"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_8.png')],
+    alt: ["wm8"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_9.png')],
+    alt: ["wm9"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_10.png')],
+    alt: ["wm10"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_11.png')],
+    alt: ["wm11"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_12.png')],
+    alt: ["wm12"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_13.png')],
+    alt: ["wm13"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_14.png')],
+    alt: ["wm14"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_15.png')],
+    alt: ["wm15"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_16.png')],
+    alt: ["wm16"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_17.png')],
+    alt: ["wm17"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_18.png')],
+    alt: ["wm18"]
+  },
+  {
+    images: [require('../../../assests/ratecard/wm_19.png')],
+    alt: ["wm19"]
+  }
+];
 
-// const settings = {
-//   dots: true,
-//   infinite: true,
-//   speed: 500,
-//   slidesToShow: 1,
-//   slidesToScroll: 1
-// };
 
 
-// const selectServiceList = () =>{
-
-//   if(selectedType==="Split"){
-//   switch(componentCategory){
-//     case "Split":
-//       return showServiceList("AC", "split", "service");
-
-//     case "Split":
-//       return showServiceList("AC", "split", "repair");
-
-//     case "Split":
-//       return showServiceList("AC", "split", "install");
-
-     
-//       default:
-//         return null;
-//   }
-
-//   else if(selectedType==="Window"){
-//     switch(componentCategory){
-//       case "Split":
-//         return showServiceList("AC", "split", "service");
-  
-//       case "Split":
-//         return showServiceList("AC", "split", "repair");
-  
-//       case "Split":
-//         return showServiceList("AC", "split", "install");
-  
-       
-//         default:
-//           return null;
-//     }
-// }
 
 
 const settings = {
@@ -394,11 +367,11 @@ const settings = {
   return (
     <>
       {loginModalOpen && <LoginModal isOpen={true} closeModal={closeLoginModal} />}
-      <div className="relative w-full ">
-        <img src={ACI} alt="AC" className="w-full h-[620px]" />
+      <div className="relative w-full">
+        <img src={TELE} alt="TV" className=" mx-auto h-[620px]" />
         <div className="absolute top-0 left-0 flex justify-center h-full items-center w-full backdrop-brightness-50 flex-col">
-          <h1 className="text-5xl font-bold text-white mb-12 mo:text-3xl">
-            AC Repair and Service
+          <h1 className="text-5xl font-bold text-white mb-12 mo:text-3xl text-center mx-4">
+            TV Repair and Service
           </h1>
           <p className="text-white text-xl font-medium mb-12 mo:text-lg">
             Kick back and chill, we will take care of it
@@ -458,67 +431,35 @@ const settings = {
               className="mt-16 w-[52%] overflow-auto des_xl:w-[58%] des_search:w-[62%] de:ml-[5%] de:w-[90%] ta:w-[95%] ta:ml-[5%] mo:w-[96%] mo:ml-2"
               style={{ maxHeight: "80vh" }}
             >
-              <h1 className="text-3xl mt-8 font-semibold flex justify-center ta:text-2xl mo:text-xl">
-                AC Repair & Maintenance Plans
+              <h1 className="text-3xl mt-8 font-semibold flex justify-center ta:text-2xl mo:text-xl text-center">
+                TV Service & Maintenance Plans
               </h1>
-              <h1 className="text-center text-xl font-semibold mt-6 mb-8 ta:text-lg mo:text-base">
-                Select the type of Air Conditioner
+              <h1 className="text-center text-xl font-semibold mt-6 mb-20 ta:text-lg mo:text-base">
+                Select the type of service
               </h1>
-              <div className="flex justify-center">
-                <button
-                  onClick={() => handleTypeSelect("Split")}
-                  className={`px-10 py-2 font-medium border-2 mr-4 mo:px-8 mo:py-2 mo:text-sm ${
-                    selectedType === "Split"
-                      ? "border border-blue-500 bg-blue-900 text-white"
-                      : ""
-                  }`}
-                >
-                  Split AC
-                </button>
-                <button
-                  onClick={() => handleTypeSelect("Window")}
-                  className={`px-6 py-2 border-2 font-medium mo:px-4 mo:py-2 ${
-                    selectedType === "Window"
-                      ? "border border-blue-500 bg-blue-900 text-white"
-                      : ""
-                  }`}
-                >
-                  Window AC
-                </button>
-              </div>
-              
-               <div id="service" className="mt-12 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
-                <h1  className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
-                  Service
+             
+               <div id="repair"  className=" mt-12 pt-4 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
+                <h1 className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
+                  Repair
                 </h1>
                 
-  { selectedType === "Split" && showServiceList("AC", "split", "service") }
-  { selectedType === "Window" && showServiceList("AC", "window", "service") }
+  { showServiceList("TV", "tv_common", "repair") }
+  
 
               </div>
-              
-              <div id="repair" className="mt-12 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
+              {/* <div  className=""></div> */}
+              <div id="install"  className="mt-12 bg-gray-300 px-6 py-4 rounded-3xl  des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
                 <h1 className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
-                  Repair & Gas Fill
+                  Installation
                 </h1>
-                { selectedType === "Split" &&
-                showServiceList("AC", "split", "repair")
-}
-                { selectedType === "Window" &&
-                showServiceList("AC", "window", "repair")
-}
+                { showServiceList("TV", "tv_common_install", "on-install") }
               </div>
-              
-              <div id="install" className="mt-12 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
-                <h1 className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
-                  Installation & Uninstallation
+              {/* <div  className=""></div> */}
+              <div id="uninstall" className="mt-12 pt-4 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
+                <h1  className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
+                  Uninstallation
                 </h1>
-                { selectedType === "Split" &&
-                showServiceList("AC", "split", "install")
-}
-                { selectedType === "Window" &&
-                showServiceList("AC", "window", "install")
-}
+                { showServiceList("TV", "tv_common_uninstall", "on-uninstall") }
               </div>
 
             
@@ -530,16 +471,19 @@ const settings = {
         {mobileTableView && tableView && (
           <>
           <div id="table" className=""></div>
-  <div  className="w-3/4 m-auto">
+  <div    className="w-3/4 m-auto">
+ 
     <div className="mt-20">
     <p className="bg-blue-200 py-2 px-4 rounded text-[11px]">Labour Charges are capped at ₹299 per appliance</p>
       <Slider {...settings}>
           {dataTable.map((tab,i)=>(
-            <div key={i} className=" text-black">
-              <div  className="rounded-lg ">
+            <div  key={i} className=" text-black">
+              <div id="table-content" className="rounded-lg ">
               <img src={tab.images} alt={tab.alt} className=" "/>
               </div>
+              
             </div>
+           
           ))
 
           }
@@ -550,10 +494,10 @@ const settings = {
 
 
 
-        {acRateCard && <AC_RATE_CARD isOpenCard={acRateCard} closeCard={closeRateCard} />}
+        {wmRateCard && <WASHING_MACHINE_RATE_CARD isOpenCard={wmRateCard} closeCard={closeRateCard} />}
       </div>
     </>
   );
 }
 
-export default AC;
+export default TV;

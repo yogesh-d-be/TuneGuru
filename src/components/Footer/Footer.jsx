@@ -65,10 +65,10 @@ const Footer = () => {
                         <div className='text-white social'>
                             <h2 className='mb-2 text-lg font-semibold'>Social Links</h2>
                             <div className='flex gap-4'>
-                                <Link to="/customer/mender"><img src={require('../../assests/Icons/facebook.png')} alt="facebook" className='w-7' /></Link>
-                                <Link to="/customer/mender"><img src={require('../../assests/Icons/social.png')} alt="instagram" className='w-7' /></Link>
-                                <Link to="/customer/mender"><img src={require('../../assests/Icons/twitter.png')} alt="twitter" className='w-7' /></Link>
-                                <Link to="/customer/mender"><img src={require('../../assests/Icons/linkedin.png')} alt="linkedin" className='w-7' /></Link>
+                                <Link to=""><img src={require('../../assests/Icons/facebook.png')} alt="facebook" className='w-7' /></Link>
+                                <Link to=""><img src={require('../../assests/Icons/social.png')} alt="instagram" className='w-7' /></Link>
+                                <Link to=""><img src={require('../../assests/Icons/twitter.png')} alt="twitter" className='w-7' /></Link>
+                                <Link to=""><img src={require('../../assests/Icons/linkedin.png')} alt="linkedin" className='w-7' /></Link>
                             </div>
                         </div>
                     </div>

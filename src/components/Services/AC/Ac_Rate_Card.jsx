@@ -216,6 +216,7 @@ function AC_RATE_CARD({ isOpenCard, closeCard }) {
         <div
           
         >
+          <p className="bg-blue-200 py-2 px-4 rounded pl-4 ml-6 w-full max-w-[602px] ta:w-[460px] ta:m-auto mo:w-[250px] mo:m-auto">Labour Charges are capped at ₹299 per appliance</p>
           <Section
             title="Commonly Used Parts"
             show={showCommon}

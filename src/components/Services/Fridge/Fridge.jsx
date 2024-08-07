@@ -162,9 +162,9 @@ function Fridge() {
                 key={index}
                 className="mt-6 flex flex-col shadow-2xl px-6 py-4 bg-gray-100 rounded-xl m-auto ta:justify-start mo:mx-auto"
             >
-                <div className="flex flex-row items-center">
+                <div className="flex flex-row items-center mo:flex-col">
                     <div
-                        className="border-e-2 border-black mr-4 des_xl:basis-[45%] de:m-auto ta:m-auto mo:mr-2"
+                        className="border-e-2 border-black mr-4 des_xl:basis-[45%] de:m-auto ta:m-auto mo:border-none mo:mr-0"
                         style={{ flexBasis: "50%" }}
                     >
                         <p className="text-green-700 mb-2 ta:text-sm mo:text-sm">
@@ -177,6 +177,7 @@ function Fridge() {
                             {service.description}
                         </p>
                     </div>
+                    <div className="flex flex-row items-center justify-center mo:justify-around mo:w-full">
                     <div className="flex flex-row mt-3 items-center w-9 mr-12 ml-4 des_xl:mr-6 des_search:mr-6 ta:mr-6 ta:ml-2 mo:mr-6 mo:ml-0">
                         <p
                             className="font-semibold text-lg ta:text-base ta:m-auto mo:text-[15px]"
@@ -236,19 +237,20 @@ function Fridge() {
                             />
                         )}
                     </button>
+                    </div>
                 </div>
                 {detailShow === service.serviceName && (
-                    <div className="mt-6 ml-14 flex flex-col transition-height duration-300 ease-in-out ta:m-auto ta:mt-3 mo:m-auto mo:mt-3">
+                    <div className="mt-8 ml-14 flex flex-col transition-height duration-300 ease-in-out ta:m-auto ta:mt-3 mo:m-auto mo:mt-3 mo:border-t-[1px] mo:border-black">
                         <img
                             src={`${API_URL}/images/${service.image}`}
                             alt="Fridge service"
-                            className="w-[40%] mx-auto ta:w-[40%]"
+                            className="w-[40%] mx-auto ta:w-[40%] mt-6"
                         />
-                        <ul className="flex flex-col ta:flex ta:justify-start ta:w-[97%] mo:w-[97%] mb-4">
+                        <ul className="flex flex-col ta:flex ta:justify-start ta:w-[97%] mo:w-[97%] mb-4 mt-4">
                             {service.details.map((detail, index) => (
                                 <li
                                     key={index}
-                                    className="w-[90%] mx-auto mt-3 text-sm ta:text-xs"
+                                    className="w-[90%] mx-auto mt-3 text-sm ta:text-xs leading-6"
                                 >
                                     <FontAwesomeIcon
                                         icon={faSquareCheck}
@@ -374,9 +376,9 @@ const settings = {
     <>
       {loginModalOpen && <LoginModal isOpen={true} closeModal={closeLoginModal} />}
       <div className="relative w-full">
-        <img src={FRIDGE} alt="AC" className=" mx-auto h-[620px]" />
+        <img src={FRIDGE} alt="Fridge" className=" mx-auto h-[620px]" />
         <div className="absolute top-0 left-0 flex justify-center h-full items-center w-full backdrop-brightness-50 flex-col">
-          <h1 className="text-5xl font-bold text-white mb-12 mo:text-3xl">
+          <h1 className="text-5xl font-bold text-white mb-12 mo:text-3xl mx-4 text-center">
             Fridge Repair and Service
           </h1>
           <p className="text-white text-xl font-medium mb-12 mo:text-lg">
@@ -393,7 +395,7 @@ const settings = {
 
 
 
-      <div className="w-full mt-12 relative ">
+      <div className="w-full mt-12 relative mb-20">
         <img
           src={ProfessionalTeamImage}
           alt="professional-team"
@@ -443,29 +445,7 @@ const settings = {
               <h1 className="text-center text-xl font-semibold mt-6 mb-20 ta:text-lg mo:text-base">
                 Select the type of Refrigerator
               </h1>
-              {/* <div className="flex justify-center">
-                <button
-                  onClick={() => handleTypeSelect("Split")}
-                  className={`px-10 py-2 font-medium border-2 mr-4 mo:px-8 mo:py-2 mo:text-sm ${
-                    selectedType === "Split"
-                      ? "border border-blue-500 bg-blue-900 text-white"
-                      : ""
-                  }`}
-                >
-                  Split AC
-                </button>
-                <button
-                  onClick={() => handleTypeSelect("Window")}
-                  className={`px-6 py-2 border-2 font-medium mo:px-4 mo:py-2 ${
-                    selectedType === "Window"
-                      ? "border border-blue-500 bg-blue-900 text-white"
-                      : ""
-                  }`}
-                >
-                  Window AC
-                </button>
-              </div> */}
-              {/* <div className=""></div> */}
+              
                <div id="single"  className=" mt-12 pt-4 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
                 <h1 className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
                   Single Door
@@ -501,6 +481,7 @@ const settings = {
           <div id="table" className=""></div>
   <div    className="w-3/4 m-auto">
     <div className="mt-20">
+    <p className="bg-blue-200 py-2 px-4 rounded text-[11px]">Labour Charges are capped at ₹299 per appliance</p>
       <Slider {...settings}>
           {dataTable.map((tab,i)=>(
             <div  key={i} className=" text-black">

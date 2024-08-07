@@ -5,7 +5,9 @@ import { faCircleChevronUp, faCircleChevronDown } from "@fortawesome/free-solid-
 import { rateCards } from "../Rate_Card";
 
 const Section = ({ title, show, toggle, data }) => (
+    
   <div className="relative m-auto mb-8">
+    
     <h1
       className="bg-blue-400 py-3 mt-8 pl-4 ml-6 font-semibold text-lg w-full max-w-[602px] ta:w-[460px] ta:m-auto mo:w-[250px] mo:m-auto"
       onClick={toggle}
@@ -55,35 +57,33 @@ const Section = ({ title, show, toggle, data }) => (
   </div>
 );
 
-function FRIDGE_RATE_CARD({ isOpenCard, closeCard }) {
+function WASHING_MACHINE_RATE_CARD({ isOpenCard, closeCard }) {
   const [sections, setSections] = useState([]);
 
   useEffect(() => {
     const sectionTitles = [
-      "Single Door Power Unit",
-      "Single Door Cooling Issue",
-      "Single Door Gas Change",
-      "Single Door Gas Charge",
-      "Single Door Compressor",
-      "Single Door Accessories",
-      "Single Door Minor Repair",
-      "Double Door Power Unit",
-      "Double Door Defrost Issue",
-      "Double Door Gas Charge",
-      "Double Door Compressor Unit",
-      "Double Door Cooling Issue",
-      "Double Door Accessories",
-      "Side By Side Power Unit",
-      "Side By Side Cooling Issue",
-      "Side By Side Gas Charge",
-      "Side By Side Compressor Unit",
-      "Side By Side Defrost Issue",
-      "Side By Side Ice Water Dispenser",
-      "Side By Side Accessories",
-      "Side By Side Minor Repair"
-    ];
+        "Semi-Automatic Power Unit",
+        "Semi-Automatic Wash Issue",
+        "Semi-Automatic Spin Issue",
+        "Semi-Automatic Water Leakage",
+        "Semi-Automatic Accessories",
+        "Top Load WM Power Unit",
+        "Top Load WM Wash Issue",
+        "Top Load WM Spin Issue",
+        "Top Load WM Water Leakage",
+        "Top Load WM Accessories",
+        "Front Load WM Power Unit",
+        "Front Load WM Wash Issue",
+        "Front Load WM Noise Issue",
+        "Front Load WM Spin Issue",
+        "Front Load WM Water Leakage",
+        "Front Load WM Accessories",
+        "Minor Repair",
+        "Installation",
+        "Descaling"
+      ];
 
-    const sectionData = rateCards[1].fridgeRateCard.map((item, index) => {
+    const sectionData = rateCards[2].wmRateCard.map((item, index) => {
       const key = Object.keys(item)[0];
       return {
         title: sectionTitles[index],
@@ -117,7 +117,7 @@ function FRIDGE_RATE_CARD({ isOpenCard, closeCard }) {
   return (
     <>
       <Modal
-        title="Fridge Rate Card"
+        title="Washing Machine Rate Card"
         centered
         open={isOpenCard}
         footer={null}
@@ -141,4 +141,4 @@ function FRIDGE_RATE_CARD({ isOpenCard, closeCard }) {
   );
 }
 
-export default FRIDGE_RATE_CARD;
+export default WASHING_MACHINE_RATE_CARD;

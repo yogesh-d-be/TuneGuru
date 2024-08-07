@@ -560,28 +560,7 @@ return(
             <input type="number" name="mobileNumber" id="" value={menderData.mobileNumber} placeholder="Mobilenumber" onChange={onChangeHandle} className="mt-3 rounded-xl"/>
             <input type="email" name="emailId" id="" value={menderData.emailId} placeholder="Email Address" onChange={onChangeHandle} className="mt-3 rounded-xl"/>
             
-            {/* <textarea name="" id="expertise" cols="30" rows="4"></textarea>
-            <select name="expertise" id="expertise" value={menderData.expertise} onChange={onChangeHandle} className="mt-3 rounded-xl">
-                <option value="select">Select</option>
-                <option value="Ac repair service">Ac repair service</option>
-                <option value="Fridge repair service">Fridge repair service</option>
-                <option value="Washing machine repair service">Washing machine repair service</option>
-                <option value="TV repair service">TV repair service</option>
-                <option value="Mixer & Grinder repair service">Mixer & Grinder repair service</option>
-                <option value="Inverter repair service">Inverter repair service</option>
-                <option value="Electrician">Electrician</option>
-                <option value="Plumber">Plumber</option>
-                <option value="Carpenter">Carpenter</option>
-                <option value="Mobile repair service">Mobile repair service</option>
-                <option value="PC & Laptop repair service">PC & Laptop repair service</option>
-                <option value="Printer repair service">Printer repair service</option>
-                <option value="Cleaning services">Cleaning services</option>
-                <option value="Pest control services">Pest control services</option>
-                <option value="Bike repair service">Bike repair service</option>
-                <option value="Car repair service">Car repair service</option>
-                <option value="Water purifier repair service">Water purifier repair service</option>
-                <option value="Painting">Painting</option>
-            </select> */}
+           
            { selectedExpertise ? <div className="">
                 {selectedExpertise.map((exp,index)=>(
                     <div key={index} className="bg-gray-200 rounded-full px-3 py-2 text-center inline-block mr-2 mb-2">

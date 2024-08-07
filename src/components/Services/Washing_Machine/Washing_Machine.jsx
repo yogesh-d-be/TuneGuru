@@ -6,7 +6,7 @@ import {
   faSquareCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { StoreContext } from "../../StoreContext";
-import FRIDGE from "../../../assests/images/fridge_service.jpg";
+import W_Machine from "../../../assests/images/washing machine.png";
 import ProfessionalTeamImage from "../../../assests/images/professional-team.jpg";
 import LoginModal from "../../Register_Login/LoginModal";
 import "../../Home/Navbar.css";
@@ -15,13 +15,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { API_URL } from "../../../service/Helper";
 import '../Service.css'
-import FRIDGE_RATE_CARD from "./Fridge_Rate_Card";
+import WASHING_MACHINE_RATE_CARD from "./Washing_Machine_Rate_Card";
 
 
-
-
-
-function Fridge() {
+function WashingMachine() {
  
 
   const {
@@ -37,7 +34,7 @@ function Fridge() {
 
   
   const [detailShow, setDetailShow] = useState("");
-  const [fridgeRateCard, setFridgeRateCard] = useState(false);
+  const [wmRateCard, setwmRateCard] = useState(false);
  
 
   const [mobileTableView, setMobileTableView] = useState(false);
@@ -57,11 +54,11 @@ function Fridge() {
 
   
   const openRateCard = () => {
-    setFridgeRateCard(true);
+    setwmRateCard(true);
   };
 
   const closeRateCard = () => {
-    setFridgeRateCard(false);
+    setwmRateCard(false);
   };
 
   const toggle = (box) => {
@@ -131,19 +128,19 @@ function Fridge() {
 
   const serviceType = [
     {
-      s_type: "Single Door",
-      s_img: require("../../../assests/images/single-door.jpeg"),
-      s_scroll: () =>scrollToElementInContainer('single', 'c_div'),
+      s_type: "Repair",
+      s_img: require("../../../assests/images/wm_repair.jpeg"),
+      s_scroll: () =>scrollToElementInContainer('repair', 'c_div'),
     },
     {
-      s_type: "Double Door",
-      s_img: require("../../../assests/images/double-door.jpg"),
-      s_scroll: () => scrollToElementInContainer('double', 'c_div'),
+      s_type: "Installation",
+      s_img: require("../../../assests/images/wm_install.jpg"),
+      s_scroll: () => scrollToElementInContainer('install', 'c_div'),
     },
     {
-      s_type: "Side Door",
-      s_img: require("../../../assests/images/side-door.jpg"),
-      s_scroll: () => scrollToElementInContainer('side', 'c_div'),
+      s_type: "Uninstallation",
+      s_img: require("../../../assests/images/wm_uninstall.jpeg"),
+      s_scroll: () => scrollToElementInContainer('uninstall', 'c_div'),
     },
   ];
 
@@ -162,9 +159,9 @@ function Fridge() {
                 key={index}
                 className="mt-6 flex flex-col shadow-2xl px-6 py-4 bg-gray-100 rounded-xl m-auto ta:justify-start mo:mx-auto"
             >
-                <div className="flex flex-row items-center">
+                <div className="flex flex-row items-center mo:flex-col ">
                     <div
-                        className="border-e-2 border-black mr-4 des_xl:basis-[45%] de:m-auto ta:m-auto mo:mr-2"
+                        className="border-e-2 border-black mr-4 des_xl:basis-[45%] de:m-auto ta:m-auto mo:border-none mo:mr-0"
                         style={{ flexBasis: "50%" }}
                     >
                         <p className="text-green-700 mb-2 ta:text-sm mo:text-sm">
@@ -173,11 +170,12 @@ function Fridge() {
                         <h1 className="font-semibold text-base mb-1 mo:text-sm">
                             {service.serviceName}
                         </h1>
-                        <p className="text-pretty w-[90%] text-sm des_xl:w-[85%] ta:w-[85%] ta:text-[12px] ta:mb-2 mo:text-[11px]">
+                        <p className="text-pretty w-[90%] text-sm des_xl:w-[85%] ta:w-[85%] ta:text-[12px] ta:mb-2 mo:text-[11px] mo:w-full">
                             {service.description}
                         </p>
                     </div>
-                    <div className="flex flex-row mt-3 items-center w-9 mr-12 ml-4 des_xl:mr-6 des_search:mr-6 ta:mr-6 ta:ml-2 mo:mr-6 mo:ml-0">
+                    <div className="flex flex-row items-center justify-center mo:justify-around mo:w-full">
+                    <div className="flex flex-row mt-3 w-9 mr-12 ml-4 des_xl:mr-6 des_search:mr-6 ta:mr-6 ta:ml-2 ta:mt-[-3px] mo:mr-6 mo:ml-0">
                         <p
                             className="font-semibold text-lg ta:text-base ta:m-auto mo:text-[15px]"
                             style={{ flexBasis: "10%" }}
@@ -236,19 +234,20 @@ function Fridge() {
                             />
                         )}
                     </button>
+                    </div>
                 </div>
                 {detailShow === service.serviceName && (
-                    <div className="mt-6 ml-14 flex flex-col transition-height duration-300 ease-in-out ta:m-auto ta:mt-3 mo:m-auto mo:mt-3">
+                    <div className="mt-8 ml-14 flex flex-col transition-height duration-300 ease-in-out ta:m-auto ta:mt-3 mo:m-auto mo:mt-3 mo:border-t-[1px] mo:border-black ">
                         <img
                             src={`${API_URL}/images/${service.image}`}
                             alt="Fridge service"
-                            className="w-[40%] mx-auto ta:w-[40%]"
+                            className="w-[40%] mx-auto ta:w-[40%] mo:mt-6"
                         />
-                        <ul className="flex flex-col ta:flex ta:justify-start ta:w-[97%] mo:w-[97%] mb-4">
+                        <ul className="flex flex-col ta:flex ta:justify-start ta:w-[97%] mo:w-[97%] mb-4 mt-4">
                             {service.details.map((detail, index) => (
                                 <li
                                     key={index}
-                                    className="w-[90%] mx-auto mt-3 text-sm ta:text-xs"
+                                    className="w-[90%] mx-auto mt-3 text-sm ta:text-xs leading-6"
                                 >
                                     <FontAwesomeIcon
                                         icon={faSquareCheck}
@@ -276,90 +275,85 @@ function Fridge() {
 
 const dataTable = [
   {
-    images: [require('../../../assests/ratecard/fr_1.png')],
-    alt: ["fridge1"]
+    images: [require('../../../assests/ratecard/wm_1.png')],
+    alt: ["wm1"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_2.png')],
-    alt: ["fridge2"]
+    images: [require('../../../assests/ratecard/wm_2.png')],
+    alt: ["wm2"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_3.png')],
-    alt: ["fridge3"]
+    images: [require('../../../assests/ratecard/wm_3.png')],
+    alt: ["wm3"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_4.png')],
-    alt: ["fridge4"]
+    images: [require('../../../assests/ratecard/wm_4.png')],
+    alt: ["wm4"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_5.png')],
-    alt: ["fridge5"]
+    images: [require('../../../assests/ratecard/wm_5.png')],
+    alt: ["wm5"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_6.png')],
-    alt: ["fridge6"]
+    images: [require('../../../assests/ratecard/wm_6.png')],
+    alt: ["wm6"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_7.png')],
-    alt: ["fridge7"]
+    images: [require('../../../assests/ratecard/wm_7.png')],
+    alt: ["wm7"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_8.png')],
-    alt: ["fridge8"]
+    images: [require('../../../assests/ratecard/wm_8.png')],
+    alt: ["wm8"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_9.png')],
-    alt: ["fridge9"]
+    images: [require('../../../assests/ratecard/wm_9.png')],
+    alt: ["wm9"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_10.png')],
-    alt: ["fridge10"]
+    images: [require('../../../assests/ratecard/wm_10.png')],
+    alt: ["wm10"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_11.png')],
-    alt: ["fridge11"]
+    images: [require('../../../assests/ratecard/wm_11.png')],
+    alt: ["wm11"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_12.png')],
-    alt: ["fridge12"]
+    images: [require('../../../assests/ratecard/wm_12.png')],
+    alt: ["wm12"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_13.png')],
-    alt: ["fridge13"]
+    images: [require('../../../assests/ratecard/wm_13.png')],
+    alt: ["wm13"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_14.png')],
-    alt: ["fridge14"]
+    images: [require('../../../assests/ratecard/wm_14.png')],
+    alt: ["wm14"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_15.png')],
-    alt: ["fridge15"]
+    images: [require('../../../assests/ratecard/wm_15.png')],
+    alt: ["wm15"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_16.png')],
-    alt: ["fridge16"]
+    images: [require('../../../assests/ratecard/wm_16.png')],
+    alt: ["wm16"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_17.png')],
-    alt: ["fridge17"]
+    images: [require('../../../assests/ratecard/wm_17.png')],
+    alt: ["wm17"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_18.png')],
-    alt: ["fridge18"]
+    images: [require('../../../assests/ratecard/wm_18.png')],
+    alt: ["wm18"]
   },
   {
-    images: [require('../../../assests/ratecard/fr_19.png')],
-    alt: ["fridge19"]
-  },
-  {
-    images: [require('../../../assests/ratecard/fr_20.png')],
-    alt: ["fridge20"]
-  },
-  {
-    images: [require('../../../assests/ratecard/fr_21.png')],
-    alt: ["fridge21"]
+    images: [require('../../../assests/ratecard/wm_19.png')],
+    alt: ["wm19"]
   }
 ];
+
+
+
 
 
 const settings = {
@@ -374,10 +368,10 @@ const settings = {
     <>
       {loginModalOpen && <LoginModal isOpen={true} closeModal={closeLoginModal} />}
       <div className="relative w-full">
-        <img src={FRIDGE} alt="AC" className=" mx-auto h-[620px]" />
+        <img src={W_Machine} alt="Washing_machine" className=" mx-auto h-[620px]" />
         <div className="absolute top-0 left-0 flex justify-center h-full items-center w-full backdrop-brightness-50 flex-col">
-          <h1 className="text-5xl font-bold text-white mb-12 mo:text-3xl">
-            Fridge Repair and Service
+          <h1 className="text-5xl font-bold text-white mb-12 mo:text-3xl text-center mx-4">
+            Washing Machine Repair and Service
           </h1>
           <p className="text-white text-xl font-medium mb-12 mo:text-lg">
             Kick back and chill, we will take care of it
@@ -393,7 +387,7 @@ const settings = {
 
 
 
-      <div className="w-full mt-12 relative ">
+      <div className="w-full mt-12 relative mb-20">
         <img
           src={ProfessionalTeamImage}
           alt="professional-team"
@@ -437,57 +431,35 @@ const settings = {
               className="mt-16 w-[52%] overflow-auto des_xl:w-[58%] des_search:w-[62%] de:ml-[5%] de:w-[90%] ta:w-[95%] ta:ml-[5%] mo:w-[96%] mo:ml-2"
               style={{ maxHeight: "80vh" }}
             >
-              <h1 className="text-3xl mt-8 font-semibold flex justify-center ta:text-2xl mo:text-xl">
-                Fridge Service & Maintenance Plans
+              <h1 className="text-3xl mt-8 font-semibold flex justify-center ta:text-2xl mo:text-xl text-center">
+                Washing Machine Service & Maintenance Plans
               </h1>
               <h1 className="text-center text-xl font-semibold mt-6 mb-20 ta:text-lg mo:text-base">
-                Select the type of Refrigerator
+                Select the type of Washing Machine
               </h1>
-              {/* <div className="flex justify-center">
-                <button
-                  onClick={() => handleTypeSelect("Split")}
-                  className={`px-10 py-2 font-medium border-2 mr-4 mo:px-8 mo:py-2 mo:text-sm ${
-                    selectedType === "Split"
-                      ? "border border-blue-500 bg-blue-900 text-white"
-                      : ""
-                  }`}
-                >
-                  Split AC
-                </button>
-                <button
-                  onClick={() => handleTypeSelect("Window")}
-                  className={`px-6 py-2 border-2 font-medium mo:px-4 mo:py-2 ${
-                    selectedType === "Window"
-                      ? "border border-blue-500 bg-blue-900 text-white"
-                      : ""
-                  }`}
-                >
-                  Window AC
-                </button>
-              </div> */}
-              {/* <div className=""></div> */}
-               <div id="single"  className=" mt-12 pt-4 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
+             
+               <div id="repair"  className=" mt-12 pt-4 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
                 <h1 className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
-                  Single Door
+                  Repair
                 </h1>
                 
-  { showServiceList("Fridge", "singledoor", "service") }
+  { showServiceList("Washing Machine", "wm_common", "repair") }
   
 
               </div>
               {/* <div  className=""></div> */}
-              <div id="double"  className="mt-12 bg-gray-300 px-6 py-4 rounded-3xl  des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
+              <div id="install"  className="mt-12 bg-gray-300 px-6 py-4 rounded-3xl  des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
                 <h1 className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
-                  Double Door
+                  Installation
                 </h1>
-                { showServiceList("Fridge", "doubledoor", "service") }
+                { showServiceList("Washing Machine", "wm_common_install", "on-install") }
               </div>
               {/* <div  className=""></div> */}
-              <div id="side" className="mt-12 pt-4 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
+              <div id="uninstall" className="mt-12 pt-4 bg-gray-300 px-6 py-4 rounded-3xl des_search:w-[100%] ta:w-[95%] mo:w-[100%] mo:px-4 mo:py-3">
                 <h1  className="text-2xl font-medium mt-4 ta:text-xl mo:text-xl">
-                  Side Door
+                  Uninstallation
                 </h1>
-                { showServiceList("Fridge", "sidedoor", "service") }
+                { showServiceList("Washing Machine", "wm_common_uninstall", "on-uninstall") }
               </div>
 
             
@@ -500,7 +472,9 @@ const settings = {
           <>
           <div id="table" className=""></div>
   <div    className="w-3/4 m-auto">
+ 
     <div className="mt-20">
+    <p className="bg-blue-200 py-2 px-4 rounded text-[11px]">Labour Charges are capped at ₹299 per appliance</p>
       <Slider {...settings}>
           {dataTable.map((tab,i)=>(
             <div  key={i} className=" text-black">
@@ -520,10 +494,10 @@ const settings = {
 
 
 
-        {fridgeRateCard && <FRIDGE_RATE_CARD isOpenCard={fridgeRateCard} closeCard={closeRateCard} />}
+        {wmRateCard && <WASHING_MACHINE_RATE_CARD isOpenCard={wmRateCard} closeCard={closeRateCard} />}
       </div>
     </>
   );
 }
 
-export default Fridge;
+export default WashingMachine;

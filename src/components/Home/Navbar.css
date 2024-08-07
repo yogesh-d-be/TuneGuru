@@ -133,24 +133,24 @@
     }
 }
 
-.custom {
+/* .custom {
     .ant-modal-content {
       background-color: rgba(255, 255, 255, 0.832); 
     }
-}
+} */
  
 
   .nav-c {
     background-color: rgb(8, 8,80);
   }
 
-  .ant-modal .ant-modal-content{
+  /* .ant-modal .ant-modal-content{
     position: relative;
   }
 
   .ant-modal .ant-modal-content{
     position: relative;
-  }
+  } */
  
 
   .slick-next {

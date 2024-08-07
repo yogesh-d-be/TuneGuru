@@ -523,7 +523,387 @@ export const rateCards=[
             ]
           }
         ]
-      }
+      },
+
+      // washing machine rate card
+      {
+        "wmRateCard": [
+          {
+            "semiAutomatic_PowerUnit": [
+              {
+                "description": [
+                  "Power 3 Pin Plug Top",
+                  "Power Cord",
+                  "Re wiring (Heavy damage)"
+                ],
+                "price": [200, 350, 650],
+          
+              }
+            ]
+          },
+            {
+            "semiAutomatic_wash_issue": [
+              {
+                "description": [
+                  "Timer Wash (Electro Mechanical)",
+                  "Pulsator Snap",
+                  "Thermostat",
+                  "Pulsator with snap",
+                  "Gear Box (With Pulley)",
+                  "Heater",
+                  "Motor Pulley",
+                  "Spin & Wash Capacitor",
+                  "Wash Motor",
+                  "Wash Timer",
+                  "V Belt"
+                ],
+                "price": [1000, 200, 400, 850, 1525, 800, 550, 490, 1968, 750, 350],
+             
+              }
+            ]
+          },
+            {
+            "semiAutomatic_spin_issue": [
+              {
+                "description": [
+                  "Spin Motor",
+                  "Spin Pulley",
+                  "Spin Capacitor",
+                  "Spin Belt"
+                ],
+                "price": [1200, 600, 400, 250],
+               
+              }
+            ]
+          },
+            {
+              "semiAutomatic_water_leakage": [
+              {
+                "description": [
+                  "Drain Hose",
+                  "Water Inlet Valve",
+                  "Seal & Gasket",
+                  "Overflow Pipe"
+                ],
+                "price": [300, 500, 400, 150],
+              
+              }
+            ]
+          },
+            {
+              "semiAutomatic_accessories": [
+              {
+                "description": [
+                  "Rat Mesh",
+                  "Descaling Powder",
+                  "Outer Body / Cabinet",
+                  "Washing Machine Cover",
+                  "Drain Pipe",
+                  "Inlet Pipe",
+                  "Stand/Trolley"
+                ],
+                "price": [400, 150, 3200, 500, 300, 450, 900],
+               
+              }
+            ]
+          },
+          {
+            "topLoadWM_PowerUnit": [
+              {
+                "description": [
+                  "Repair - Inverter PCB (Top Load) (plus labour)",
+                  "Power 3 Pin Plug Top",
+                  "Power Cord",
+                  "Wiring Kit (labour charge)",
+                  "Replace (New) - Display PCB (Top Load) (labour charge)",
+                  "Replace (New) - PCB (Top Load) (labour charge)",
+                  "LVT",
+                  "Repair - PCB (Top Load)"
+                ],
+                "price": [2201, 200, 350, 299, 299, 299, 650, 1977],
+                
+              }
+            ]
+          },
+            {
+              "topLoadWM_wash_issue": [
+              {
+                "description": [
+                  "Capacitor",
+                  "Motor Pulley",
+                  "Pulsator Snap",
+                  "Pressure sensor with pipe",
+                  "Agitator",
+                  "Outer tub",
+                  "Pulsator with snap",
+                  "Sensor Pipe",
+                  "Drain Cleaning",
+                  "Door Lock (Top Load)",
+                  "Brake Arm - (Whirlpool)",
+                  "AC Inlet Valve 1 way",
+                  "AC Inlet Valve 2 way",
+                  "AC Inlet valve 3/4 way",
+                  "DC Inlet Valve 1 way",
+                  "DC Inlet Valve 2 way",
+                  "DC Inlet valve 3/4 way",
+                  "Main Motor",
+                  "Hall sensor",
+                  "Direct Drive Motor",
+                  "Heater Sensor",
+                  "Heater",
+                  "Chuck Nut",
+                  "V Belt"
+                ],
+                "price": [450, 450, 200, 1000, 850, 2000, 1100, 181, 300, 1450, 1200, 750, 970, 1400, 999, 1250, 2000, 2200, 1300, 4000, 350, 750,301,250],
+               
+              }
+            ]
+          },
+            {
+              "topLoadWM_spin_issue": [
+              {
+                "description": [
+                  "Damper rod / Balancing Rods (4 Qty)",
+                  "Haier 6.5kg Clutch Assembly",
+                  "Lid/Magnet Switch",
+                  "Spin lid",
+                  "Inner drum Plastic / Steel",
+                  "DC Drain Motor",
+                  "Clutch assembly",
+                  "Whirlpool - TSP (Complete Mechanism with hub)",
+                  "AC Drain Motor"
+                ],
+                "price": [1400, 3800, 380, 550, 2200, 1700, 4000, 4300, 1400],
+               
+              }
+            ]
+          },
+            {
+              "topLoadWM_water_leakage": [
+              {
+                "description": [
+                  "Inner Drain Hose",
+                  "Drain Case Assembly (D V Case Assembly)",
+                  "Drain Bellow",
+                  "Drain Valve Spring",
+                  "Drain Case Cleaning"
+                ],
+                "price": [300, 1000, 290, 100, 726],
+              
+              }
+            ]
+          },
+            {
+              "topLoadWM_accessories": [
+              {
+                "description": [
+                  "Rat Mesh",
+                  "Shocker Set - 3 Pieces",
+                  "Chemical Wash - Drum Dismantling & Assembling",
+                  "Inner Drain Hose",
+                  "Outer Body / Cabinet",
+                  "Inner drum Plastic / Steel",
+                  "Stand/Trolley",
+                  "Descaling Powder",
+                  "Extension Inlet Pipe 4Mtr (with adaptor)",
+                  "Tub/Drain/Detergent-drawer Hose Rubber pipe",
+                  "Sensor Pipe",
+                  "Back Cover (Top Load)",
+                  "Inlet Pipe / 1.5 Mtr with adaptor",
+                  "Drain Pipe",
+                  "Lint / Magic filter",
+                  "Spin lid",
+                  "Inlay Panel / Control Panel",
+                  "Sensor Pipe",
+                  "Pulsator with snap",
+                  "Pulsator Snap",
+                  "Agitator",
+                  "Outer tub",
+                  "Tap Adaptor",
+                  "Motor Pulley",
+                  "Knob",
+                  "Washing Machine Cover",
+                  "water filter"
+                ],
+                "price": [400, 2400, 1021, 300, 3200, 2200, 900, 150, 600, 550, 181, 650, 450, 300, 300, 550, 500, 150, 1100, 200, 850, 500],
+                
+              }
+            ]
+          },
+          {
+            "frontLoadWM_PowerUnit": [
+              {
+                "description": [
+                  "Power 3 Pin Plug Top",
+                  "Power Cord",
+                  "Replace (New) - Display PCB (Front Load) (labour charge)",
+                  "Replace (New) - PCB (Front Load) (labour charge)",
+                  "LVT",
+                  "Repair - PCB (Front Load)",
+                  "Timer",
+                  "Motor Control Unit (MCU)",
+                  "Repair - Inverter PCB (Front Load)"
+                ],
+                "price": [150, 350, 299, 299, 650, 2717, 2200, 1450, 3298],
+                
+              }
+            ]
+          },
+            {
+              "frontLoadWM_wash_issue": [
+              {
+                "description": [
+                  "DC Inlet valve 3/4 way",
+                  "Door Lock (Front Load)",
+                  "Complete drum assembly (Bosch / Siemens)",
+                  "AC Inlet valve 3/4 way",
+                  "DC Inlet valve 3/4 way",
+                  "Gasket/ Door Diaphragm",
+                  "Complete Tub & Drum Assembly",
+                  "Front tub",
+                  "Back Tub (With bearings and seal)",
+                  "Capacitor",
+                  "Pulley drive",
+                  "Sensor Pipe",
+                  "AC Inlet Valve 1 way",
+                  "AC Inlet Valve 2 way",
+                  "Pressure sensor with pipe",
+                  "DC Inlet Valve 1 way",
+                  "DC Inlet Valve 2 way",
+                  "Hall sensor",
+                  "Direct Drive Motor",
+                  "Heater",
+                  "Heater Sensor",
+                  "Motor Universal",
+                  "V Belt",
+                  "Drum Pulley"
+                ],
+                "price": [2000, 1450, 9000, 1100, 2200, 1600, 6000, 2300, 3300, 400, 750, 150, 750, 970, 900, 999, 1250, 1100, 4000, 1000, 500, 4000, 850, 450],
+          
+              }
+            ]
+          },
+            {
+              "frontLoadWM_noise_issue": [
+              {
+                "description": [
+                  "Shocker Set - 3 Pieces",
+                  "Flange shaft Tri angle",
+                  "Drum Bearing/ oil Seal with Cleaning",
+                  "Shocker Set - 2 pieces",
+                  "Shocker Set - 3 Pieces"
+                ],
+                "price": [2400, 2800, 2700, 1700, 2400],
+              
+              }
+            ]
+          },
+            {
+              "frontLoadWM_spin_issue": [
+              {
+                "description": [
+                  "Drain Pump Motor",
+                  "Assembly Drain Pump",
+                  "Drain Pump Motor (Double way)"
+                ],
+                "price": [1800, 1600, 2200],
+          
+              }
+            ]
+          },
+            {
+              "frontLoadWM_water_leakage": [
+              {
+                "description": [
+                  "Drain Cleaning",
+                  "Drain Rubber Hose"
+                ],
+                "price": [300, 700],
+              
+              }
+            ]
+          },
+           {
+            "frontLoadWM_accessories": [
+              {
+                "description": [
+                  "Chemical Wash - Drum Dismantling & Assembling",
+                  "Frontload Trolly (Stand)",
+                  "Rat Mesh",
+                  "Door Hinge",
+                  "Descaling Powder",
+                  "Outer Body / Cabinet",
+                  "Dispenser Angle",
+                  "Water Filter (Front Load)",
+                  "Extension Inlet Pipe 4Mtr (with adaptor)",
+                  "Drain Rubber Hose",
+                  "Drain Pipe",
+                  "Inlet Pipe / 1.5 Mtr with adaptor",
+                  "Knob",
+                  "Noise Filter",
+                  "Inlay Panel / Control Panel",
+                  "Sensor Pipe",
+                  "Tap Adaptor",
+                  "Power 3 Pin Plug Top",
+                  "Back Tub (With bearings and seal)",
+                  "Tub/Drain/Detergent-drawer Hose Rubber pipe",
+                  "Power Cord",
+                  "Gasket/ Door Diaphragm",
+                  "Gasket Spring",
+                  "Front holder/ Door lever",
+                  "Back holder",
+                  "Washing Machine Cover"
+                ],
+                "price": [1500, 1300, 400, 1100, 150, 3500, 450, 1, 600, 700, 300, 450, 100, 500, 700, 150, 559, 150, 3300, 550, 350, 1600, 150, 800, 600, 800],
+         
+              }
+            ]
+          },
+          {
+            "minorRepair": [
+              {
+                "description": [
+                  "Detergent Drawer Adjustment (include labour)",
+                  "Electrical Plug Adjustment (include labour)",
+                  "Drain Pipe Adjustment (include labour)",
+                  "Filter cleaning (include labour)",
+                  "Tap Adapter fixing (include labour)",
+                  "Wire Retaping (include labour)",
+                  "Machine Level Adjustment (include labour)",
+                  "Cloth/Coin stuck (include labour)",
+                  "Belt Adjustment (include labour)" ,
+                  "Body Cabinet Adjustment (include labour)"
+                ],
+                "price": [299, 299, 299, 299, 299, 299, 299, 299, 299, 299],
+              }
+            ]
+          },
+            {
+              "installation": [
+              {
+                "description": [
+                  "Installation/Un-installation (plus labour)"
+                ],
+                "price": [100],
+              }
+            ]
+          },
+            {
+              "descaling": [
+              {
+                "description": [
+                  "Descaling"
+                ],
+                "price": [200],
+               
+              }
+            ]
+          }
+        ]
+      },
+      
+      
+      
       
       
     ]

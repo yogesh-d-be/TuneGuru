@@ -23,7 +23,8 @@ import { StoreContext } from "../StoreContext";
 import ThrowablesScene from "../ThrowableScenes";
 // // Dynamically import ThrowablesScene component
 // const ThrowablesScene = React.lazy(() => import("../ThrowableScenes"));
-
+import './Home.css'
+import Select  from "react-select";
 
 // import Navbar from "./Navbar";
 // import {useLocation} from "react-router-dom";
@@ -104,7 +105,7 @@ const navigate = useNavigate();
         line: "Electrician",
         queryParam: "_electrician",
         images:[require('../../assests/Icons/e_install.png'),require('../../assests/Icons/broken-cable.png')],
-        capt:["Installation","Repair"],
+        capt:["Electrical Installation","Electrical Repair"],
         path:["/electrician_installation","/electrician_repair"]
       },
       {
@@ -113,7 +114,7 @@ const navigate = useNavigate();
         line: "Plumber",
         queryParam: "_plumber",
         images:[require('../../assests/Icons/plumber (2).png'),require('../../assests/Icons/leaking.png')],
-        capt:["Installation","Repair"],
+        capt:["Plumbing Installation","Plumbing Repair"],
         path:["/plumber_installation","/plumber_repair"]
       },
       {
@@ -122,7 +123,7 @@ const navigate = useNavigate();
         line: "Carpenter",
         queryParam: "_carpenter",
         images:[require('../../assests/Icons/carpenter (2).png'),require('../../assests/Icons/carpenter (1).png')],
-        capt:["Installation","Service"],
+        capt:["Carpentering Installation","Carpentering Service"],
         path:["/carpenter_installation","/carpenter_repair"]
       },
       {
@@ -185,6 +186,29 @@ const navigate = useNavigate();
 
   const services = imagesData();
 
+
+
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const searchServices = (services) =>{
+    return services.flatMap(service=> 
+      service.capt.map((caption, index)=>({
+        label:caption,
+        value:service.path[index],
+        image:service.images[index]
+      }))
+    )
+  }
+
+  const search = searchServices(services)
+
+  const handleSearchServiceChange = (option) =>{
+    setSelectedOption(option);
+    if(option){
+      navigate(option.value)
+    }
+  }
+  
   return (
     <>
       {/* {nav} */}
@@ -201,14 +225,23 @@ const navigate = useNavigate();
       {/* <Appliances/> */}
       <div className="relative w-full h-[700px] mt-12">
   <img src={require('../../assests/images/Service persons2.jpg')} alt="Service persons 3" className="w-full h-[700px]" />
-  <div className="absolute top-0 left-0 w-full h-[700px] flex items-center justify-center backdrop-brightness-50 ">
-    
-  
-              <input
-                type="text"
-                placeholder="Search..."
-                className=" border-2 border-black outline-none rounded-3xl w-[40%] h-12 ta:w-[70%] mo:w-[70%]"/>
-          
+  <div className="absolute top-0 left-0 w-full h-[700px] flex flex-col items-center justify-center backdrop-brightness-50">
+
+   <Select
+      value={selectedOption}
+      onChange={handleSearchServiceChange}
+      options={search} 
+      getOptionLabel={(option) => (
+        <div className="flex items-center">
+          <img src={option.image} alt={option.label} className="w-6 h-6 mr-2" />
+          {option.label}
+        </div>
+      )}
+      getOptionValue={(option) => option.value}
+      placeholder="Search for services..."
+      classNamePrefix="custom-search"
+    />
+     
   </div>
 </div>
 
